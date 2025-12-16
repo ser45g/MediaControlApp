@@ -5,7 +5,7 @@ namespace MediaControlApp.Domain.Models.Media
 {
     public class Media
     {
-        public Media(Guid id, string title, string? description, Ganre ganre, DateTime publisedDate, DateTime? lastConsumedDate, Author author, Action<DateTime>? onConsumed, Rating? rating)
+        public Media(Guid id, string title, string? description, Ganre ganre, DateTime publisedDate, DateTime? lastConsumedDate, Author author, Rating? rating)
         {
             Id = id;
             Title = title;
@@ -14,7 +14,7 @@ namespace MediaControlApp.Domain.Models.Media
             PublisedDateUtc = publisedDate;
             LastConsumedDateUtc = lastConsumedDate;
             Author = author;
-            OnConsumed = onConsumed;
+          
             Rating = rating;
         }
 
@@ -31,10 +31,10 @@ namespace MediaControlApp.Domain.Models.Media
 
         public DateTime? LastConsumedDateUtc { get; private set; }
 
-        public Guid authorId { get; private set; }
+        public Guid AuthorId { get; private set; }
         public Author? Author { get; private set; }
 
-        public Action<DateTime>? OnConsumed { get; set; }
+ 
 
         public Rating? Rating { get; private set; }
 

@@ -1,8 +1,6 @@
 ﻿using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace MediaControlApp.Application.Services
 {
@@ -15,12 +13,12 @@ namespace MediaControlApp.Application.Services
             _mediaTypeRepo = mediaTypeRepo;
         }
 
-        public async Task<MediaType> Add(string name)
+        public async Task<bool> Add(string name)
         {
             return await _mediaTypeRepo.Add(name:name);
         }
 
-        public async Task<MediaType> Update(Guid id, string name)
+        public async Task<bool> Update(Guid id, string name)
         {
             return await _mediaTypeRepo.Update(id:id, name:name);
         }
@@ -34,7 +32,7 @@ namespace MediaControlApp.Application.Services
         {
             return await _mediaTypeRepo.GetAll(); 
         }
-        public async Task<MediaType> GetById(Guid id)
+        public async Task<MediaType?> GetById(Guid id)
         {
             return await _mediaTypeRepo.GetById(id);
         }

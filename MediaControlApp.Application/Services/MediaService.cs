@@ -1,10 +1,6 @@
 ﻿using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.Domain.Models.Media.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace MediaControlApp.Application.Services
 {
@@ -17,13 +13,13 @@ namespace MediaControlApp.Application.Services
             _mediaRepo = mediaRepo;
         }
 
-        public async Task<Media> Add(string title, string? description, Ganre ganre, DateTime publishedDate, Author author, Rating? rating)
+        public async Task<bool> Add(string title, string? description, Guid ganreId, DateTime publishedDate, Guid authorId, Rating? rating)
         {
-            return await _mediaRepo.Add(title:title, description:description, ganre:ganre, publisedDate:publishedDate, author:author, rating:rating);
+            return await _mediaRepo.Add(title:title, description:description, ganreId:ganreId, publishedDate:publishedDate, authorId:authorId, rating:rating);
         }
 
-        public async Task<Media> Update(Guid id, string title, string? description, Ganre ganre, DateTime publisedDate, DateTime? lastConsumedDate, Author author, Action<DateTime>? onConsumed, Rating? rating) {
-            return await _mediaRepo.Update(id:id, title:title, description:description,ganre:ganre,publisedDate:publisedDate,lastConsumedDate:lastConsumedDate,author:author, rating:rating);
+        public async Task<bool> Update(Guid id, string title, string? description, Guid ganreId, DateTime publishedDate, DateTime? lastConsumedDate, Guid authorId, Rating? rating) {
+            return await _mediaRepo.Update(id:id, title:title, description:description, ganreId:ganreId, publishedDate:publishedDate, lastConsumedDate:lastConsumedDate, authorId:authorId, rating:rating);
         }
 
         public async Task<bool> Remove(Guid id)
@@ -50,17 +46,20 @@ namespace MediaControlApp.Application.Services
             return await _mediaRepo.GetByMediaTypeId(mediaTypeId);
         }
 
-        public async Task<Media> GetById(Guid id)
+        public async Task<Media?> GetById(Guid id)
         {
             return await _mediaRepo.GetById(id);
         }
 
-        public async Task<Media> SetConsumed(Guid id)
+        public async Task<bool> SetConsumed(Guid id)
         {
-            var media = await _mediaRepo.GetById(id);
-            media.SetConsumed();
-            return await _mediaRepo.Update(id:media.Id, title:media.Title, ganre:media.Ganre, publisedDate:media.PublisedDateUtc, author:media.Author, description:media.Description,lastConsumedDate:media.LastConsumedDateUtc,rating:media.Rating);
+            return await _mediaRepo.SetConsumed(id);
 
+        }
+
+        public async Task<bool> Rate(Guid id, Rating rating)
+        {
+            return await _mediaRepo.Rate(id, rating);
         }
     }
 }

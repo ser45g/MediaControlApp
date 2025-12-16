@@ -7,13 +7,13 @@ namespace MediaControlApp.Application.Services.Interfaces
 {
     public interface IMediaTypeRepo
     {
-        Task<MediaType> Add(string name);
+        Task<bool> Add(string name);
 
-        Task<MediaType> Update(Guid id, string name);
+        Task<bool> Update(Guid id, string name);
 
         Task<bool> Remove(Guid id);
 
         Task<IEnumerable<MediaType>> GetAll();
-        Task<MediaType> GetById(Guid id);
+        Task<MediaType?> GetById(Guid id);
     }
 }

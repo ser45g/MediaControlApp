@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.1.11304.174 d18.0
+VisualStudioVersion = 18.1.11304.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaControlApp", "MediaControlApp\MediaControlApp.csproj", "{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaControlApp.Domain", "MediaControlApp.Domain\MediaControlApp.Domain.csproj", "{5420927E-7BB7-46FD-AF93-01C153AA1BF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaControlApp.Application", "MediaControlApp.Application\MediaControlApp.Application.csproj", "{D235669D-1782-482D-9598-258DBE44F6B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaControlApp.Infrastructure", "MediaControlApp.Infrastructure\MediaControlApp.Infrastructure.csproj", "{6F4229BA-11E4-42B6-8419-358BE07416FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D235669D-1782-482D-9598-258DBE44F6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D235669D-1782-482D-9598-258DBE44F6B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D235669D-1782-482D-9598-258DBE44F6B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4229BA-11E4-42B6-8419-358BE07416FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4229BA-11E4-42B6-8419-358BE07416FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4229BA-11E4-42B6-8419-358BE07416FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4229BA-11E4-42B6-8419-358BE07416FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

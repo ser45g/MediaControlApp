@@ -15,6 +15,7 @@
         public string? Description { get; private set; }= string.Empty;
 
         public Guid MediaTypeId { get; private set; }
+
         public MediaType MediaType { get; private set; }
     }
 }
