@@ -18,7 +18,7 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<bool> Add(string firstName, string lastName, string? companyName = null, string? email = null)
         {
-            var author = new Entities.Author() { FirstName=firstName, LastName=lastName,CompanyName=companyName, Email = email };
+            var author = new Author() { FirstName=firstName, LastName=lastName,CompanyName=companyName, Email = email };
             _context.Authors.Add(author);
             return await _context.SaveChangesAsync()==1;
         }
@@ -27,14 +27,14 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
         {
             var authorList = await _context.Authors.ToListAsync();
 
-            return _mapper.Map<IEnumerable<Entities.Author>, IEnumerable<Author>>(authorList);
+            return _mapper.Map<IEnumerable<Author>, IEnumerable<Author>>(authorList);
         }
 
         public async Task<Author?> GetById(Guid id)
         {
             var author = await _context.Authors.SingleOrDefaultAsync(a => a.Id == id);
             if (author == null) {return null;}
-            return _mapper.Map<Entities.Author,Author>(author);
+            return _mapper.Map<Author,Author>(author);
         }
 
         public async Task<bool> Remove(Guid id)

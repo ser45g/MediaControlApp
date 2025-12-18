@@ -21,7 +21,7 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<bool> Add(string name)
         {
-            var mediaType = new Entities.MediaType() { Name=name};
+            var mediaType = new MediaType() { Name=name};
             _context.MediaTypes.Add(mediaType);
             return await _context.SaveChangesAsync() == 1;
         }
@@ -30,14 +30,14 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
         {
             var mediaTypeList = await _context.MediaTypes.ToListAsync();
 
-            return _mapper.Map<IEnumerable<Entities.MediaType>, IEnumerable<MediaType>>(mediaTypeList);
+            return _mapper.Map<IEnumerable<MediaType>, IEnumerable<MediaType>>(mediaTypeList);
         }
 
         public async Task<MediaType?> GetById(Guid id)
         {
             var mediaType = await _context.MediaTypes.SingleOrDefaultAsync(a => a.Id == id);
             if (mediaType == null) { return null; }
-            return _mapper.Map<Entities.MediaType, MediaType>(mediaType);
+            return _mapper.Map<MediaType, MediaType>(mediaType);
         }
 
         public async Task<bool> Remove(Guid id)

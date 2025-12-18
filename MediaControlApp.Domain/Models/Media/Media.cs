@@ -5,38 +5,26 @@ namespace MediaControlApp.Domain.Models.Media
 {
     public class Media
     {
-        public Media(Guid id, string title, string? description, Ganre ganre, DateTime publisedDate, DateTime? lastConsumedDate, Author author, Rating? rating)
-        {
-            Id = id;
-            Title = title;
-            Description = description;
-            Ganre = ganre;
-            PublisedDateUtc = publisedDate;
-            LastConsumedDateUtc = lastConsumedDate;
-            Author = author;
-          
-            Rating = rating;
-        }
+     
+        public Guid Id { get; set; }
 
-        public Guid Id { get; private set; }
+        public string Title { get; set; } = string.Empty;
 
-        public string Title { get; private set; } = string.Empty;
-
-        public string? Description { get; private set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
         
-        public Guid GanreId { get; private set; }
-        public Ganre Ganre { get; private set; }
+        public Guid GanreId { get; set; }
+        public Ganre Ganre { get; set; }
 
-        public DateTime PublisedDateUtc { get; private set; }
+        public DateTime PublisedDateUtc { get; set; }
 
-        public DateTime? LastConsumedDateUtc { get; private set; }
+        public DateTime? LastConsumedDateUtc { get; set; }
 
-        public Guid AuthorId { get; private set; }
-        public Author? Author { get; private set; }
+        public Guid AuthorId { get; set; }
+        public Author? Author { get; set; }
 
  
 
-        public Rating? Rating { get; private set; }
+        public Rating? Rating { get; set; }
 
         
 
@@ -44,7 +32,7 @@ namespace MediaControlApp.Domain.Models.Media
         {
             var dateTime = DateTime.UtcNow;
             LastConsumedDateUtc = dateTime;
-            OnConsumed?.Invoke(dateTime);
+            
         }
 
         public bool Rate(int score)
@@ -56,8 +44,7 @@ namespace MediaControlApp.Domain.Models.Media
             }
             catch (Exception ex) { 
                 return false;
-            }
-             
+            }  
         }
     }
 }

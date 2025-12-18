@@ -1,5 +1,5 @@
 ﻿
-using MediaControlApp.Infrastructure.DataAccess.MediaStore.Entities;
+using MediaControlApp.Domain.Models.Media;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaControlApp.Infrastructure.DataAccess.MediaStore
@@ -7,20 +7,16 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore
     public class MediaDbContext : DbContext
     {
 
-        public DbSet<Entities.Author> Authors { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
-        public DbSet<Entities.Ganre> Ganres { get; set; }
+        public DbSet<Ganre> Ganres { get; set; }
 
-        public DbSet<Entities.Media> Medias { get; set; }
+        public DbSet<Media> Medias { get; set; }
 
-        public DbSet<Entities.MediaType> MediaTypes { get; set; }
+        public DbSet<MediaType> MediaTypes { get; set; }
         public MediaDbContext(DbContextOptions<MediaDbContext> options) : base(options)
         {
             
-        }
-
-        protected MediaDbContext()
-        {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
