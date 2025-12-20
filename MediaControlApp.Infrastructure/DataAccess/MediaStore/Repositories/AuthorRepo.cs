@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediaControlApp.Application.Services.Interfaces;
+﻿using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +7,12 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
     public class AuthorRepo: IAuthorRepo
     {
         private readonly MediaDbContext _context;
-        private readonly IMapper _mapper;
+       
 
-        public AuthorRepo(MediaDbContext context, IMapper mapper)
+        public AuthorRepo(MediaDbContext context)
         {
             _context = context;
-            _mapper = mapper;
+           
         }
 
         public async Task<bool> Add(string firstName, string lastName, string? companyName = null, string? email = null)
@@ -25,16 +24,13 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<IEnumerable<Author>> GetAll()
         {
-            var authorList = await _context.Authors.ToListAsync();
-
-            return _mapper.Map<IEnumerable<Author>, IEnumerable<Author>>(authorList);
+            return await _context.Authors.ToListAsync();
         }
 
         public async Task<Author?> GetById(Guid id)
         {
-            var author = await _context.Authors.SingleOrDefaultAsync(a => a.Id == id);
-            if (author == null) {return null;}
-            return _mapper.Map<Author,Author>(author);
+            return await _context.Authors.SingleOrDefaultAsync(a => a.Id == id);
+           
         }
 
         public async Task<bool> Remove(Guid id)

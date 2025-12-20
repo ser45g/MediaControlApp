@@ -1,5 +1,6 @@
 ﻿
 using MediaControlApp.Domain.Models.Media;
+using MediaControlApp.Infrastructure.DataAccess.MediaStore.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaControlApp.Infrastructure.DataAccess.MediaStore
@@ -21,12 +22,17 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            //optionsBuilder.UseSqlite("Data Source = db.db");
+            
             base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration<Author>(new AuthorConfiguration());
+            modelBuilder.ApplyConfiguration(new GanreConfiguration());
+            modelBuilder.ApplyConfiguration(new MediaTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MediaConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

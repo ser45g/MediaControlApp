@@ -11,7 +11,8 @@ namespace MediaControlApp.Domain.Models.Media.ValueObjects
     {
         public static readonly float LOW_RATING = 0;
         public static readonly float HIGH_RATING = 10;
-        public double Value;
+        public double Value {  get; }
+       
         public Rating(double value) {
             if (!IsValid(value)) { 
                 throw new ArgumentOutOfRangeException(nameof(Value));

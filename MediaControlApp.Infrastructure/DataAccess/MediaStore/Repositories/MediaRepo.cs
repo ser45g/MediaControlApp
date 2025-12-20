@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using MediaControlApp.Application.Services.Interfaces;
+﻿using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.Domain.Models.Media.ValueObjects;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
@@ -10,12 +8,10 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
     public class MediaRepo : IMediaRepo
     {
         private readonly MediaDbContext _context;
-        private readonly IMapper _mapper;
 
-        public MediaRepo(MediaDbContext context, IMapper mapper)
+        public MediaRepo(MediaDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<bool> Add(string title, Guid ganreId, DateTime publisedDate, Guid authorId, string? description = null, DateTime? lastConsumedDate = null, Rating? rating = null)
@@ -29,35 +25,27 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<IEnumerable<Media>> GetAll()
         {
-            var mediaList = await _context.Medias.ToListAsync();
-
-            return _mapper.Map<IEnumerable<Media>, IEnumerable<Media>>(mediaList);
+            return await _context.Medias.ToListAsync();
         }
 
         public async Task<IEnumerable<Media>> GetByAuthorId(Guid authorId)
         {
-            var mediaList = await _context.Medias.Where(media => media.AuthorId == authorId).ToListAsync();
-            return _mapper.Map<IEnumerable<Media>, IEnumerable<Media>>(mediaList);
+            return await _context.Medias.Where(media => media.AuthorId == authorId).ToListAsync();
         }
 
         public async Task<IEnumerable<Media>> GetByGanreId(Guid ganreId)
         {
-            var mediaList = await _context.Medias.Where(media => media.GanreId == ganreId).ToListAsync();
-            return _mapper.Map<IEnumerable<Media>, IEnumerable<Media>>(mediaList);
+            return await _context.Medias.Where(media => media.GanreId == ganreId).ToListAsync();
         }
 
         public async Task<Media?> GetById(Guid id)
         {
-            var media = await _context.Medias.Where(media => media.Id == id).FirstOrDefaultAsync();
-            if (media == null)
-                return null;
-            return _mapper.Map<Media, Media>(media);
+            return await _context.Medias.Where(media => media.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Media>> GetByMediaTypeId(Guid mediaTypeId)
         {
-            var mediaList = await _context.Medias.Include(m=>m.Ganre).Where(m=>m.Ganre.MediaTypeId == mediaTypeId).ToListAsync();
-            return _mapper.Map<IEnumerable<Media>, IEnumerable<Media>>(mediaList);
+            return await _context.Medias.Include(m=>m.Ganre).Where(m=>m.Ganre.MediaTypeId == mediaTypeId).ToListAsync();
         }
 
         public async Task<bool> Rate(Guid id, Rating rating)
@@ -68,7 +56,6 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
         public async Task<bool> Remove(Guid id)
         {
             return await _context.Medias.Where(m => m.Id == id).ExecuteDeleteAsync()==1;
-            
         }
 
         public async Task<bool> SetConsumed(Guid id)

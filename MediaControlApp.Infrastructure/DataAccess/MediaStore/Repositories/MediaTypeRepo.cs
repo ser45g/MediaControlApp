@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediaControlApp.Application.Services.Interfaces;
+﻿using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
 
 using MediaControlApp.Infrastructure.DataAccess.MediaStore;
@@ -11,12 +10,11 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
     public class MediaTypeRepo : IMediaTypeRepo
     {
         private readonly MediaDbContext _context;
-        private readonly IMapper _mapper;
+       
 
-        public MediaTypeRepo(MediaDbContext context, IMapper mapper)
+        public MediaTypeRepo(MediaDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<bool> Add(string name)
@@ -28,16 +26,13 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<IEnumerable<MediaType>> GetAll()
         {
-            var mediaTypeList = await _context.MediaTypes.ToListAsync();
-
-            return _mapper.Map<IEnumerable<MediaType>, IEnumerable<MediaType>>(mediaTypeList);
+            return await _context.MediaTypes.ToListAsync();
         }
 
         public async Task<MediaType?> GetById(Guid id)
         {
-            var mediaType = await _context.MediaTypes.SingleOrDefaultAsync(a => a.Id == id);
-            if (mediaType == null) { return null; }
-            return _mapper.Map<MediaType, MediaType>(mediaType);
+            return await _context.MediaTypes.SingleOrDefaultAsync(a => a.Id == id);
+
         }
 
         public async Task<bool> Remove(Guid id)
