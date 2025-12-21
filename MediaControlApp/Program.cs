@@ -70,6 +70,7 @@ app.Configure(config =>
         mediaType.AddCommand<AddMediaTypeCommand>("add");
         mediaType.AddCommand<RemoveMediaTypeCommand>("remove");
         mediaType.AddCommand<ShowMediaTypesCommand>("show");
+        mediaType.AddCommand<UpdateMediaTypeCommand>("update");
     });
    
 

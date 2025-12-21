@@ -58,7 +58,7 @@ namespace MediaControlApp.Commands.MediaTypes
             catch (Exception ex)
             {
                 AnsiConsole.WriteException(ex);
-                return await Task.FromResult(-1);
+                return -1;
             }
          
             int count = 1;
