@@ -1,4 +1,5 @@
-﻿using MediaControlApp.Application.Services.Interfaces;
+﻿using MediaControlApp.Application.Services;
+using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Commands.Add;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.Infrastructure.DataAccess.MediaStore;
@@ -16,14 +17,14 @@ namespace MediaControlApp.Commands.MediaTypes
    
 
     [Description("Show available media types.")]
-    public sealed class ShowMediaTypesCommand : AsyncCommand<ShowMediaTypesCommand.Settings>
+    public sealed class ShowAuthorsCommand : AsyncCommand<ShowAuthorsCommand.Settings>
     {
 
-        private readonly IMediaTypeRepo _mediaTypeRepo;
+        private readonly AuthorService _authorService;
 
-        public ShowMediaTypesCommand(IMediaTypeRepo mediaTypeRepo)
+        public ShowAuthorsCommand(AuthorService authorService)
         {
-            _mediaTypeRepo = mediaTypeRepo;
+            _authorService = authorService;
         }
 
         protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
@@ -31,26 +32,28 @@ namespace MediaControlApp.Commands.MediaTypes
             var table = new Table().RoundedBorder();
            
          
-            table.AddColumn("[red]Id[/]");
+            table.AddColumn("[red]№[/]");
             table.AddColumn("[green]Name[/]");
+            table.AddColumn("[green]Company Name[/]");
+            table.AddColumn("[green]Email[/]");
             table.ShowRowSeparators();
 
-            IEnumerable<MediaType> mediaTypes = Enumerable.Empty<MediaType>();
+            IEnumerable<Author> authors = Enumerable.Empty<Author>();
 
             try
             {
-                mediaTypes = await _mediaTypeRepo.GetAll();
+                authors = await _authorService.GetAll();
                 if (settings.Limit != null)
                 {
-                    mediaTypes = mediaTypes.Take(settings.Limit.Value);
+                    authors = authors.Take(settings.Limit.Value);
                 }
 
                 if (settings.IsAscending) { 
-                    mediaTypes = mediaTypes.OrderBy(x => x.Name);
+                    authors = authors.OrderBy(x => x.Name);
                 }
                 else
                 {
-                    mediaTypes = mediaTypes.OrderByDescending(x => x.Name);
+                    authors = authors.OrderByDescending(x => x.Name);
                 }
                 
 
@@ -61,11 +64,11 @@ namespace MediaControlApp.Commands.MediaTypes
                 return -1;
             }
          
-            int count = 1;
+          
             AnsiConsole.MarkupLine("[red]Media Types[/]");
-            foreach (var el in mediaTypes)
+            foreach (var el in authors)
             {
-                table.AddRow((count++).ToString(), el.Name);
+                table.AddRow(el.Id.ToString(), el.Name, el.CompanyName??" - ", el.Email??" - ");
             }
 
             AnsiConsole.Write(table);
@@ -79,7 +82,7 @@ namespace MediaControlApp.Commands.MediaTypes
             public int? Limit { get; set; }
 
             [CommandOption("--ascending")]
-            [Description("Show media types in an ascending order")]
+            [Description("Show authors by Name in an ascending order")]
             public bool IsAscending { get; set; }
         }
 

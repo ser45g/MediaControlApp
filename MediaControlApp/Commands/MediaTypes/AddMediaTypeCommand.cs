@@ -1,12 +1,8 @@
 ﻿using MediaControlApp.Application.Services.Interfaces;
-using MediaControlApp.Commands.Add;
-using MediaControlApp.Utilities;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+
 
 namespace MediaControlApp.Commands.MediaTypes
 {
@@ -21,6 +17,8 @@ namespace MediaControlApp.Commands.MediaTypes
             [CommandArgument(0, "<MEDIATYPENAME>")]
             [Description("The media type to add. It must be unique")]
             public string MediaTypeName { get; set; }
+
+           
         }
 
         public AddMediaTypeCommand(IMediaTypeRepo mediaTypeRepo)

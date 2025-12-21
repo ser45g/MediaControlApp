@@ -1,9 +1,6 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Application.Services.Interfaces;
-using MediaControlApp.Commands.Add;
 using MediaControlApp.Commands.MediaTypes;
-using MediaControlApp.Commands.Run;
-using MediaControlApp.Commands.Serve;
 using MediaControlApp.Infrastructure.DataAccess.MediaStore;
 using MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories;
 using MediaControlApp.Infrasturcture;
@@ -52,17 +49,8 @@ app.Configure(config =>
     config.SetApplicationName("favorite-media");
     config.ValidateExamples();
     config.AddExample("media-type","add","MUSIC");
+    
 
-    // Run
-    config.AddCommand<RunCommand>("run");
-
-    // Add
-    config.AddBranch<AddSettings>("add", add =>
-    {
-        add.SetDescription("Add a package or reference to a .NET project");
-        add.AddCommand<AddPackageCommand>("package");
-        add.AddCommand<AddReferenceCommand>("reference");
-    });
 
     config.AddBranch<CommandSettings>("media-type", mediaType =>
     {
@@ -72,12 +60,16 @@ app.Configure(config =>
         mediaType.AddCommand<ShowMediaTypesCommand>("show");
         mediaType.AddCommand<UpdateMediaTypeCommand>("update");
     });
-   
 
-    // Serve
-    config.AddCommand<ServeCommand>("serve")
-        .WithExample("serve", "-o", "firefox")
-        .WithExample("serve", "--port", "80", "-o", "firefox");
+    config.AddBranch<CommandSettings>("author", author=>
+    {
+        author.SetDescription("Working with authors");
+        author.AddCommand<AddAuthorCommand>("add");
+        author.AddCommand<RemoveAuthorCommand>("remove");
+        author.AddCommand<ShowAuthorsCommand>("show");
+        author.AddCommand<UpdateAuthorCommand>("update");
+    });
+
 });
 
 _host.Start();
