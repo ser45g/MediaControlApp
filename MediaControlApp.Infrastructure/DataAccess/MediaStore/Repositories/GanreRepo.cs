@@ -36,6 +36,12 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
             return await _context.Ganres.Where(g=>g.MediaTypeId==mediaTypeId).ToListAsync();
         }
 
+        public async Task<Ganre?> GetByName(string name)
+        {
+            return await _context.Ganres.FirstOrDefaultAsync(g => g.Name == name);
+
+        }
+
         public async Task<bool> Remove(Guid id)
         {
             return await _context.Ganres.Where(m => m.Id == id).ExecuteDeleteAsync() == 1;

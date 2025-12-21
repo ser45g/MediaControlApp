@@ -10,7 +10,7 @@
 
         public Guid MediaTypeId { get;  set; }
 
-        public MediaType MediaType { get;  set; }
+        public MediaType? MediaType { get;  set; }
 
         public IEnumerable<Media> Medias { get; set; } = Enumerable.Empty<Media>();
 

@@ -1,4 +1,5 @@
-﻿using MediaControlApp.Application.Services.Interfaces;
+﻿using MediaControlApp.Application.Services;
+using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Commands.Add;
 using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Commands.Run;
@@ -25,6 +26,11 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(s =>
     s.AddTransient<IGanreRepo,GanreRepo>();
     s.AddTransient<IMediaRepo,MediaRepo>();
     s.AddTransient<IMediaTypeRepo,MediaTypeRepo>();
+
+    s.AddTransient<AuthorService>();
+    s.AddTransient<GanreService>();
+    s.AddTransient<MediaService>();
+    s.AddTransient<MediaTypeService>();
 
     services = s;
 }).Build();

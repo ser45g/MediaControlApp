@@ -13,13 +13,13 @@ namespace MediaControlApp.Application.Services
             _authorRepo = authorRepo;
         }
 
-        public async Task<bool> Add(string firstName, string lastName, string? companyName = null, string? email = null)
+        public async Task<bool> Add(string name, string? companyName = null, string? email = null)
         {
-            return await _authorRepo.Add(firstName:firstName, lastName:lastName, companyName:companyName, email:email);
+            return await _authorRepo.Add(name:name, companyName:companyName, email:email);
         }
-        public async Task<bool> Update(Guid id, string firstName, string lastName, string? companyName = null, string? email = null)
+        public async Task<bool> Update(Guid id, string name, string? companyName = null, string? email = null)
         {
-            return await _authorRepo.Update(id:id,firstName:firstName,lastName:lastName,companyName:companyName,email:email);
+            return await _authorRepo.Update(id:id,name:name,companyName:companyName,email:email);
         }
         public async Task<bool> Remove(Guid id)
         {

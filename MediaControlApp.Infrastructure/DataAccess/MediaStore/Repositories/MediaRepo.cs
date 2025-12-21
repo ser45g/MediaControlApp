@@ -48,6 +48,12 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
             return await _context.Medias.Include(m=>m.Ganre).Where(m=>m.Ganre.MediaTypeId == mediaTypeId).ToListAsync();
         }
 
+        public async Task<Media?> GetByTitle(string title)
+        {
+
+            return await _context.Medias.Where(media => media.Title == title).FirstOrDefaultAsync();
+        }
+
         public async Task<bool> Rate(Guid id, Rating rating)
         {
             return await _context.Medias.Where(m => m.Id == id).ExecuteUpdateAsync((m) => m.SetProperty(m => m.Rating, rating)) == 1;

@@ -1,7 +1,5 @@
 ﻿using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
-
-using MediaControlApp.Infrastructure.DataAccess.MediaStore;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -33,6 +31,11 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
         {
             return await _context.MediaTypes.SingleOrDefaultAsync(a => a.Id == id);
 
+        }
+
+        public async Task<MediaType?> GetByName(string name)
+        {
+            return await _context.MediaTypes.SingleOrDefaultAsync(a => a.Name==name);
         }
 
         public async Task<bool> Remove(Guid id)

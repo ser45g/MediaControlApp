@@ -24,6 +24,8 @@ namespace MediaControlApp.Application.Services.Interfaces
 
         Task<Media?> GetById(Guid id);
 
+        Task<Media?> GetByTitle(string title);
+
         Task<bool> Rate(Guid id, Rating rating);
 
         Task<bool> SetConsumed(Guid id);

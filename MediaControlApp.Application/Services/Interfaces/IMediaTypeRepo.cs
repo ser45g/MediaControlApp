@@ -15,5 +15,7 @@ namespace MediaControlApp.Application.Services.Interfaces
 
         Task<IEnumerable<MediaType>> GetAll();
         Task<MediaType?> GetById(Guid id);
+
+        Task<MediaType?> GetByName(string name);
     }
 }
