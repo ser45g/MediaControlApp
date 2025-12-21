@@ -35,8 +35,8 @@
             /// <summary>
             /// Gets or sets the AuthorId
             /// </summary>
-            [CommandArgument(0, "<AUTHORID>")]
-            [Description("The author's id to delete if.")]
+            [CommandArgument(0, "[AUTHORID]")]
+            [Description("The author's id to delete it.")]
             public string? AuthorId { get; set; }
 
             [CommandOption("-s|--show-select")]

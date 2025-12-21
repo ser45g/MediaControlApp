@@ -73,14 +73,12 @@
                 {
                     await HandleUpdate();
                 }
-
             }
             catch (Exception ex)
             {
                 AnsiConsole.WriteException(ex);
                 return -1;
             }
-
             return 0;
         }
 

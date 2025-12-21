@@ -45,7 +45,7 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<IEnumerable<Media>> GetByMediaTypeId(Guid mediaTypeId)
         {
-            return await _context.Medias.Include(m=>m.Ganre).Where(m=>m.Ganre.MediaTypeId == mediaTypeId).ToListAsync();
+            return await _context.Medias.Where(m=>m.Ganre!=null? m.Ganre.MediaTypeId == mediaTypeId:false).ToListAsync();
         }
 
         public async Task<Media?> GetByTitle(string title)

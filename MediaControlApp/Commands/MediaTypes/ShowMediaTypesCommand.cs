@@ -1,15 +1,8 @@
 ﻿using MediaControlApp.Application.Services.Interfaces;
-using MediaControlApp.Commands.Add;
 using MediaControlApp.Domain.Models.Media;
-using MediaControlApp.Infrastructure.DataAccess.MediaStore;
-using MediaControlApp.Utilities;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MediaControlApp.Commands.MediaTypes
 {
@@ -21,6 +14,16 @@ namespace MediaControlApp.Commands.MediaTypes
 
         private readonly IMediaTypeRepo _mediaTypeRepo;
 
+        public sealed class Settings : CommandSettings
+        {
+            [CommandOption("--limit <LIMIT>")]
+            [Description("How many elements you want to see")]
+            public int? Limit { get; set; }
+
+            [CommandOption("--ascending")]
+            [Description("Show media types in an ascending order")]
+            public bool IsAscending { get; set; }
+        }
         public ShowMediaTypesCommand(IMediaTypeRepo mediaTypeRepo)
         {
             _mediaTypeRepo = mediaTypeRepo;
@@ -71,18 +74,5 @@ namespace MediaControlApp.Commands.MediaTypes
             AnsiConsole.Write(table);
             return 0;
         }
-
-        public sealed class Settings : CommandSettings
-        {
-            [CommandOption("--limit <LIMIT>")]
-            [Description("How many elements you want to see")]
-            public int? Limit { get; set; }
-
-            [CommandOption("--ascending")]
-            [Description("Show media types in an ascending order")]
-            public bool IsAscending { get; set; }
-        }
-
-        
     }
 }

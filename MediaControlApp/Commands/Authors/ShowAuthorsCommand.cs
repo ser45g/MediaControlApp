@@ -1,16 +1,9 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Application.Services.Interfaces;
-using MediaControlApp.Commands.Add;
 using MediaControlApp.Domain.Models.Media;
-using MediaControlApp.Infrastructure.DataAccess.MediaStore;
-using MediaControlApp.Utilities;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MediaControlApp.Commands.MediaTypes
 {
@@ -29,8 +22,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
         protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            var table = new Table().RoundedBorder();
-           
+            var table = new Table().RoundedBorder(); 
          
             table.AddColumn("[red]№[/]");
             table.AddColumn("[green]Name[/]");

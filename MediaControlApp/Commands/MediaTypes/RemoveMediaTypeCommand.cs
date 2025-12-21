@@ -25,7 +25,7 @@
             /// <summary>
             /// Gets or sets the MediaTypeId
             /// </summary>
-            [CommandArgument(0, "<MEDIATYPEID>")]
+            [CommandArgument(0, "[MEDIATYPEID]")]
             [Description("The media type's id to delete if.")]
             public string? MediaTypeId { get; set; }
 

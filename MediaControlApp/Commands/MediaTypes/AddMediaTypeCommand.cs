@@ -16,8 +16,7 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             [CommandArgument(0, "<MEDIATYPENAME>")]
             [Description("The media type to add. It must be unique")]
-            public string MediaTypeName { get; set; }
-
+            public required string MediaTypeName { get; set; }
            
         }
 
@@ -39,7 +38,7 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             try
             {
-                await _mediaTypeRepo.Add(settings.MediaTypeName);
+                await _mediaTypeRepo.Add(settings.MediaTypeName!);
                 AnsiConsole.MarkupLine($"[green]Media Type was successfully added![/]");
             }
             catch (Exception ex)

@@ -1,18 +1,11 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Application.Services.Interfaces;
-using MediaControlApp.Commands.Add;
-using MediaControlApp.Utilities;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace MediaControlApp.Commands.MediaTypes
 {
    
-
     [Description("Add an author.")]
     public sealed class AddAuthorCommand : AsyncCommand<AddAuthorCommand.Settings>
     {
@@ -28,13 +21,13 @@ namespace MediaControlApp.Commands.MediaTypes
             [CommandArgument(0, "<AUTHORNAME>")]
             
             [Description("The auhtor's name")]
-            public string AuthorName { get; set; }
+            public required string AuthorName { get; set; }
 
-            [CommandArgument(1, "<COMPANYNAME>")]
+            [CommandArgument(1, "[COMPANYNAME]")]
             [Description("The media type to add. It must be unique")]
             public string? CompanyName { get; set; }
 
-            [CommandArgument(2, "<EMAIL>")]
+            [CommandArgument(2, "[EMAIL]")]
             [Description("The media type to add. It must be unique")]
             public string? Email { get; set; }
         }
@@ -49,8 +42,6 @@ namespace MediaControlApp.Commands.MediaTypes
   
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-
-
             try
             {
                 await _authorService.Add(settings.AuthorName, settings.CompanyName, settings.Email);

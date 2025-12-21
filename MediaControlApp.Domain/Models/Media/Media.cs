@@ -13,7 +13,7 @@ namespace MediaControlApp.Domain.Models.Media
         public string? Description { get; set; } = string.Empty;
         
         public Guid GanreId { get; set; }
-        public Ganre Ganre { get; set; }
+        public Ganre? Ganre { get; set; }
 
         public DateTime PublisedDateUtc { get; set; }
 
@@ -42,7 +42,7 @@ namespace MediaControlApp.Domain.Models.Media
                 Rating = new Rating(score);
                 return true;
             }
-            catch (Exception ex) { 
+            catch (Exception ) { 
                 return false;
             }  
         }

@@ -25,22 +25,22 @@ namespace MediaControlApp.Commands.MediaTypes
             /// <summary>
             /// Gets or sets the MediaTypeId
             /// </summary>
-            [CommandArgument(0, "<AUTHORID>")]
+            [CommandArgument(0, "[AUTHORID]")]
             [Description("The media type's id to delete if.")]
             public string? AuthorId { get; set; }
 
             /// <summary>
             /// Gets or sets the MediaTypeName
             /// </summary>
-            [CommandArgument(0, "<AUTHORNAME>")]
+            [CommandArgument(0, "[AUTHORNAME]")]
             [Description("The media type name to add. It must be unique")]
             public string? AuthorName { get; set; }
 
-            [CommandArgument(0, "<COMPANYNAME>")]
+            [CommandArgument(0, "[COMPANYNAME]")]
             [Description("The media type name to add. It must be unique")]
             public string? CompanyName { get; set; }
 
-            [CommandArgument(0, "<EMAIL>")]
+            [CommandArgument(0, "[EMAIL]")]
             [Description("The media type name to add. It must be unique")]
             public string? Email { get; set; }
 
