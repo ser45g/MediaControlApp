@@ -8,11 +8,13 @@ using System.Text;
 namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Configuration
 {
    public class MediaConfiguration : IEntityTypeConfiguration<Media>
-    {
+   {
         public void Configure(EntityTypeBuilder<Media> modelBuilder)
         {
-
             modelBuilder.HasKey(x => x.Id);
+            modelBuilder.HasIndex(x => x.Title).IsUnique();
+            modelBuilder.Property(x=>x.Title).IsRequired();
+
             modelBuilder.HasOne(x => x.Author).WithMany(y => y.Medias).HasForeignKey(x=>x.AuthorId);
             modelBuilder.HasOne(x => x.Ganre).WithMany(y => y.Medias).HasForeignKey(x => x.GanreId);
             modelBuilder.OwnsOne(x => x.Rating, o =>
@@ -20,10 +22,6 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Configuration
                 o.Property(x => x.Value);
                 
             });
-            //modelBuilder.Navigation(x => x.Rating).IsRequired(false);
-
-            
-
         }
     }
 }

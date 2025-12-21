@@ -3,6 +3,7 @@ using MediaControlApp.Application.Services.Interfaces;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 
 namespace MediaControlApp.Commands.MediaTypes
@@ -29,13 +30,14 @@ namespace MediaControlApp.Commands.MediaTypes
 
  
 
-        protected override ValidationResult Validate(CommandContext context, Settings settings)
+        protected override  ValidationResult Validate(CommandContext context, Settings settings)
         {
             if (string.IsNullOrWhiteSpace(settings.MediaTypeName)) {
                 return ValidationResult.Error("Media Name can't be empty");
             }
-            //Must be unique
+            //_mediaTypeService.GetBy
             return base.Validate(context, settings);
+            
         }
   
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)

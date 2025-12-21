@@ -60,11 +60,11 @@ namespace MediaControlApp.Commands.MediaTypes
             {
                 if (settings.ShowSelect)
                 {
-                    await HandleUpdateWithShowSelect(settings.AuthorId, settings.AuthorName, settings.CompanyName, settings.Email);
+                    await HandleUpdate();
                 }
                 else
                 {
-                    await HandleUpdate();
+                    await HandleUpdateWithShowSelect(settings.AuthorId, settings.AuthorName, settings.CompanyName, settings.Email);
                 }
 
             }

@@ -7,6 +7,7 @@
     using System;
     using System.ComponentModel;
 
+    [Description("Remove a media type.")]
     public class RemoveMediaTypeCommand : AsyncCommand<RemoveMediaTypeCommand.Settings>
     {
        
@@ -40,11 +41,12 @@
             {
                 if (settings.ShowSelect)
                 {
-                    await HandleRemoveWithShowSelect(settings.MediaTypeId);
+                     await HandleRemove();
                 }
                 else
                 {
-                    await HandleRemove();
+                   
+                    await HandleRemoveWithShowSelect(settings.MediaTypeId);
                 }
 
             }

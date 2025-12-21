@@ -58,7 +58,8 @@ namespace MediaControlApp.Commands.MediaTypes
                 {
                     mediaTypes = mediaTypes.OrderByDescending(x => x.Name);
                 }
-                
+
+               
 
             }
             catch (Exception ex)
@@ -66,12 +67,15 @@ namespace MediaControlApp.Commands.MediaTypes
                 AnsiConsole.WriteException(ex);
                 return -1;
             }
-         
-            int count = 1;
+        
             AnsiConsole.MarkupLine("[red]Media Types[/]");
+            if (mediaTypes.Count() == 0)
+            {
+                table.AddEmptyRow();
+            }
             foreach (var el in mediaTypes)
             {
-                table.AddRow((count++).ToString(), el.Name);
+                table.AddRow(el.Id.ToString(), el.Name);
             }
 
             AnsiConsole.Write(table);

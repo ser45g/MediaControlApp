@@ -7,7 +7,7 @@
     using System;
     using System.ComponentModel;
 
-
+    [Description("Update a media type.")]
     public class UpdateMediaTypeCommand : AsyncCommand<UpdateMediaTypeCommand.Settings>
     {
  
@@ -20,11 +20,11 @@
 
         public sealed class Settings : CommandSettings
         {
-            [CommandArgument(0, "<MEDIATYPEID>")]
+            [CommandArgument(0, "[MEDIATYPEID]")]
             [Description("The media type's id to delete if.")]
             public string? MediaTypeId { get; set; }
 
-            [CommandArgument(0, "<MEDIATYPENAME>")]
+            [CommandArgument(0, "[MEDIATYPENAME]")]
             [Description("The media type name to add. It must be unique")]
             public string? MediaTypeName { get; set; }
 
@@ -42,11 +42,11 @@
             {
                 if (settings.ShowSelect)
                 {
-                    await HandleUpdateWithShowSelect(settings.MediaTypeId, settings.MediaTypeName);
+                    await HandleUpdate();
                 }
                 else
                 {
-                    await HandleUpdate();
+                    await HandleUpdateWithShowSelect(settings.MediaTypeId, settings.MediaTypeName);
                 }
             }
             catch (Exception ex)
@@ -76,14 +76,14 @@
         {
             var mediaTypes = await _mediaTypeService.GetAll();
 
-            var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
+            var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
 
             if (mediaType == null)
             {
                 throw new ArgumentNullException(nameof(mediaType));
             }
 
-            var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").Validate(x =>
+            var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(mediaType.Name).Validate(x =>
             {
                 if (string.IsNullOrWhiteSpace(x))
                     return false;

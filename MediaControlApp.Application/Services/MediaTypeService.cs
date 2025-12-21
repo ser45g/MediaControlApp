@@ -36,5 +36,10 @@ namespace MediaControlApp.Application.Services
         {
             return await _mediaTypeRepo.GetById(id);
         }
+
+        public async Task<MediaType?> GetByName(string name)
+        {
+            return await _mediaTypeRepo.GetByName(name);
+        }
     }
 }

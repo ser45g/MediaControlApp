@@ -24,7 +24,7 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             var table = new Table().RoundedBorder(); 
          
-            table.AddColumn("[red]№[/]");
+            table.AddColumn("[red]Id[/]");
             table.AddColumn("[green]Name[/]");
             table.AddColumn("[green]Company Name[/]");
             table.AddColumn("[green]Email[/]");
@@ -58,6 +58,10 @@ namespace MediaControlApp.Commands.MediaTypes
          
           
             AnsiConsole.MarkupLine("[red]Media Types[/]");
+            if (authors.Count() == 0)
+            {
+                table.AddEmptyRow();
+            }
             foreach (var el in authors)
             {
                 table.AddRow(el.Id.ToString(), el.Name, el.CompanyName??" - ", el.Email??" - ");

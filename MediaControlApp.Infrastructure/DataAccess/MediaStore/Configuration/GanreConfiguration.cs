@@ -13,6 +13,10 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Configuration
         {
 
             modelBuilder.HasKey(x => x.Id);
+            modelBuilder.HasIndex(x => x.Name).IsUnique();
+            modelBuilder.Property(x => x.Name).IsRequired();
+            modelBuilder.Property(x => x.MediaTypeId).IsRequired();
+
             modelBuilder.HasOne(x=>x.MediaType).WithMany(y=>y.Ganres).HasForeignKey(x=>x.MediaTypeId);
 
         }

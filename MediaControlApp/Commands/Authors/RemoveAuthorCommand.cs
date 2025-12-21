@@ -87,11 +87,11 @@
             {
                 if (settings.ShowSelect)
                 {
-                    await HandleRemoveWithShowSelect(settings.AuthorId);
+                    await HandleRemove();
                 }
                 else
                 {
-                    await HandleRemove();
+                    await HandleRemoveWithShowSelect(settings.AuthorId);
                 }
             }
             catch (Exception ex)
