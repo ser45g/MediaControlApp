@@ -1,4 +1,5 @@
-﻿using MediaControlApp.Application.Services.Interfaces;
+﻿using MediaControlApp.Application.Services;
+using MediaControlApp.Application.Services.Interfaces;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -11,7 +12,13 @@ namespace MediaControlApp.Commands.MediaTypes
     [Description("Add a media type.")]
     public sealed class AddMediaTypeCommand : AsyncCommand<AddMediaTypeCommand.Settings>
     {
-        private readonly IMediaTypeRepo _mediaTypeRepo;
+        private readonly MediaTypeService _mediaTypeService;
+
+        public AddMediaTypeCommand(MediaTypeService mediaTypeService)
+        {
+            _mediaTypeService = mediaTypeService;
+        }
+
         public sealed class Settings : CommandSettings
         {
             [CommandArgument(0, "<MEDIATYPENAME>")]
@@ -20,10 +27,7 @@ namespace MediaControlApp.Commands.MediaTypes
            
         }
 
-        public AddMediaTypeCommand(IMediaTypeRepo mediaTypeRepo)
-        {
-            _mediaTypeRepo = mediaTypeRepo;
-        }
+ 
 
         protected override ValidationResult Validate(CommandContext context, Settings settings)
         {
@@ -38,7 +42,7 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             try
             {
-                await _mediaTypeRepo.Add(settings.MediaTypeName!);
+                await _mediaTypeService.Add(settings.MediaTypeName!);
                 AnsiConsole.MarkupLine($"[green]Media Type was successfully added![/]");
             }
             catch (Exception ex)

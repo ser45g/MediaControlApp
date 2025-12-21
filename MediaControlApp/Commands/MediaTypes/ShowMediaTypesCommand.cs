@@ -1,4 +1,5 @@
-﻿using MediaControlApp.Application.Services.Interfaces;
+﻿using MediaControlApp.Application.Services;
+using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -12,7 +13,12 @@ namespace MediaControlApp.Commands.MediaTypes
     public sealed class ShowMediaTypesCommand : AsyncCommand<ShowMediaTypesCommand.Settings>
     {
 
-        private readonly IMediaTypeRepo _mediaTypeRepo;
+        private readonly MediaTypeService _mediaTypeService;
+
+        public ShowMediaTypesCommand(MediaTypeService mediaTypeService)
+        {
+            _mediaTypeService = mediaTypeService;
+        }
 
         public sealed class Settings : CommandSettings
         {
@@ -24,10 +30,7 @@ namespace MediaControlApp.Commands.MediaTypes
             [Description("Show media types in an ascending order")]
             public bool IsAscending { get; set; }
         }
-        public ShowMediaTypesCommand(IMediaTypeRepo mediaTypeRepo)
-        {
-            _mediaTypeRepo = mediaTypeRepo;
-        }
+    
 
         protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
@@ -42,7 +45,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
             try
             {
-                mediaTypes = await _mediaTypeRepo.GetAll();
+                mediaTypes = await _mediaTypeService.GetAll();
                 if (settings.Limit != null)
                 {
                     mediaTypes = mediaTypes.Take(settings.Limit.Value);

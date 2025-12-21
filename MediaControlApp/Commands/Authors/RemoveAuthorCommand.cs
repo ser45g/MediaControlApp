@@ -8,33 +8,21 @@
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    /// <summary>
-    /// Defines the <see cref="RemoveAuthorCommand" />
-    /// </summary>
+    
     public class RemoveAuthorCommand : AsyncCommand<RemoveAuthorCommand.Settings>
     {
-        /// <summary>
-        /// Defines the _authorService
-        /// </summary>
+        
         private readonly AuthorService _authorService;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RemoveAuthorCommand"/> class.
-        /// </summary>
-        /// <param name="authorService">The authorService<see cref="AuthorService"/></param>
+       
         public RemoveAuthorCommand(AuthorService authorService)
         {
             _authorService = authorService;
         }
-
-        /// <summary>
-        /// Defines the <see cref="Settings" />
-        /// </summary>
+       
         public sealed class Settings : CommandSettings
         {
-            /// <summary>
-            /// Gets or sets the AuthorId
-            /// </summary>
+          
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The author's id to delete it.")]
             public string? AuthorId { get; set; }
