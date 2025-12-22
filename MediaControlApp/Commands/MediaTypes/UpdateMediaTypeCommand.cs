@@ -33,7 +33,24 @@
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
             public bool ShowSelect { get; set; }
         }
+        protected override ValidationResult Validate(CommandContext context, Settings settings)
+        {
+            if (!settings.ShowSelect)
+            {
+                if(settings.MediaTypeId == null  ){
+                    bool isValidGuid = Guid.TryParse(settings.MediaTypeId, out Guid res);
+                    if (!isValidGuid)
+                        return ValidationResult.Error("Invalid format for Media Type Id");
 
+                }
+                var task = ValidateName(settings.MediaTypeName);
+                task.Wait();
+
+                return task.Result;
+            }
+
+            return base.Validate(context, settings);
+        }
 
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
@@ -46,7 +63,7 @@
                 }
                 else
                 {
-                    await HandleUpdateWithShowSelect(settings.MediaTypeId, settings.MediaTypeName);
+                    await HandleUpdateWithShowSelect(settings.MediaTypeId!, settings.MediaTypeName!);
                 }
             }
             catch (Exception ex)
@@ -57,19 +74,12 @@
             return 0;
         }
 
-        private async Task HandleUpdateWithShowSelect(string? mediaTypeId, string? mediaTypeName)
+        private async Task HandleUpdateWithShowSelect(string mediaTypeId, string mediaTypeName)
         {
-            if (mediaTypeId != null && mediaTypeName != null)
-            {
                 Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
                 await _mediaTypeService.Update(mediaTypeIdGuid, mediaTypeName);
-                AnsiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");
-            }
-            else
-            {
-                throw new Exception("Media type id and Media type name must be provided");
-            }
+                AnsiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");      
         }
 
         private async Task HandleUpdate()
@@ -85,14 +95,40 @@
 
             var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(mediaType.Name).Validate(x =>
             {
-                if (string.IsNullOrWhiteSpace(x))
-                    return false;
+                var task = ValidateName(x);
+                task.Wait();
 
-                return true;
+                return !task.Result.Successful;
+              
             }));
 
             await _mediaTypeService.Update(mediaType.Id, newName);
             AnsiConsole.MarkupLine($"[green]Media Type was successfully updated![/]");
+        }
+
+
+        private async Task<ValidationResult> ValidateName(string? name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return ValidationResult.Error("Media Name can't be empty");
+            }
+
+            var tf = async () =>
+            {
+                var res = await _mediaTypeService.GetByName(name.ToUpper());
+                return res == null;
+            };
+            var task2 = tf();
+
+            task2.Wait();
+
+            if (!task2.Result)
+            {
+                return ValidationResult.Error("Media Name must be unique");
+            }
+
+            return ValidationResult.Success();
         }
     }
 }

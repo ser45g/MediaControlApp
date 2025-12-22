@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MediaControlApp": {
+      "commandName": "Project",
+      "commandLineArgs": "media-type add BOOKS"
+    }
+  }
+}
