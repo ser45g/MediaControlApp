@@ -37,16 +37,19 @@
         {
             if (!settings.ShowSelect)
             {
-                if(settings.MediaTypeId == null  ){
-                    bool isValidGuid = Guid.TryParse(settings.MediaTypeId, out Guid res);
-                    if (!isValidGuid)
-                        return ValidationResult.Error("Invalid format for Media Type Id");
+                var mediaTypeIdValidationResult = MediaTypeValidationUtils.ValidateMediaTypeId(settings.MediaTypeId);
 
-                }
-                var task = ValidateName(settings.MediaTypeName);
-                task.Wait();
+                var mediaTypeNameValidationTask = MediaTypeValidationUtils.ValidateName(_mediaTypeService,settings.MediaTypeName);
 
-                return task.Result;
+                mediaTypeNameValidationTask.Wait();
+
+                var mediaTypeNameValidationResult = mediaTypeNameValidationTask.Result;
+
+                if (!mediaTypeIdValidationResult.Successful)
+                    return mediaTypeIdValidationResult;
+
+                if (!mediaTypeNameValidationResult.Successful)
+                    return mediaTypeNameValidationResult;
             }
 
             return base.Validate(context, settings);
@@ -95,7 +98,7 @@
 
             var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(mediaType.Name).Validate(x =>
             {
-                var task = ValidateName(x);
+                var task = MediaTypeValidationUtils.ValidateName(_mediaTypeService, x);
                 task.Wait();
 
                 return !task.Result.Successful;
@@ -107,28 +110,6 @@
         }
 
 
-        private async Task<ValidationResult> ValidateName(string? name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return ValidationResult.Error("Media Name can't be empty");
-            }
-
-            var tf = async () =>
-            {
-                var res = await _mediaTypeService.GetByName(name.ToUpper());
-                return res == null;
-            };
-            var task2 = tf();
-
-            task2.Wait();
-
-            if (!task2.Result)
-            {
-                return ValidationResult.Error("Media Name must be unique");
-            }
-
-            return ValidationResult.Success();
-        }
+        
     }
 }

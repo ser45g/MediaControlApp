@@ -1,16 +1,15 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Application.Services.Interfaces;
+using MediaControlApp.Commands.Authors;
 using MediaControlApp.Domain.Models.Media;
-using MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories;
+
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+
 
 namespace MediaControlApp.Commands.MediaTypes
 {
+    [Description("Update an author")]
     public class UpdateAuthorCommand : AsyncCommand<UpdateAuthorCommand.Settings>
     {
         private readonly AuthorService _authorService;
@@ -22,16 +21,12 @@ namespace MediaControlApp.Commands.MediaTypes
 
         public sealed class Settings : CommandSettings
         {
-            /// <summary>
-            /// Gets or sets the MediaTypeId
-            /// </summary>
+            
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The media type's id to delete if.")]
             public string? AuthorId { get; set; }
 
-            /// <summary>
-            /// Gets or sets the MediaTypeName
-            /// </summary>
+           
             [CommandArgument(0, "[AUTHORNAME]")]
             [Description("The media type name to add. It must be unique")]
             public string? AuthorName { get; set; }
@@ -44,18 +39,37 @@ namespace MediaControlApp.Commands.MediaTypes
             [Description("The media type name to add. It must be unique")]
             public string? Email { get; set; }
 
-            /// <summary>
-            /// Gets or sets a value indicating whether ShowSelect
-            /// </summary>
+            
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
             public bool ShowSelect { get; set; }
         }
 
+        protected override ValidationResult Validate(CommandContext context, Settings settings)
+        {
+            if (!settings.ShowSelect)
+            {
+                var authorIdValidationResult = AuthorValidationUtils.ValidateAuthorId(settings.AuthorId);
+
+                var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.AuthorName);
+
+                authorNameValidationTask.Wait();
+
+                var authorNameValidationResult = authorNameValidationTask.Result;
+
+                if (!authorIdValidationResult.Successful)
+                    return authorIdValidationResult;
+
+                if (!authorNameValidationResult.Successful)
+                    return authorNameValidationResult;
+            }
+
+            return base.Validate(context, settings);
+        }
+
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-
             try
             {
                 if (settings.ShowSelect)
@@ -64,7 +78,7 @@ namespace MediaControlApp.Commands.MediaTypes
                 }
                 else
                 {
-                    await HandleUpdateWithShowSelect(settings.AuthorId, settings.AuthorName, settings.CompanyName, settings.Email);
+                    await HandleUpdateWithShowSelect(settings.AuthorId!, settings.AuthorName!, settings.CompanyName, settings.Email);
                 }
 
             }
@@ -78,25 +92,14 @@ namespace MediaControlApp.Commands.MediaTypes
         }
 
 
-        private async Task HandleUpdateWithShowSelect(string? authorId, string? authorName, string? companyName, string? email)
+        private async Task HandleUpdateWithShowSelect(string authorId, string authorName, string? companyName, string? email)
         {
-            if (authorId != null && authorName != null)
-            {
-                Guid authorIdGuid = Guid.Parse(authorId);
+            Guid authorIdGuid = Guid.Parse(authorId!);
 
-                await _authorService.Update(authorIdGuid, authorName, companyName, email);
-                AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
-            }
-            else
-            {
-                throw new Exception("Media type id and Media type name must be provided");
-            }
+            await _authorService.Update(authorIdGuid, authorName!, companyName, email);
+            AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");           
         }
 
-        /// <summary>
-        /// The HandleRemove
-        /// </summary>
-        /// <returns>The <see cref="Task"/></returns>
         private async Task HandleUpdate()
         {
             var authors = await _authorService.GetAll();
@@ -110,10 +113,12 @@ namespace MediaControlApp.Commands.MediaTypes
 
             var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(author.Name).Validate(x =>
             {
-                if (string.IsNullOrWhiteSpace(x))
-                    return false;
+                var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, x);
+                authorNameValidationTask.Wait();
 
-                return true;
+                var authorNameValidationResult = authorNameValidationTask.Result;
+
+                return authorNameValidationResult.Successful;
             }));
 
             var newCompanyName = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new company name: ").DefaultValue(author.CompanyName));

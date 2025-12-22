@@ -9,7 +9,7 @@ namespace MediaControlApp.Commands.MediaTypes
 {
    
 
-    [Description("Show available media types.")]
+    [Description("Show available authors.")]
     public sealed class ShowAuthorsCommand : AsyncCommand<ShowAuthorsCommand.Settings>
     {
 

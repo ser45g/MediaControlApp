@@ -29,6 +29,23 @@ namespace MediaControlApp.Application.Services
         {
             return await _authorRepo.GetById(id);
         }
+
+        public async Task<Author?> GetByName(string name) { 
+            return await _authorRepo.GetByName(name);
+
+        }
+
+        public async Task<Author?> GetByCompanyName(string companyName)
+        {
+            return await _authorRepo.GetByCompanyName(companyName);
+        }
+
+        public async Task<Author?> GetByEmail(string email)
+        {
+            return await _authorRepo.GetByEmail(email);
+        }
+
+
         public async Task<IEnumerable<Author>> GetAll()
         {
             return await _authorRepo.GetAll();

@@ -45,7 +45,6 @@
                 }
                 else
                 {
-                   
                     await HandleRemoveWithShowSelect(settings.MediaTypeId);
                 }
 
@@ -77,16 +76,19 @@
 
         private async Task HandleRemoveWithShowSelect(string? mediaTypeId)
         {
-            if (mediaTypeId != null)
+
+            var mediaTypeIdValidationResult = MediaTypeValidationUtils.ValidateMediaTypeId(mediaTypeId);
+
+            if (mediaTypeIdValidationResult.Successful)
             {
-                Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
+                Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId!);
 
                 await _mediaTypeService.Remove(mediaTypeIdGuid);
                 AnsiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");
             }
             else
             {
-                throw new Exception("Media type id must be provided");
+                throw new Exception(mediaTypeIdValidationResult.Message);
             }
         }
     }

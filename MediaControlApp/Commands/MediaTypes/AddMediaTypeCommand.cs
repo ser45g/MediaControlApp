@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace MediaControlApp.Commands.MediaTypes
 {
-   
-
     [Description("Add a media type.")]
     public sealed class AddMediaTypeCommand : AsyncCommand<AddMediaTypeCommand.Settings>
     {
@@ -28,27 +26,17 @@ namespace MediaControlApp.Commands.MediaTypes
            
         }
 
- 
-
         protected override  ValidationResult Validate(CommandContext context, Settings settings)
         {
-            if (string.IsNullOrWhiteSpace(settings.MediaTypeName)) {
-                return ValidationResult.Error("Media Name can't be empty");
-            }
+            var mediaTypeNameValidationTask = MediaTypeValidationUtils.ValidateName(_mediaTypeService, settings.MediaTypeName);
 
-            var tf = async () =>
-            {
-                var res = await _mediaTypeService.GetByName(settings.MediaTypeName.ToUpper());
-                return res == null;
-            };
-            var task2 = tf();
+            mediaTypeNameValidationTask.Wait();
 
-            task2.Wait();
+            var mediaTypeNameValidationResult = mediaTypeNameValidationTask.Result;
 
-            if (!task2.Result)
-            {
-                return ValidationResult.Error("Media Name must be unique");
-            }
+            if (!mediaTypeNameValidationResult.Successful)
+                return mediaTypeNameValidationResult;
+
             return base.Validate(context, settings);
         }
   

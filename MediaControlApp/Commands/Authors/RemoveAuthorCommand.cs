@@ -1,6 +1,7 @@
 ﻿namespace MediaControlApp.Commands.MediaTypes
 {
     using MediaControlApp.Application.Services;
+    using MediaControlApp.Commands.Authors;
     using MediaControlApp.Domain.Models.Media;
     using Spectre.Console;
     using Spectre.Console.Cli;
@@ -8,7 +9,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    
+    [Description("Remove an author")]
     public class RemoveAuthorCommand : AsyncCommand<RemoveAuthorCommand.Settings>
     {
         
@@ -33,10 +34,7 @@
             public bool ShowSelect { get; set; }
         }
 
-        /// <summary>
-        /// The HandleRemove
-        /// </summary>
-        /// <returns>The <see cref="Task"/></returns>
+    
         private async Task HandleRemove()
         {
             var authors = await _authorService.GetAll();
@@ -53,33 +51,25 @@
             AnsiConsole.MarkupLine($"[green]Author [[{author.Name}]] was successfully deleted![/]");
         }
 
-        /// <summary>
-        /// The HandleRemoveWithShowSelect
-        /// </summary>
-        /// <param name="authorId">The authorId<see cref="string?"/></param>
-        /// <returns>The <see cref="Task"/></returns>
-        private async Task HandleRemoveWithShowSelect(string? authorId)
+    
+        private async Task HandleRemoveWithShowSelect(string authorId)
         {
-            if (authorId != null)
+            var mediaTypeIdValidationResult = AuthorValidationUtils.ValidateAuthorId(authorId);
+
+            if (mediaTypeIdValidationResult.Successful)
             {
-                Guid authorIdGuid = Guid.Parse(authorId);
+                 Guid authorIdGuid = Guid.Parse(authorId);
 
                 await _authorService.Remove(authorIdGuid);
                 AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
             }
             else
             {
-                throw new Exception("Author id must be provided");
-            }
+                throw new Exception(mediaTypeIdValidationResult.Message);
+            }       
         }
 
-        /// <summary>
-        /// The ExecuteAsync
-        /// </summary>
-        /// <param name="context">The context<see cref="CommandContext"/></param>
-        /// <param name="settings">The settings<see cref="Settings"/></param>
-        /// <param name="cancellationToken">The cancellationToken<see cref="CancellationToken"/></param>
-        /// <returns>The <see cref="Task{int}"/></returns>
+     
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
 

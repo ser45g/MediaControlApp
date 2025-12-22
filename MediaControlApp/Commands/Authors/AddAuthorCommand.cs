@@ -1,4 +1,5 @@
 ﻿using MediaControlApp.Application.Services;
+using MediaControlApp.Commands.Authors;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -33,10 +34,15 @@ namespace MediaControlApp.Commands.MediaTypes
         }
         protected override ValidationResult Validate(CommandContext context, Settings settings)
         {
-            if (string.IsNullOrWhiteSpace(settings.AuthorName))
-            {
-                return ValidationResult.Error("Author name can't be empty");
-            }
+            var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.AuthorName);
+
+            authorNameValidationTask.Wait();
+
+            var authorNameValidationResult = authorNameValidationTask.Result;
+           
+            if (!authorNameValidationResult.Successful)
+                return authorNameValidationResult;
+
             return base.Validate(context, settings);
         }
   
