@@ -23,22 +23,23 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<IEnumerable<Ganre>> GetAll()
         {
-            return await _context.Ganres.ToListAsync();
+            return await _context.Ganres.Include(g=>g.MediaType).ToListAsync();
         }
 
         public async Task<Ganre?> GetById(Guid id)
         {
-            return await _context.Ganres.SingleOrDefaultAsync(a => a.Id == id);
+            return await _context.Ganres.Include(g => g.MediaType).SingleOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<Ganre>> GetByMediaTypeId(Guid mediaTypeId)
         {
-            return await _context.Ganres.Where(g=>g.MediaTypeId==mediaTypeId).ToListAsync();
+
+            return await _context.Ganres.Include(g => g.MediaType).Where(g=>g.MediaTypeId==mediaTypeId).ToListAsync();
         }
 
         public async Task<Ganre?> GetByName(string name)
         {
-            return await _context.Ganres.FirstOrDefaultAsync(g => g.Name == name);
+            return await _context.Ganres.Include(g => g.MediaType).FirstOrDefaultAsync(g => g.Name == name);
 
         }
 

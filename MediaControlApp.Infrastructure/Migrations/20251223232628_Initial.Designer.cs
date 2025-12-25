@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaControlApp.Infrastructure.Migrations
 {
     [DbContext(typeof(MediaDbContext))]
-    [Migration("20251219231847_M2")]
-    partial class M2
+    [Migration("20251223232628_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,15 +32,14 @@ namespace MediaControlApp.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Authors");
                 });
@@ -64,6 +63,9 @@ namespace MediaControlApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MediaTypeId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Ganres");
                 });
@@ -99,6 +101,9 @@ namespace MediaControlApp.Infrastructure.Migrations
 
                     b.HasIndex("GanreId");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Medias");
                 });
 
@@ -113,6 +118,9 @@ namespace MediaControlApp.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("MediaTypes");
                 });

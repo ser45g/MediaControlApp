@@ -47,24 +47,24 @@ namespace MediaControlApp.Commands.MediaTypes
                 {
                     authors = authors.OrderByDescending(x => x.Name);
                 }
-                
-
             }
+
             catch (Exception ex)
             {
                 AnsiConsole.WriteException(ex);
                 return -1;
             }
          
-          
-            AnsiConsole.MarkupLine("[red]Media Types[/]");
-            if (authors.Count() == 0)
+            AnsiConsole.MarkupLine("[red]Authors[/]");
+
+            if (!authors.Any())
             {
                 table.AddEmptyRow();
             }
+
             foreach (var el in authors)
             {
-                table.AddRow(el.Id.ToString(), el.Name, el.CompanyName??" - ", el.Email??" - ");
+                table.AddRow(el.Id.ToString(), el.Name, el.CompanyName ?? " - ", el.Email ?? " - ");
             }
 
             AnsiConsole.Write(table);
@@ -81,7 +81,5 @@ namespace MediaControlApp.Commands.MediaTypes
             [Description("Show authors by Name in an ascending order")]
             public bool IsAscending { get; set; }
         }
-
-        
     }
 }

@@ -6,16 +6,13 @@
     using Spectre.Console;
     using Spectre.Console.Cli;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
 
     [Description("Remove an author")]
     public class RemoveAuthorCommand : AsyncCommand<RemoveAuthorCommand.Settings>
-    {
-        
+    {  
         private readonly AuthorService _authorService;
 
-       
         public RemoveAuthorCommand(AuthorService authorService)
         {
             _authorService = authorService;
@@ -23,7 +20,6 @@
        
         public sealed class Settings : CommandSettings
         {
-          
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The author's id to delete it.")]
             public string? AuthorId { get; set; }
@@ -33,11 +29,15 @@
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
             public bool ShowSelect { get; set; }
         }
-
     
         private async Task HandleRemove()
         {
             var authors = await _authorService.GetAll();
+
+            if (!authors.Any())
+            {
+                throw new Exception("No authors available");
+            }
 
             var author = AnsiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select the author you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(authors).UseConverter(x => x.Name));
 
@@ -48,6 +48,7 @@
             Guid selectedAuthorId = author.Id;
 
             await _authorService.Remove(selectedAuthorId);
+
             AnsiConsole.MarkupLine($"[green]Author [[{author.Name}]] was successfully deleted![/]");
         }
 
@@ -68,11 +69,9 @@
                 throw new Exception(mediaTypeIdValidationResult.Message);
             }       
         }
-
      
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-
             try
             {
                 if (settings.ShowSelect)

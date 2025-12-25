@@ -16,8 +16,7 @@ namespace MediaControlApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: true),
                     CompanyName = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -39,7 +38,7 @@ namespace MediaControlApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Author",
+                name: "Ganres",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -49,9 +48,9 @@ namespace MediaControlApp.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Author", x => x.Id);
+                    table.PrimaryKey("PK_Ganres", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Author_MediaTypes_MediaTypeId",
+                        name: "FK_Ganres_MediaTypes_MediaTypeId",
                         column: x => x.MediaTypeId,
                         principalTable: "MediaTypes",
                         principalColumn: "Id",
@@ -69,29 +68,41 @@ namespace MediaControlApp.Infrastructure.Migrations
                     PublisedDateUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
                     LastConsumedDateUtc = table.Column<DateTime>(type: "TEXT", nullable: true),
                     AuthorId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Rating = table.Column<double>(type: "REAL", nullable: true)
+                    Rating_Value = table.Column<double>(type: "REAL", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medias", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Medias_Author_GanreId",
-                        column: x => x.GanreId,
-                        principalTable: "Author",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Medias_Authors_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Medias_Ganres_GanreId",
+                        column: x => x.GanreId,
+                        principalTable: "Ganres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Author_MediaTypeId",
-                table: "Author",
+                name: "IX_Authors_Name",
+                table: "Authors",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ganres_MediaTypeId",
+                table: "Ganres",
                 column: "MediaTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ganres_Name",
+                table: "Ganres",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medias_AuthorId",
@@ -102,6 +113,18 @@ namespace MediaControlApp.Infrastructure.Migrations
                 name: "IX_Medias_GanreId",
                 table: "Medias",
                 column: "GanreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medias_Title",
+                table: "Medias",
+                column: "Title",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MediaTypes_Name",
+                table: "MediaTypes",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -111,10 +134,10 @@ namespace MediaControlApp.Infrastructure.Migrations
                 name: "Medias");
 
             migrationBuilder.DropTable(
-                name: "Author");
+                name: "Authors");
 
             migrationBuilder.DropTable(
-                name: "Authors");
+                name: "Ganres");
 
             migrationBuilder.DropTable(
                 name: "MediaTypes");

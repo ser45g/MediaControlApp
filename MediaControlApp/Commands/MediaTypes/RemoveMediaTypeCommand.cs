@@ -24,8 +24,8 @@
         {
         
             [CommandArgument(0, "[MEDIATYPEID]")]
-            [Description("The media type's id to delete if.")]
-            public string? MediaTypeId { get; set; }
+            [Description("The media type's id to delete it")]
+            public string? Id { get; set; }
 
          
             [CommandOption("-s|--show-select")]
@@ -45,7 +45,7 @@
                 }
                 else
                 {
-                    await HandleRemoveWithShowSelect(settings.MediaTypeId);
+                    await HandleRemoveWithShowSelect(settings.Id);
                 }
 
             }
@@ -61,6 +61,11 @@
         private async Task HandleRemove()
         {
             var mediaTypes = await _mediaTypeService.GetAll();
+
+            if (!mediaTypes.Any())
+            {
+                throw new Exception("No media types available");
+            }
 
             var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
 

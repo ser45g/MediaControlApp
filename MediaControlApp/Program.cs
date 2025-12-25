@@ -1,5 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Application.Services.Interfaces;
+using MediaControlApp.Commands.Ganres;
+using MediaControlApp.Commands.Medias;
 using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Infrastructure.DataAccess.MediaStore;
 using MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories;
@@ -7,6 +9,9 @@ using MediaControlApp.Infrasturcture;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Spectre.Console;
+
 using Spectre.Console.Cli;
 
 
@@ -30,6 +35,9 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(s =>
     s.AddTransient<MediaTypeService>();
 
     services = s;
+}).ConfigureLogging(builder =>
+{
+    builder.ClearProviders();
 }).Build();
 
 
@@ -70,8 +78,44 @@ app.Configure(config =>
         author.AddCommand<UpdateAuthorCommand>("update");
     });
 
+    config.AddBranch<CommandSettings>("ganre", ganre =>
+    {
+        ganre.SetDescription("Working with ganres");
+        ganre.AddCommand<AddGanreCommand>("add");
+        ganre.AddCommand<RemoveGanreCommand>("remove");
+        ganre.AddCommand<ShowGanresCommand>("show");
+        ganre.AddCommand<UpdateGanreCommand>("update");
+    });
+
+    config.AddBranch<CommandSettings>("media", media =>
+    {
+        media.SetDescription("Working with medias");
+        media.AddCommand<AddMediaCommand>("add");
+        media.AddCommand<RemoveMediaCommand>("remove");
+        media.AddCommand<ShowMediasCommand>("show");
+        media.AddCommand<UpdateMediaCommand>("update");
+    });
+
+ 
+
+
 });
 
 _host.Start();
+
+
+Console.CancelKeyPress+= (sender, e) =>
+{
+    e.Cancel = true; // Prevent default behavior of terminating immediately
+    AnsiConsole.MarkupLine("[yellow]\nCaught CTRL+C. Shutting down gracefully.[/]");
+
+    // Exit the application
+    Environment.Exit(0); // Pass appropriate exit code (0 means success).
+};
+
+
+
 await app.RunAsync(args);
+
+
 

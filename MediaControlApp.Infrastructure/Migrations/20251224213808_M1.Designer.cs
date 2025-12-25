@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaControlApp.Infrastructure.Migrations
 {
     [DbContext(typeof(MediaDbContext))]
-    [Migration("20251219215920_Initial")]
-    partial class Initial
+    [Migration("20251224213808_M1")]
+    partial class M1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,17 +32,16 @@ namespace MediaControlApp.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors", (string)null);
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("MediaControlApp.Domain.Models.Media.Ganre", b =>
@@ -65,7 +64,10 @@ namespace MediaControlApp.Infrastructure.Migrations
 
                     b.HasIndex("MediaTypeId");
 
-                    b.ToTable("Author", (string)null);
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Ganres");
                 });
 
             modelBuilder.Entity("MediaControlApp.Domain.Models.Media.Media", b =>
@@ -99,6 +101,9 @@ namespace MediaControlApp.Infrastructure.Migrations
 
                     b.HasIndex("GanreId");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Medias");
                 });
 
@@ -114,7 +119,10 @@ namespace MediaControlApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaTypes", (string)null);
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("MediaTypes");
                 });
 
             modelBuilder.Entity("MediaControlApp.Domain.Models.Media.Ganre", b =>
@@ -148,8 +156,7 @@ namespace MediaControlApp.Infrastructure.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<double>("Value")
-                                .HasColumnType("REAL")
-                                .HasColumnName("Rating");
+                                .HasColumnType("REAL");
 
                             b1.HasKey("MediaId");
 

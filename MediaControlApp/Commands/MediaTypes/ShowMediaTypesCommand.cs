@@ -36,7 +36,6 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             var table = new Table().RoundedBorder();
            
-         
             table.AddColumn("[red]Id[/]");
             table.AddColumn("[green]Name[/]");
             table.ShowRowSeparators();
@@ -57,10 +56,7 @@ namespace MediaControlApp.Commands.MediaTypes
                 else
                 {
                     mediaTypes = mediaTypes.OrderByDescending(x => x.Name);
-                }
-
-               
-
+                }  
             }
             catch (Exception ex)
             {
@@ -69,7 +65,7 @@ namespace MediaControlApp.Commands.MediaTypes
             }
         
             AnsiConsole.MarkupLine("[red]Media Types[/]");
-            if (mediaTypes.Count() == 0)
+            if (!mediaTypes.Any())
             {
                 table.AddEmptyRow();
             }

@@ -1,5 +1,5 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.MediaTypes;
+using MediaControlApp.Commands.Ganres;
 using MediaControlApp.Domain.Models.Media;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -8,16 +8,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace MediaControlApp.Commands.Ganres
+namespace MediaControlApp.Commands.Medias
 {
-    [Description("Show available ganres")]
-    public class ShowGanresCommand : AsyncCommand<ShowGanresCommand.Settings>
+    [Description("Show available medias")]
+    public class ShowMediasCommand : AsyncCommand<ShowMediasCommand.Settings>
     {
-        private readonly GanreService _ganreService;
 
-        public ShowGanresCommand(GanreService ganreService)
+        private readonly MediaService _mediaService;
+
+        public ShowMediasCommand(MediaService mediaService)
         {
-            _ganreService = ganreService;
+            _mediaService = mediaService;
         }
 
         protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
@@ -25,50 +26,51 @@ namespace MediaControlApp.Commands.Ganres
             var table = new Table().RoundedBorder();
 
             table.AddColumn("[red]Id[/]");
-            table.AddColumn("[green]Name[/]");
+            table.AddColumn("[green]Title[/]");
             table.AddColumn("[green]Description[/]");
-            table.AddColumn("[green]Media Type Id[/]");
-            table.AddColumn("[green]Media Type Name[/]");
+            table.AddColumn("[green]Ganre Id[/]");
+            table.AddColumn("[green]Ganre Name[/]");
+            table.AddColumn("[green]Author Id[/]");
+            table.AddColumn("[green]Author Name[/]");
+            table.AddColumn("[green]Published[/]");
+            table.AddColumn("[green]Last consumed[/]");
+            
             table.ShowRowSeparators();
 
-            IEnumerable<Ganre> ganres = Enumerable.Empty<Ganre>();
+            IEnumerable<Media> medias = Enumerable.Empty<Media>();
 
             try
             {
-                ganres = await _ganreService.GetAll();
-
+                medias = await _mediaService.GetAll();
                 if (settings.Limit != null)
                 {
-                    ganres = ganres.Take(settings.Limit.Value);
+                    medias = medias.Take(settings.Limit.Value);
                 }
 
                 if (settings.IsAscending)
                 {
-                    ganres = ganres.OrderBy(x => x.Name);
+                    medias = medias.OrderBy(x => x.Title);
                 }
                 else
                 {
-                    ganres = ganres.OrderByDescending(x => x.Name);
+                    medias = medias.OrderByDescending(x => x.Title);
                 }
-
-
             }
+
             catch (Exception ex)
             {
                 AnsiConsole.WriteException(ex);
                 return -1;
             }
 
-
-            AnsiConsole.MarkupLine("[red]Ganres[/]");
-
-            if (!ganres.Any())
+            AnsiConsole.MarkupLine("[red]Medias[/]");
+            if (!medias.Any())
             {
                 table.AddEmptyRow();
             }
-            foreach (var el in ganres)
+            foreach (var el in medias)
             {
-                table.AddRow(el.Id.ToString(), el.Name, el.Description ?? " - ",el.MediaTypeId.ToString(), el.MediaType?.Name ?? " - ");
+                table.AddRow(el.Id.ToString(), el.Title, el.Description ?? " - ", el.GanreId.ToString(), el.Ganre?.Name ?? " - ", el.AuthorId.ToString(), el.Author?.Name?? " - ", el.PublisedDateUtc.ToShortDateString(), el.LastConsumedDateUtc?.ToShortDateString()??" - ");
             }
 
             AnsiConsole.Write(table);

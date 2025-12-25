@@ -25,7 +25,7 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<IEnumerable<Media>> GetAll()
         {
-            return await _context.Medias.ToListAsync();
+            return await _context.Medias.Include(m=>m.Ganre).Include(m=>m.Author).ToListAsync();
         }
 
         public async Task<IEnumerable<Media>> GetByAuthorId(Guid authorId)

@@ -9,6 +9,6 @@
 
         public string? CompanyName {  get;  set; } = string.Empty;
 
-        public IEnumerable<Media> Medias { get; set; } = Enumerable.Empty<Media>();
+        public ICollection<Media>? Medias { get; set; } 
     }
 }

@@ -22,8 +22,6 @@ namespace MediaControlApp.Domain.Models.Media
         public Guid AuthorId { get; set; }
         public Author? Author { get; set; }
 
- 
-
         public Rating? Rating { get; set; }
 
         

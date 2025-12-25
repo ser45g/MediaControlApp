@@ -17,7 +17,7 @@ namespace MediaControlApp.Commands.Authors
 
             var checkNameIsUniqueFunc = async () =>
             {
-                var res = await authorService.GetByName(name.ToUpper());
+                var res = await authorService.GetByName(name);
                 return res == null;
             };
             var checkNameIsUniqueTask = checkNameIsUniqueFunc();

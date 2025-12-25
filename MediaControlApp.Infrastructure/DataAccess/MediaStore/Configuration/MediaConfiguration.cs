@@ -16,7 +16,9 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Configuration
             modelBuilder.Property(x=>x.Title).IsRequired();
 
             modelBuilder.HasOne(x => x.Author).WithMany(y => y.Medias).HasForeignKey(x=>x.AuthorId);
+
             modelBuilder.HasOne(x => x.Ganre).WithMany(y => y.Medias).HasForeignKey(x => x.GanreId);
+
             modelBuilder.OwnsOne(x => x.Rating, o =>
             {
                 o.Property(x => x.Value);

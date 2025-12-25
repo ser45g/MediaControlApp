@@ -23,23 +23,22 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             
             [CommandArgument(0, "[AUTHORID]")]
-            [Description("The media type's id to delete if.")]
-            public string? AuthorId { get; set; }
+            [Description("The media type's id to delete it")]
+            public string? Id { get; set; }
 
            
             [CommandArgument(0, "[AUTHORNAME]")]
-            [Description("The media type name to add. It must be unique")]
-            public string? AuthorName { get; set; }
+            [Description("The new name. It must be unique")]
+            public string? Name { get; set; }
 
             [CommandArgument(0, "[COMPANYNAME]")]
-            [Description("The media type name to add. It must be unique")]
+            [Description("The new description")]
             public string? CompanyName { get; set; }
 
             [CommandArgument(0, "[EMAIL]")]
-            [Description("The media type name to add. It must be unique")]
+            [Description("The new email")]
             public string? Email { get; set; }
 
-            
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
@@ -50,9 +49,9 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             if (!settings.ShowSelect)
             {
-                var authorIdValidationResult = AuthorValidationUtils.ValidateAuthorId(settings.AuthorId);
+                var authorIdValidationResult = AuthorValidationUtils.ValidateAuthorId(settings.Id);
 
-                var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.AuthorName);
+                var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.Name);
 
                 authorNameValidationTask.Wait();
 
@@ -78,9 +77,8 @@ namespace MediaControlApp.Commands.MediaTypes
                 }
                 else
                 {
-                    await HandleUpdateWithShowSelect(settings.AuthorId!, settings.AuthorName!, settings.CompanyName, settings.Email);
+                    await HandleUpdateWithShowSelect(settings.Id!, settings.Name!, settings.CompanyName, settings.Email);
                 }
-
             }
             catch (Exception ex)
             {
@@ -90,7 +88,6 @@ namespace MediaControlApp.Commands.MediaTypes
 
             return 0;
         }
-
 
         private async Task HandleUpdateWithShowSelect(string authorId, string authorName, string? companyName, string? email)
         {
@@ -103,6 +100,11 @@ namespace MediaControlApp.Commands.MediaTypes
         private async Task HandleUpdate()
         {
             var authors = await _authorService.GetAll();
+            
+            if (!authors.Any())
+            {
+                throw new Exception("No authors available");
+            }
 
             var author = AnsiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select the author you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(authors).UseConverter(x => x.Name));
 
@@ -121,9 +123,9 @@ namespace MediaControlApp.Commands.MediaTypes
                 return authorNameValidationResult.Successful;
             }));
 
-            var newCompanyName = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new company name: ").DefaultValue(author.CompanyName));
+            var newCompanyName = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new company name: ").DefaultValue(author.CompanyName).AllowEmpty());
 
-            var newEmail = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new email: ").DefaultValue(author.Email));
+            var newEmail = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new email: ").DefaultValue(author.Email).AllowEmpty());
 
             await _authorService.Update(author.Id, newName, companyName:newCompanyName, email:newEmail);
             AnsiConsole.MarkupLine($"[green]Author was successfully updated![/]");

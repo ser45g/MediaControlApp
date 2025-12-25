@@ -29,11 +29,12 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration<Author>(new AuthorConfiguration());
-            modelBuilder.ApplyConfiguration(new GanreConfiguration());
-            modelBuilder.ApplyConfiguration(new MediaTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new MediaConfiguration());
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
+            modelBuilder.ApplyConfiguration(new MediaTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new GanreConfiguration());
+            modelBuilder.ApplyConfiguration(new MediaConfiguration());
+
         }
     }
 }

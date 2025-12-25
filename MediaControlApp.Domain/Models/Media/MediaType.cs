@@ -7,7 +7,7 @@
         public Guid Id { get;set; }
         public string Name { get;set; } = string.Empty;
 
-        public IEnumerable<Ganre> Ganres { get; set; } = [];
+        public ICollection<Ganre>? Ganres { get; set; }
   
     }
 }

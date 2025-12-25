@@ -16,25 +16,23 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             _authorService = authorService;
         }
-
         public sealed class Settings : CommandSettings
         {
             [CommandArgument(0, "<AUTHORNAME>")]
-            
             [Description("The auhtor's name")]
-            public required string AuthorName { get; set; }
+            public required string Name { get; set; }
 
             [CommandArgument(1, "[COMPANYNAME]")]
-            [Description("The media type to add. It must be unique")]
+            [Description("The company name")]
             public string? CompanyName { get; set; }
 
             [CommandArgument(2, "[EMAIL]")]
-            [Description("The media type to add. It must be unique")]
+            [Description("The author's email")]
             public string? Email { get; set; }
         }
         protected override ValidationResult Validate(CommandContext context, Settings settings)
         {
-            var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.AuthorName);
+            var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.Name);
 
             authorNameValidationTask.Wait();
 
@@ -50,7 +48,7 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             try
             {
-                await _authorService.Add(settings.AuthorName, settings.CompanyName, settings.Email);
+                await _authorService.Add(settings.Name, settings.CompanyName, settings.Email);
                 AnsiConsole.MarkupLine($"[green]Author was successfully added![/]");
             }
             catch (Exception ex)

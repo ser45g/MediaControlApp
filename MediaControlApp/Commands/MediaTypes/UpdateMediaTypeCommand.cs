@@ -22,11 +22,11 @@
         {
             [CommandArgument(0, "[MEDIATYPEID]")]
             [Description("The media type's id to delete if.")]
-            public string? MediaTypeId { get; set; }
+            public string? Id { get; set; }
 
             [CommandArgument(0, "[MEDIATYPENAME]")]
             [Description("The media type name to add. It must be unique")]
-            public string? MediaTypeName { get; set; }
+            public string? Name { get; set; }
 
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
@@ -37,9 +37,9 @@
         {
             if (!settings.ShowSelect)
             {
-                var mediaTypeIdValidationResult = MediaTypeValidationUtils.ValidateMediaTypeId(settings.MediaTypeId);
+                var mediaTypeIdValidationResult = MediaTypeValidationUtils.ValidateMediaTypeId(settings.Id);
 
-                var mediaTypeNameValidationTask = MediaTypeValidationUtils.ValidateName(_mediaTypeService,settings.MediaTypeName);
+                var mediaTypeNameValidationTask = MediaTypeValidationUtils.ValidateName(_mediaTypeService,settings.Name);
 
                 mediaTypeNameValidationTask.Wait();
 
@@ -66,7 +66,7 @@
                 }
                 else
                 {
-                    await HandleUpdateWithShowSelect(settings.MediaTypeId!, settings.MediaTypeName!);
+                    await HandleUpdateWithShowSelect(settings.Id, settings.Name);
                 }
             }
             catch (Exception ex)
@@ -79,15 +79,20 @@
 
         private async Task HandleUpdateWithShowSelect(string mediaTypeId, string mediaTypeName)
         {
-                Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
+            Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
-                await _mediaTypeService.Update(mediaTypeIdGuid, mediaTypeName);
-                AnsiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");      
+            await _mediaTypeService.Update(mediaTypeIdGuid, mediaTypeName);
+            AnsiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");      
         }
 
         private async Task HandleUpdate()
         {
             var mediaTypes = await _mediaTypeService.GetAll();
+
+            if (!mediaTypes.Any())
+            {
+                throw new Exception("No media types available");
+            }
 
             var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
 
@@ -107,9 +112,6 @@
 
             await _mediaTypeService.Update(mediaType.Id, newName);
             AnsiConsole.MarkupLine($"[green]Media Type was successfully updated![/]");
-        }
-
-
-        
+        }      
     }
 }

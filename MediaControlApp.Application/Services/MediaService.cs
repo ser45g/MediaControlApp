@@ -32,6 +32,11 @@ namespace MediaControlApp.Application.Services
             return await _mediaRepo.GetAll();
         }
 
+        public async Task<Media?> GetByTitle(string title)
+        {
+            return await _mediaRepo.GetByTitle(title);
+        }
+
         public async Task<IEnumerable<Media>> GetByAuthorId(Guid authorId)
         {
             return await _mediaRepo.GetByAuthorId(authorId); 

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaControlApp.Infrastructure.Migrations
 {
     [DbContext(typeof(MediaDbContext))]
-    [Migration("20251221104452_M3")]
+    [Migration("20251224220006_M3")]
     partial class M3
     {
         /// <inheritdoc />
@@ -38,6 +38,9 @@ namespace MediaControlApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Authors");
                 });
 
@@ -60,6 +63,9 @@ namespace MediaControlApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MediaTypeId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Ganres");
                 });
@@ -95,6 +101,9 @@ namespace MediaControlApp.Infrastructure.Migrations
 
                     b.HasIndex("GanreId");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Medias");
                 });
 
@@ -109,6 +118,9 @@ namespace MediaControlApp.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("MediaTypes");
                 });
