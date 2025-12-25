@@ -30,28 +30,28 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<IEnumerable<Media>> GetByAuthorId(Guid authorId)
         {
-            return await _context.Medias.Where(media => media.AuthorId == authorId).ToListAsync();
+            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.AuthorId == authorId).ToListAsync();
         }
 
         public async Task<IEnumerable<Media>> GetByGanreId(Guid ganreId)
         {
-            return await _context.Medias.Where(media => media.GanreId == ganreId).ToListAsync();
+            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.GanreId == ganreId).ToListAsync();
         }
 
         public async Task<Media?> GetById(Guid id)
         {
-            return await _context.Medias.Where(media => media.Id == id).FirstOrDefaultAsync();
+            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Media>> GetByMediaTypeId(Guid mediaTypeId)
         {
-            return await _context.Medias.Where(m=>m.Ganre!=null? m.Ganre.MediaTypeId == mediaTypeId:false).ToListAsync();
+            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(m=> m.Ganre!=null && m.Ganre.MediaTypeId == mediaTypeId).ToListAsync();
         }
 
         public async Task<Media?> GetByTitle(string title)
         {
 
-            return await _context.Medias.Where(media => media.Title == title).FirstOrDefaultAsync();
+            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.Title == title).FirstOrDefaultAsync();
         }
 
         public async Task<bool> Rate(Guid id, Rating rating)
