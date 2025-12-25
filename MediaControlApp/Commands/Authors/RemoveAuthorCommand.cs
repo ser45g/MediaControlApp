@@ -3,6 +3,7 @@
     using MediaControlApp.Application.Services;
     using MediaControlApp.Commands.Authors;
     using MediaControlApp.Domain.Models.Media;
+    using MediaControlApp.SharedSettings;
     using Spectre.Console;
     using Spectre.Console.Cli;
     using System;
@@ -18,16 +19,12 @@
             _authorService = authorService;
         }
        
-        public sealed class Settings : CommandSettings
+        public sealed class Settings : SelectableSettings
         {
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The author's id to delete it.")]
             public string? AuthorId { get; init; }
 
-            [CommandOption("-s|--show-select")]
-            [DefaultValue(false)]
-            [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; init; }
         }
     
         private async Task HandleRemove()

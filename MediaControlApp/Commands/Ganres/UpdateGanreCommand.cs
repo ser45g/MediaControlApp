@@ -2,6 +2,7 @@
 using MediaControlApp.Commands.Authors;
 using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Domain.Models.Media;
+using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System;
@@ -23,28 +24,12 @@ namespace MediaControlApp.Commands.Ganres
             _mediaTypeService = mediaTypeService;
         }
 
-        public sealed class Settings : CommandSettings
+        public sealed class Settings : GanreSettings
         {
             [CommandArgument(0, "[GANREID]")]
             [Description("The ganre's id to delete.")]
             public string? GanreId { get; init; }
 
-            [CommandArgument(0, "[GANRENAME]")]
-            [Description("The ganre name to add. It must be unique")]
-            public string? Name { get; init; }
-
-            [CommandArgument(0, "[MEDIATYPEID]")]
-            [Description("The ganre's media type id")]
-            public string? MediaTypeId { get; init; }
-
-            [CommandArgument(0, "[DESCRIPTION]")]
-            [Description("The description of the specified ganre")]
-            public string? Description { get; init; }
-
-            [CommandOption("-s|--show-select")]
-            [DefaultValue(false)]
-            [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; init; }
         }
 
         protected override ValidationResult Validate(CommandContext context, Settings settings)

@@ -1,5 +1,6 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Domain.Models.Media;
+using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ namespace MediaControlApp.Commands.MediaTypes
    
 
     [Description("Show available authors.")]
-    public sealed class ShowAuthorsCommand : AsyncCommand<ShowAuthorsCommand.Settings>
+    public sealed class ShowAuthorsCommand : AsyncCommand<ShowElementsSettings>
     {
 
         private readonly AuthorService _authorService;
@@ -20,7 +21,7 @@ namespace MediaControlApp.Commands.MediaTypes
             _authorService = authorService;
         }
 
-        protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
+        protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)
         {
             var table = new Table().RoundedBorder(); 
          
@@ -71,15 +72,6 @@ namespace MediaControlApp.Commands.MediaTypes
             return 0;
         }
 
-        public sealed class Settings : CommandSettings
-        {
-            [CommandOption("--limit <LIMIT>")]
-            [Description("How many elements you want to see")]
-            public int? Limit { get; init; }
-
-            [CommandOption("--ascending")]
-            [Description("Show authors by Name in an ascending order")]
-            public bool IsAscending { get; init; }
-        }
+     
     }
 }

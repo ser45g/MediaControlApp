@@ -2,6 +2,7 @@
 using MediaControlApp.Commands.Ganres;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.Domain.Models.Media.ValueObjects;
+using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System;
@@ -12,7 +13,7 @@ using System.Text;
 namespace MediaControlApp.Commands.Medias
 {
     [Description("Add a media")]
-    public class AddMediaCommand : AsyncCommand<AddMediaCommand.Settings>
+    public class AddMediaCommand : AsyncCommand<MediaSettings>
     {
         private readonly GanreService _ganreService;
         private readonly MediaService _mediaService;
@@ -25,44 +26,9 @@ namespace MediaControlApp.Commands.Medias
             _authorService = authorService;
         }
 
-        public sealed class Settings : CommandSettings
-        {
-            [CommandArgument(0, "[MEDIATITLE]")]
-            [Description("The media's title. It must be unique")]
-            public string? Title { get; init; }
+       
 
-            [CommandArgument(0, "[GANREID]")]
-            [Description("The ganre's id")]
-            public string? GanreId { get; init; }
-
-            [CommandArgument(0, "[AUTHORID]")]
-            [Description("The author's id")]
-            public string? AuthorId { get; init; }
-
-            [CommandArgument(0, "[DESCRIPTION]")]
-            [Description("The description")]
-            public string? Description { get; init; }
-
-            [CommandArgument(0, "[PUBLISHEDDATE]")]
-            [Description("The publicashion date of the specified ganre")]
-            public string? PublishedDate { get; init; }
-
-            [CommandArgument(0, "[LASTCONSUMEDDATE]")]
-            [Description("The date the specified media was consumed")]
-            public string? LastConsumedDateUtc { get; init; }
-
-            [CommandArgument(0, "[RATING]")]
-            [Description("The rating of a media")]
-            public string? Rating { get; init; }
-
-            [CommandOption("-s|--show-select")]
-            [DefaultValue(false)]
-            [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; init; }
-
-        }
-
-        protected override ValidationResult Validate(CommandContext context, Settings settings)
+        protected override ValidationResult Validate(CommandContext context, MediaSettings settings)
         {
             if (!settings.ShowSelect)
             {
@@ -80,7 +46,7 @@ namespace MediaControlApp.Commands.Medias
         }
 
 
-        protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
+        protected async override Task<int> ExecuteAsync(CommandContext context, MediaSettings settings, CancellationToken cancellationToken)
         {
             try
             {

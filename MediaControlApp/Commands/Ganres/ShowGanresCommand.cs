@@ -1,6 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Domain.Models.Media;
+using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System;
@@ -11,7 +12,7 @@ using System.Text;
 namespace MediaControlApp.Commands.Ganres
 {
     [Description("Show available ganres")]
-    public class ShowGanresCommand : AsyncCommand<ShowGanresCommand.Settings>
+    public class ShowGanresCommand : AsyncCommand<ShowElementsSettings>
     {
         private readonly GanreService _ganreService;
 
@@ -20,7 +21,7 @@ namespace MediaControlApp.Commands.Ganres
             _ganreService = ganreService;
         }
 
-        protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
+        protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)
         {
             var table = new Table().RoundedBorder();
 
@@ -75,17 +76,6 @@ namespace MediaControlApp.Commands.Ganres
             return 0;
         }
 
-        public sealed class Settings : CommandSettings
-        {
-            [CommandOption("--limit <LIMIT>")]
-            [Description("How many elements you want to see")]
-            public int? Limit { get; init; }
-
-            [CommandOption("--ascending")]
-            [Description("Show authors by Name in an ascending order")]
-            public bool IsAscending { get; init; }
-        }
-
-
+       
     }
 }

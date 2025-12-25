@@ -26,7 +26,7 @@ namespace MediaControlApp.Commands.MediaTypes
             [Description("The company name")]
             public string? CompanyName { get; init; }
 
-            [CommandArgument(2, "[EMAIL]")]
+            [CommandArgument(1, "[EMAIL]")]
             [Description("The author's email")]
             public string? Email { get; init; }
         }

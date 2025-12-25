@@ -1,6 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
+using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ namespace MediaControlApp.Commands.MediaTypes
    
 
     [Description("Show available media types.")]
-    public sealed class ShowMediaTypesCommand : AsyncCommand<ShowMediaTypesCommand.Settings>
+    public sealed class ShowMediaTypesCommand : AsyncCommand<ShowElementsSettings>
     {
 
         private readonly MediaTypeService _mediaTypeService;
@@ -18,21 +19,9 @@ namespace MediaControlApp.Commands.MediaTypes
         public ShowMediaTypesCommand(MediaTypeService mediaTypeService)
         {
             _mediaTypeService = mediaTypeService;
-        }
+        }    
 
-        public sealed class Settings : CommandSettings
-        {
-            [CommandOption("--limit <LIMIT>")]
-            [Description("How many elements you want to see")]
-            public int? Limit { get; init; }
-
-            [CommandOption("--ascending")]
-            [Description("Show media types in an ascending order")]
-            public bool IsAscending { get; init; }
-        }
-    
-
-        protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
+        protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)
         {
             var table = new Table().RoundedBorder();
            

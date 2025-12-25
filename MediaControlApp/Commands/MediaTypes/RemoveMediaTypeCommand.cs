@@ -2,6 +2,7 @@
 {
     using MediaControlApp.Application.Services;
     using MediaControlApp.Domain.Models.Media;
+    using MediaControlApp.SharedSettings;
     using Spectre.Console;
     using Spectre.Console.Cli;
     using System;
@@ -20,18 +21,13 @@
         }
 
     
-        public sealed class Settings : CommandSettings
+        public sealed class Settings : SelectableSettings
         {
         
             [CommandArgument(0, "[MEDIATYPEID]")]
             [Description("The media type's id to delete it")]
             public string? Id { get; init; }
 
-         
-            [CommandOption("-s|--show-select")]
-            [DefaultValue(false)]
-            [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; init; }
         }
 
 
