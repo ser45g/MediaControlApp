@@ -1,13 +1,8 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.Ganres;
-using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace MediaControlApp.Commands.Medias
 {
@@ -35,34 +30,24 @@ namespace MediaControlApp.Commands.Medias
             table.AddColumn("[green]Author Name[/]");
             table.AddColumn("[green]Published[/]");
             table.AddColumn("[green]Last consumed[/]");
-            
+
             table.ShowRowSeparators();
 
-            IEnumerable<Media> medias = Enumerable.Empty<Media>();
-
-            try
+            var medias = await _mediaService.GetAll();
+            if (settings.Limit != null)
             {
-                medias = await _mediaService.GetAll();
-                if (settings.Limit != null)
-                {
-                    medias = medias.Take(settings.Limit.Value);
-                }
-
-                if (settings.IsAscending)
-                {
-                    medias = medias.OrderBy(x => x.Title);
-                }
-                else
-                {
-                    medias = medias.OrderByDescending(x => x.Title);
-                }
+                medias = medias.Take(settings.Limit.Value);
             }
 
-            catch (Exception ex)
+            if (settings.IsAscending)
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                medias = medias.OrderBy(x => x.Title);
             }
+            else
+            {
+                medias = medias.OrderByDescending(x => x.Title);
+            }
+
 
             AnsiConsole.MarkupLine("[red]Medias[/]");
             if (!medias.Any())
@@ -71,12 +56,12 @@ namespace MediaControlApp.Commands.Medias
             }
             foreach (var el in medias)
             {
-                table.AddRow(el.Id.ToString(), el.Title, el.Description ?? " - ", el.GanreId.ToString(), el.Ganre?.Name ?? " - ", el.AuthorId.ToString(), el.Author?.Name?? " - ", el.PublisedDateUtc.ToShortDateString(), el.LastConsumedDateUtc?.ToShortDateString()??" - ");
+                table.AddRow(el.Id.ToString(), el.Title, el.Description ?? " - ", el.GanreId.ToString(), el.Ganre?.Name ?? " - ", el.AuthorId.ToString(), el.Author?.Name ?? " - ", el.PublisedDateUtc.ToShortDateString(), el.LastConsumedDateUtc?.ToShortDateString() ?? " - ");
             }
 
             AnsiConsole.Write(table);
             return 0;
         }
-     
+
     }
 }

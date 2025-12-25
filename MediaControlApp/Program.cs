@@ -96,7 +96,16 @@ app.Configure(config =>
         media.AddCommand<UpdateMediaCommand>("update");
     });
 
- 
+    app.Configure(config =>
+    {
+        config.SetExceptionHandler((ex, resolver) =>
+        {
+            AnsiConsole.WriteException(ex, ExceptionFormats.NoStackTrace|ExceptionFormats.ShortenEverything);
+
+            // Return specific exit codes based on exception type
+            return 1;
+        });
+    });
 
 
 });

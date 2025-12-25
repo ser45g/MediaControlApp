@@ -1,13 +1,9 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace MediaControlApp.Commands.Ganres
 {
@@ -34,22 +30,14 @@ namespace MediaControlApp.Commands.Ganres
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            try
-            {
-                if (settings.ShowSelect)
-                {
-                    await HandleRemove();
-                }
-                else
-                {
-                    await HandleRemoveWithShowSelect(settings.GanreId);
-                }
 
-            }
-            catch (Exception ex)
+            if (settings.ShowSelect)
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                await HandleRemove();
+            }
+            else
+            {
+                await HandleRemoveWithShowSelect(settings.GanreId);
             }
 
             return 0;

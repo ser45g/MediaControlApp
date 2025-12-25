@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MediaControlApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a5b6d6cb14a7f327cf5857643a4dfbd5641db53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8582f95bea8062a949f4b2b25916aaac707ddddc")]
 [assembly: System.Reflection.AssemblyProductAttribute("MediaControlApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MediaControlApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

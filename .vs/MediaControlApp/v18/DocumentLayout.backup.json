@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\HP\\Desktop\\MediaControlApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\medias\\updatemediacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\medias\\updatemediacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\updatemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\updatemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\showmediatypescommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\showmediatypescommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\removemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\removemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\mediatypevalidationutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\mediatypevalidationutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\addmediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\addmediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\medias\\addmediacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,18 +63,6 @@
       "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\authors\\updateauthorcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\updatemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\updatemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\addmediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\addmediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\removemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\removemediatypecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\authors\\removeauthorcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\authors\\removeauthorcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -61,10 +73,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\medias\\removemediacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\medias\\removemediacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\mediatypevalidationutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\mediatypevalidationutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\sharedsettings\\showelementssettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -81,10 +89,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\medias\\showmediascommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\medias\\showmediascommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\mediatypes\\showmediatypescommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\commands\\mediatypes\\showmediatypescommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\commands\\medias\\mediavalidationutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -161,10 +165,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\Migrations\\20251224215318_M2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MediaControlApp.Infrastructure\\Migrations\\20251224215318_M2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|c:\\users\\hp\\desktop\\mediacontrolapp\\mediacontrolapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{18BCCE2D-C42D-46FA-BFCB-51C9D24E9E19}|MediaControlApp\\MediaControlApp.csproj|solutionrelative:mediacontrolapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\Migrations\\20251224213808_M1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -301,72 +301,98 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MediaSettings.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-25T20:15:52.036Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AddGanreCommand.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAkwDIAAABdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-22T12:31:40.54Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ShowGanresCommand.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAABIAAAA7AAAAAAAAAA==",
+              "Title": "RemoveMediaTypeCommand.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAkwC4AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-22T12:32:21.178Z",
+              "WhenOpened": "2025-12-20T18:29:16.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ShowMediaTypesCommand.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAkwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T20:51:49.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UpdateMediaTypeCommand.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAuwEAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-21T10:50:28.921Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AddMediaCommand.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
-              "ViewState": "AgIAAIIAAAAAAAAAAAAAADAAAABVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-22T20:21:23.346Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "UpdateMediaCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\UpdateMediaCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\UpdateMediaCommand.cs",
               "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\UpdateMediaCommand.cs",
               "RelativeToolTip": "MediaControlApp\\Commands\\Medias\\UpdateMediaCommand.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAUwB8AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAA0wB0AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-22T20:22:03.326Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Program.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Program.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Program.cs",
+              "RelativeToolTip": "MediaControlApp\\Program.cs",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAAwGEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T16:21:27.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MediaTypeValidationUtils.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAUwDAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T13:49:43.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "AddMediaTypeCommand.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAUwCsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T20:39:19.07Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "GanreSettings.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\GanreSettings.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\GanreSettings.cs",
@@ -379,7 +405,59 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AddMediaCommand.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\Medias\\AddMediaCommand.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAAADAAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T20:21:23.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ShowGanresCommand.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\Ganres\\ShowGanresCommand.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAABIAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:32:21.178Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AddGanreCommand.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\Ganres\\AddGanreCommand.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAkwDIAAABdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:31:40.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "MediaSettings.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
+              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
+              "RelativeToolTip": "MediaControlApp\\Commands\\Medias\\MediaSettings.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-25T20:15:52.036Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "UpdateAuthorCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Authors\\UpdateAuthorCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Authors\\UpdateAuthorCommand.cs",
@@ -392,7 +470,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "UpdateGanreCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\UpdateGanreCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\UpdateGanreCommand.cs",
@@ -405,46 +483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "UpdateMediaTypeCommand.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\UpdateMediaTypeCommand.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAAB0AAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-21T10:50:28.921Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AddMediaTypeCommand.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\AddMediaTypeCommand.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAkwBUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T20:39:19.07Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "RemoveMediaTypeCommand.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\RemoveMediaTypeCommand.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T18:29:16.58Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "AddAuthorCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Authors\\AddAuthorCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Authors\\AddAuthorCommand.cs",
@@ -457,7 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "RemoveAuthorCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Authors\\RemoveAuthorCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Authors\\RemoveAuthorCommand.cs",
@@ -470,7 +509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "RemoveGanreCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\RemoveGanreCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\RemoveGanreCommand.cs",
@@ -483,7 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "RemoveMediaCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\RemoveMediaCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\RemoveMediaCommand.cs",
@@ -496,20 +535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "MediaTypeValidationUtils.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\MediaTypeValidationUtils.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAAADAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-22T13:49:43.125Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "ShowElementsSettings.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\SharedSettings\\ShowElementsSettings.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\SharedSettings\\ShowElementsSettings.cs",
@@ -522,7 +548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "SelectableSettings.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\SharedSettings\\SelectableSettings.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\SharedSettings\\SelectableSettings.cs",
@@ -535,7 +561,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "ShowAuthorsCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Authors\\ShowAuthorsCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Authors\\ShowAuthorsCommand.cs",
@@ -548,7 +574,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "ShowMediasCommand.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\ShowMediasCommand.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\ShowMediasCommand.cs",
@@ -561,20 +587,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "ShowMediaTypesCommand.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
-              "RelativeToolTip": "MediaControlApp\\Commands\\MediaTypes\\ShowMediaTypesCommand.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABcAAABkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T20:51:49.976Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "MediaValidationUtils.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Medias\\MediaValidationUtils.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Medias\\MediaValidationUtils.cs",
@@ -587,7 +600,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "GanreValidationUtils.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Ganres\\GanreValidationUtils.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Ganres\\GanreValidationUtils.cs",
@@ -600,7 +613,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "AuthorValidationUtils.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Commands\\Authors\\AuthorValidationUtils.cs",
               "RelativeDocumentMoniker": "MediaControlApp\\Commands\\Authors\\AuthorValidationUtils.cs",
@@ -613,7 +626,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "MediaRepo.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Repositories\\MediaRepo.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Repositories\\MediaRepo.cs",
@@ -626,7 +639,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "GanreRepo.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Repositories\\GanreRepo.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Repositories\\GanreRepo.cs",
@@ -639,7 +652,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "Author.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Domain\\Models\\Media\\Author.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Domain\\Models\\Media\\Author.cs",
@@ -652,7 +665,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "Ganre.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Domain\\Models\\Media\\Ganre.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Domain\\Models\\Media\\Ganre.cs",
@@ -665,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "MediaType.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Domain\\Models\\Media\\MediaType.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Domain\\Models\\Media\\MediaType.cs",
@@ -678,7 +691,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "Media.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Domain\\Models\\Media\\Media.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Domain\\Models\\Media\\Media.cs",
@@ -691,7 +704,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "MediaConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\MediaConfiguration.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\MediaConfiguration.cs",
@@ -704,7 +717,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "MediaTypeConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\MediaTypeConfiguration.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\MediaTypeConfiguration.cs",
@@ -717,7 +730,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "GanreConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\GanreConfiguration.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\GanreConfiguration.cs",
@@ -730,7 +743,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "AuthorConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\AuthorConfiguration.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Configuration\\AuthorConfiguration.cs",
@@ -743,7 +756,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "MediaService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Application\\Services\\MediaService.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Application\\Services\\MediaService.cs",
@@ -756,7 +769,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "GanreService.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Application\\Services\\GanreService.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Application\\Services\\GanreService.cs",
@@ -769,7 +782,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "MediaControlApp\\Properties\\launchSettings.json",
@@ -782,7 +795,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "AuthorRepo.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Repositories\\AuthorRepo.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\DataAccess\\MediaStore\\Repositories\\AuthorRepo.cs",
@@ -795,7 +808,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "20251224220006_M3.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\Migrations\\20251224220006_M3.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\Migrations\\20251224220006_M3.cs",
@@ -808,7 +821,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "20251224215318_M2.cs",
               "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp.Infrastructure\\Migrations\\20251224215318_M2.cs",
               "RelativeDocumentMoniker": "MediaControlApp.Infrastructure\\Migrations\\20251224215318_M2.cs",
@@ -817,19 +830,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-24T21:53:18.909Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 40,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Program.cs",
-              "RelativeDocumentMoniker": "MediaControlApp\\Program.cs",
-              "ToolTip": "C:\\Users\\HP\\Desktop\\MediaControlApp\\MediaControlApp\\Program.cs",
-              "RelativeToolTip": "MediaControlApp\\Program.cs",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAAAHkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T16:21:27.177Z",
               "EditorCaption": ""
             },
             {

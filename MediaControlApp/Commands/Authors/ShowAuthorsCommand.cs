@@ -1,5 +1,4 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -8,7 +7,7 @@ using System.ComponentModel;
 
 namespace MediaControlApp.Commands.MediaTypes
 {
-   
+
 
     [Description("Show available authors.")]
     public sealed class ShowAuthorsCommand : AsyncCommand<ShowElementsSettings>
@@ -23,39 +22,29 @@ namespace MediaControlApp.Commands.MediaTypes
 
         protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)
         {
-            var table = new Table().RoundedBorder(); 
-         
+            var table = new Table().RoundedBorder();
+
             table.AddColumn("[red]Id[/]");
             table.AddColumn("[green]Name[/]");
             table.AddColumn("[green]Company Name[/]");
             table.AddColumn("[green]Email[/]");
             table.ShowRowSeparators();
 
-            IEnumerable<Author> authors = Enumerable.Empty<Author>();
-
-            try
+            var authors = await _authorService.GetAll();
+            if (settings.Limit != null)
             {
-                authors = await _authorService.GetAll();
-                if (settings.Limit != null)
-                {
-                    authors = authors.Take(settings.Limit.Value);
-                }
-
-                if (settings.IsAscending) { 
-                    authors = authors.OrderBy(x => x.Name);
-                }
-                else
-                {
-                    authors = authors.OrderByDescending(x => x.Name);
-                }
+                authors = authors.Take(settings.Limit.Value);
             }
 
-            catch (Exception ex)
+            if (settings.IsAscending)
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                authors = authors.OrderBy(x => x.Name);
             }
-         
+            else
+            {
+                authors = authors.OrderByDescending(x => x.Name);
+            }
+
             AnsiConsole.MarkupLine("[red]Authors[/]");
 
             if (!authors.Any())
@@ -72,6 +61,6 @@ namespace MediaControlApp.Commands.MediaTypes
             return 0;
         }
 
-     
+
     }
 }

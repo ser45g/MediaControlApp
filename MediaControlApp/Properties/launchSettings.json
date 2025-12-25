@@ -2,7 +2,7 @@
   "profiles": {
     "MediaControlApp": {
       "commandName": "Project",
-      "commandLineArgs": "media-type show"
+      "commandLineArgs": "media-type add Anime"
     }
   }
 }

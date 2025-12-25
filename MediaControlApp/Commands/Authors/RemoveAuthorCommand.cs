@@ -11,14 +11,14 @@
 
     [Description("Remove an author")]
     public class RemoveAuthorCommand : AsyncCommand<RemoveAuthorCommand.Settings>
-    {  
+    {
         private readonly AuthorService _authorService;
 
         public RemoveAuthorCommand(AuthorService authorService)
         {
             _authorService = authorService;
         }
-       
+
         public sealed class Settings : SelectableSettings
         {
             [CommandArgument(0, "[AUTHORID]")]
@@ -26,7 +26,7 @@
             public string? AuthorId { get; init; }
 
         }
-    
+
         private async Task HandleRemove()
         {
             var authors = await _authorService.GetAll();
@@ -49,14 +49,14 @@
             AnsiConsole.MarkupLine($"[green]Author [[{author.Name}]] was successfully deleted![/]");
         }
 
-    
+
         private async Task HandleRemoveWithShowSelect(string authorId)
         {
             var mediaTypeIdValidationResult = AuthorValidationUtils.ValidateAuthorId(authorId);
 
             if (mediaTypeIdValidationResult.Successful)
             {
-                 Guid authorIdGuid = Guid.Parse(authorId);
+                Guid authorIdGuid = Guid.Parse(authorId);
 
                 await _authorService.Remove(authorIdGuid);
                 AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
@@ -64,27 +64,21 @@
             else
             {
                 throw new Exception(mediaTypeIdValidationResult.Message);
-            }       
+            }
         }
-     
+
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            try
+
+            if (settings.ShowSelect)
             {
-                if (settings.ShowSelect)
-                {
-                    await HandleRemove();
-                }
-                else
-                {
-                    await HandleRemoveWithShowSelect(settings.AuthorId);
-                }
+                await HandleRemove();
             }
-            catch (Exception ex)
+            else
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                await HandleRemoveWithShowSelect(settings.AuthorId);
             }
+
             return 0;
         }
     }

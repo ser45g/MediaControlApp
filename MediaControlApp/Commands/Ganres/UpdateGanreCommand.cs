@@ -1,14 +1,8 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.Authors;
-using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Domain.Models.Media;
-using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace MediaControlApp.Commands.Ganres
 {
@@ -61,22 +55,14 @@ namespace MediaControlApp.Commands.Ganres
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            try
-            {
-                if (settings.ShowSelect)
-                {
-                    await HandleUpdate();
-                }
-                else
-                {
-                    await HandleUpdateWithShowSelect(settings.GanreId, settings.Name, settings.MediaTypeId, settings.Description);
-                }
 
-            }
-            catch (Exception ex)
+            if (settings.ShowSelect)
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                await HandleUpdate();
+            }
+            else
+            {
+                await HandleUpdateWithShowSelect(settings.GanreId, settings.Name, settings.MediaTypeId, settings.Description);
             }
 
             return 0;
@@ -94,7 +80,7 @@ namespace MediaControlApp.Commands.Ganres
 
         private async Task HandleUpdate()
         {
-            var ganres= await _ganreService.GetAll();
+            var ganres = await _ganreService.GetAll();
 
             var mediaTypes = await _mediaTypeService.GetAll();
 
@@ -135,7 +121,7 @@ namespace MediaControlApp.Commands.Ganres
             }
             Guid selectedMediaTypeId = mediaType.Id;
 
-            await _ganreService.Update(ganre.Id, newName,selectedMediaTypeId, newDescription);
+            await _ganreService.Update(ganre.Id, newName, selectedMediaTypeId, newDescription);
             AnsiConsole.MarkupLine($"[green]Ganre was successfully updated![/]");
         }
 

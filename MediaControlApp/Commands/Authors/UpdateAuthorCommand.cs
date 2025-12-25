@@ -21,12 +21,12 @@ namespace MediaControlApp.Commands.MediaTypes
 
         public sealed class Settings : SelectableSettings
         {
-            
+
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The media type's id to delete it")]
             public string? Id { get; init; }
 
-           
+
             [CommandArgument(0, "[AUTHORNAME]")]
             [Description("The new name. It must be unique")]
             public string? Name { get; init; }
@@ -64,21 +64,14 @@ namespace MediaControlApp.Commands.MediaTypes
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            try
+
+            if (settings.ShowSelect)
             {
-                if (settings.ShowSelect)
-                {
-                    await HandleUpdate();
-                }
-                else
-                {
-                    await HandleUpdateWithShowSelect(settings.Id!, settings.Name!, settings.CompanyName, settings.Email);
-                }
+                await HandleUpdate();
             }
-            catch (Exception ex)
+            else
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                await HandleUpdateWithShowSelect(settings.Id!, settings.Name!, settings.CompanyName, settings.Email);
             }
 
             return 0;
@@ -89,13 +82,13 @@ namespace MediaControlApp.Commands.MediaTypes
             Guid authorIdGuid = Guid.Parse(authorId!);
 
             await _authorService.Update(authorIdGuid, authorName!, companyName, email);
-            AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");           
+            AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
         }
 
         private async Task HandleUpdate()
         {
             var authors = await _authorService.GetAll();
-            
+
             if (!authors.Any())
             {
                 throw new Exception("No authors available");
@@ -122,7 +115,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
             var newEmail = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new email: ").DefaultValue(author.Email).AllowEmpty());
 
-            await _authorService.Update(author.Id, newName, companyName:newCompanyName, email:newEmail);
+            await _authorService.Update(author.Id, newName, companyName: newCompanyName, email: newEmail);
             AnsiConsole.MarkupLine($"[green]Author was successfully updated![/]");
         }
 

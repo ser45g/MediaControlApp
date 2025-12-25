@@ -48,22 +48,16 @@ namespace MediaControlApp.Commands.Medias
 
         protected async override Task<int> ExecuteAsync(CommandContext context, MediaSettings settings, CancellationToken cancellationToken)
         {
-            try
+            
+            if (settings.ShowSelect)
             {
-                if (settings.ShowSelect)
-                {
-                    await HandleAdd();
-                }
-                else
-                {
-                    await HandleAddWithShowSelect(settings.Title,settings.Description,settings.GanreId, settings.AuthorId,settings.PublishedDate, settings.LastConsumedDateUtc, settings.Rating);
-                }
+                await HandleAdd();
             }
-            catch (Exception ex)
+            else
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                await HandleAddWithShowSelect(settings.Title,settings.Description,settings.GanreId, settings.AuthorId,settings.PublishedDate, settings.LastConsumedDateUtc, settings.Rating);
             }
+            
             return 0;
         }
 

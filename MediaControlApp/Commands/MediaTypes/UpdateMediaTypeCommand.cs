@@ -54,22 +54,16 @@
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            try
+           
+            if (settings.ShowSelect)
             {
-                if (settings.ShowSelect)
-                {
-                    await HandleUpdate();
-                }
-                else
-                {
-                    await HandleUpdateWithShowSelect(settings.Id, settings.Name);
-                }
+                await HandleUpdate();
             }
-            catch (Exception ex)
+            else
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                await HandleUpdateWithShowSelect(settings.Id, settings.Name);
             }
+            
             return 0;
         }
 

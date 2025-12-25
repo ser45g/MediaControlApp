@@ -31,28 +31,20 @@ namespace MediaControlApp.Commands.MediaTypes
 
             IEnumerable<MediaType> mediaTypes = Enumerable.Empty<MediaType>();
 
-            try
+            mediaTypes = await _mediaTypeService.GetAll();
+            if (settings.Limit != null)
             {
-                mediaTypes = await _mediaTypeService.GetAll();
-                if (settings.Limit != null)
-                {
-                    mediaTypes = mediaTypes.Take(settings.Limit.Value);
-                }
+                mediaTypes = mediaTypes.Take(settings.Limit.Value);
+            }
 
-                if (settings.IsAscending) { 
-                    mediaTypes = mediaTypes.OrderBy(x => x.Name);
-                }
-                else
-                {
-                    mediaTypes = mediaTypes.OrderByDescending(x => x.Name);
-                }  
+            if (settings.IsAscending) { 
+                mediaTypes = mediaTypes.OrderBy(x => x.Name);
             }
-            catch (Exception ex)
+            else
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
-            }
-        
+                mediaTypes = mediaTypes.OrderByDescending(x => x.Name);
+            }  
+           
             AnsiConsole.MarkupLine("[red]Media Types[/]");
             if (!mediaTypes.Any())
             {

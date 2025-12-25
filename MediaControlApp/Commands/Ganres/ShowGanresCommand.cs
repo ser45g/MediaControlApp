@@ -1,13 +1,9 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace MediaControlApp.Commands.Ganres
 {
@@ -32,34 +28,21 @@ namespace MediaControlApp.Commands.Ganres
             table.AddColumn("[green]Media Type Name[/]");
             table.ShowRowSeparators();
 
-            IEnumerable<Ganre> ganres = Enumerable.Empty<Ganre>();
+            var ganres = await _ganreService.GetAll();
 
-            try
+            if (settings.Limit != null)
             {
-                ganres = await _ganreService.GetAll();
-
-                if (settings.Limit != null)
-                {
-                    ganres = ganres.Take(settings.Limit.Value);
-                }
-
-                if (settings.IsAscending)
-                {
-                    ganres = ganres.OrderBy(x => x.Name);
-                }
-                else
-                {
-                    ganres = ganres.OrderByDescending(x => x.Name);
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                ganres = ganres.Take(settings.Limit.Value);
             }
 
+            if (settings.IsAscending)
+            {
+                ganres = ganres.OrderBy(x => x.Name);
+            }
+            else
+            {
+                ganres = ganres.OrderByDescending(x => x.Name);
+            }
 
             AnsiConsole.MarkupLine("[red]Ganres[/]");
 
@@ -69,13 +52,13 @@ namespace MediaControlApp.Commands.Ganres
             }
             foreach (var el in ganres)
             {
-                table.AddRow(el.Id.ToString(), el.Name, el.Description ?? " - ",el.MediaTypeId.ToString(), el.MediaType?.Name ?? " - ");
+                table.AddRow(el.Id.ToString(), el.Name, el.Description ?? " - ", el.MediaTypeId.ToString(), el.MediaType?.Name ?? " - ");
             }
 
             AnsiConsole.Write(table);
             return 0;
         }
 
-       
+
     }
 }

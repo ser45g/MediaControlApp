@@ -1,13 +1,8 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.MediaTypes;
 using MediaControlApp.Domain.Models.Media;
-using MediaControlApp.SharedSettings;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace MediaControlApp.Commands.Ganres
 {
@@ -23,7 +18,7 @@ namespace MediaControlApp.Commands.Ganres
             _mediaTypeService = mediaTypeService;
         }
 
-       
+
 
         protected override ValidationResult Validate(CommandContext context, GanreSettings settings)
         {
@@ -50,22 +45,16 @@ namespace MediaControlApp.Commands.Ganres
 
         protected async override Task<int> ExecuteAsync(CommandContext context, GanreSettings settings, CancellationToken cancellationToken)
         {
-            try
+
+            if (settings.ShowSelect)
             {
-                if (settings.ShowSelect)
-                {
-                    await HandleAdd();
-                }
-                else
-                {
-                    await HandleAddWithShowSelect(settings.Name,settings.MediaTypeId, settings.Description!);
-                }
+                await HandleAdd();
             }
-            catch (Exception ex)
+            else
             {
-                AnsiConsole.WriteException(ex);
-                return -1;
+                await HandleAddWithShowSelect(settings.Name, settings.MediaTypeId, settings.Description!);
             }
+
             return 0;
         }
 
