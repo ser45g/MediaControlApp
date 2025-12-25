@@ -22,7 +22,7 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             [CommandArgument(0, "<MEDIATYPENAME>")]
             [Description("The media type to add. Its name must be unique")]
-            public required string Name { get; set; }
+            public required string Name { get; init; }
            
         }
 

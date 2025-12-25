@@ -25,13 +25,13 @@
         
             [CommandArgument(0, "[MEDIATYPEID]")]
             [Description("The media type's id to delete it")]
-            public string? Id { get; set; }
+            public string? Id { get; init; }
 
          
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; set; }
+            public bool ShowSelect { get; init; }
         }
 
 

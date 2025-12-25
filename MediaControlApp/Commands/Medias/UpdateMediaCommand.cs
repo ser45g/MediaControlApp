@@ -26,40 +26,40 @@ namespace MediaControlApp.Commands.Medias
         {
             [CommandArgument(0, "[MEDIAID]")]
             [Description("The media's id to delete.")]
-            public string? MediaId { get; set; }
+            public string? MediaId { get; init; }
 
             [CommandArgument(0, "[MEDIATITLE]")]
             [Description("The media's title. It must be unique")]
-            public string? Title { get; set; }
+            public string? Title { get; init; }
 
             [CommandArgument(0, "[GANREID]")]
             [Description("The ganre's id")]
-            public string? GanreId { get; set; }
+            public string? GanreId { get; init; }
 
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The author's id")]
-            public string? AuthorId { get; set; }
+            public string? AuthorId { get; init; }
 
             [CommandArgument(0, "[DESCRIPTION]")]
             [Description("The description")]
-            public string? Description { get; set; }
+            public string? Description { get; init; }
 
             [CommandArgument(0, "[PUBLISHEDDATE]")]
             [Description("The publicashion date of the specified media")]
-            public string? PublishedDate { get; set; }
+            public string? PublishedDate { get; init; }
 
             [CommandArgument(0, "[LASTCONSUMEDDATE]")]
             [Description("The date you consumed the specified media")]
-            public string? LastConsumedDateUtc { get; set; }
+            public string? LastConsumedDateUtc { get; init; }
 
             [CommandArgument(0, "[RATING]")]
             [Description("The rating")]
-            public string? Rating { get; set; }
+            public string? Rating { get; init; }
 
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; set; }
+            public bool ShowSelect { get; init; }
 
         }
 

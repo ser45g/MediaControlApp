@@ -24,25 +24,25 @@ namespace MediaControlApp.Commands.MediaTypes
             
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The media type's id to delete it")]
-            public string? Id { get; set; }
+            public string? Id { get; init; }
 
            
             [CommandArgument(0, "[AUTHORNAME]")]
             [Description("The new name. It must be unique")]
-            public string? Name { get; set; }
+            public string? Name { get; init; }
 
             [CommandArgument(0, "[COMPANYNAME]")]
             [Description("The new description")]
-            public string? CompanyName { get; set; }
+            public string? CompanyName { get; init; }
 
             [CommandArgument(0, "[EMAIL]")]
             [Description("The new email")]
-            public string? Email { get; set; }
+            public string? Email { get; init; }
 
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; set; }
+            public bool ShowSelect { get; init; }
         }
 
         protected override ValidationResult Validate(CommandContext context, Settings settings)

@@ -22,13 +22,13 @@ namespace MediaControlApp.Commands.Medias
 
             [CommandArgument(0, "[MEDIAID]")]
             [Description("The media's id to delete.")]
-            public string? MediaId { get; set; }
+            public string? MediaId { get; init; }
 
 
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; set; }
+            public bool ShowSelect { get; init; }
         }
 
 

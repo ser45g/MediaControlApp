@@ -26,13 +26,13 @@ namespace MediaControlApp.Commands.Ganres
 
             [CommandArgument(0, "[GANREID]")]
             [Description("The ganre's id to delete.")]
-            public string? GanreId { get; set; }
+            public string? GanreId { get; init; }
 
 
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; set; }
+            public bool ShowSelect { get; init; }
         }
 
 

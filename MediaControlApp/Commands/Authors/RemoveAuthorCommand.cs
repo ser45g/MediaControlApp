@@ -22,12 +22,12 @@
         {
             [CommandArgument(0, "[AUTHORID]")]
             [Description("The author's id to delete it.")]
-            public string? AuthorId { get; set; }
+            public string? AuthorId { get; init; }
 
             [CommandOption("-s|--show-select")]
             [DefaultValue(false)]
             [Description("Allows the command to stop and wait for user input or action (for example to complete authentication).")]
-            public bool ShowSelect { get; set; }
+            public bool ShowSelect { get; init; }
         }
     
         private async Task HandleRemove()

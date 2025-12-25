@@ -20,15 +20,15 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             [CommandArgument(0, "<AUTHORNAME>")]
             [Description("The auhtor's name")]
-            public required string Name { get; set; }
+            public required string Name { get; init; }
 
             [CommandArgument(1, "[COMPANYNAME]")]
             [Description("The company name")]
-            public string? CompanyName { get; set; }
+            public string? CompanyName { get; init; }
 
             [CommandArgument(2, "[EMAIL]")]
             [Description("The author's email")]
-            public string? Email { get; set; }
+            public string? Email { get; init; }
         }
         protected override ValidationResult Validate(CommandContext context, Settings settings)
         {

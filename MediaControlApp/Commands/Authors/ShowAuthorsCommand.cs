@@ -75,11 +75,11 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             [CommandOption("--limit <LIMIT>")]
             [Description("How many elements you want to see")]
-            public int? Limit { get; set; }
+            public int? Limit { get; init; }
 
             [CommandOption("--ascending")]
             [Description("Show authors by Name in an ascending order")]
-            public bool IsAscending { get; set; }
+            public bool IsAscending { get; init; }
         }
     }
 }
