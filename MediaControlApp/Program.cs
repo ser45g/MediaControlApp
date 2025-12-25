@@ -18,21 +18,20 @@ using Spectre.Console.Cli;
 IServiceCollection services = null!;
 
 IHost _host = Host.CreateDefaultBuilder().ConfigureServices(s =>
-{
-   
+{ 
     s.AddDbContext<MediaDbContext>(builder => {
         builder.UseSqlite("Data Source=db.db");
-    },contextLifetime:ServiceLifetime.Transient);
+    });
 
     s.AddTransient<IAuthorRepo,AuthorRepo>();
     s.AddTransient<IGanreRepo,GanreRepo>();
     s.AddTransient<IMediaRepo,MediaRepo>();
     s.AddTransient<IMediaTypeRepo,MediaTypeRepo>();
 
-    s.AddTransient<AuthorService>();
-    s.AddTransient<GanreService>();
-    s.AddTransient<MediaService>();
-    s.AddTransient<MediaTypeService>();
+    s.AddScoped<AuthorService>();
+    s.AddScoped<GanreService>();
+    s.AddScoped<MediaService>();
+    s.AddScoped<MediaTypeService>();
 
     services = s;
 }).ConfigureLogging(builder =>
@@ -110,21 +109,20 @@ app.Configure(config =>
 
 });
 
-_host.Start();
+// Create a cancellation token source to handle Ctrl+C
+var cancellationTokenSource = new CancellationTokenSource();
 
-
-Console.CancelKeyPress+= (sender, e) =>
+// Wire up Console.CancelKeyPress to trigger cancellation
+Console.CancelKeyPress += (_, e) =>
 {
-    e.Cancel = true; // Prevent default behavior of terminating immediately
-    AnsiConsole.MarkupLine("[yellow]\nCaught CTRL+C. Shutting down gracefully.[/]");
-
-    // Exit the application
-    Environment.Exit(0); // Pass appropriate exit code (0 means success).
+    e.Cancel = true; // Prevent immediate process termination
+    cancellationTokenSource.Cancel();
+    Console.WriteLine("Cancellation requested...");
 };
 
+_host.Start();
 
-
-await app.RunAsync(args);
+await app.RunAsync(args, cancellationToken:cancellationTokenSource.Token);
 
 
 
