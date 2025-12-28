@@ -11,11 +11,14 @@ namespace MediaControlApp.Commands.Ganres
     {
         private readonly GanreService _ganreService;
         private readonly MediaTypeService _mediaTypeService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public AddGanreCommand(GanreService ganreService, MediaTypeService mediaTypeService)
+
+        public AddGanreCommand(GanreService ganreService, MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaTypeService = mediaTypeService;
+            _ansiConsole = ansiConsole;
         }
 
 
@@ -63,7 +66,7 @@ namespace MediaControlApp.Commands.Ganres
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
             await _ganreService.Add(name, mediaTypeIdGuid, description);
-            AnsiConsole.MarkupLine($"[green]Ganre with Id [[{mediaTypeIdGuid}]] was successfully added![/]");
+            _ansiConsole.MarkupLine($"[green]Ganre with Id [[{mediaTypeIdGuid}]] was successfully added![/]");
         }
 
         private async Task HandleAdd()
@@ -75,7 +78,7 @@ namespace MediaControlApp.Commands.Ganres
                 throw new Exception("No media types available");
             }
 
-            var name = AnsiConsole.Prompt(new TextPrompt<string>("Enter a ganre name: ").Validate(x =>
+            var name = _ansiConsole.Prompt(new TextPrompt<string>("Enter a ganre name: ").Validate(x =>
             {
                 var task = GanreValidationUtils.ValidateName(_ganreService, x);
                 task.Wait();
@@ -84,9 +87,9 @@ namespace MediaControlApp.Commands.Ganres
 
             }));
 
-            var description = AnsiConsole.Prompt(new TextPrompt<string>("Enter a description: ").AllowEmpty());
+            var description = _ansiConsole.Prompt(new TextPrompt<string>("Enter a description: ").AllowEmpty());
 
-            var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to add a ganre to").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
+            var mediaType = _ansiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to add a ganre to").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
 
             if (mediaType == null)
             {
@@ -94,7 +97,7 @@ namespace MediaControlApp.Commands.Ganres
             }
 
             await _ganreService.Add(name, mediaType.Id, description);
-            AnsiConsole.MarkupLine($"[green]Ganre was successfully added![/]");
+            _ansiConsole.MarkupLine($"[green]Ganre was successfully added![/]");
         }
     }
 }

@@ -12,10 +12,13 @@ namespace MediaControlApp.Commands.Medias
     {
 
         private readonly MediaService _mediaService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public RemoveMediaCommand(MediaService mediaService)
+
+        public RemoveMediaCommand(MediaService mediaService, IAnsiConsole ansiConsole)
         {
             _mediaService = mediaService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : SelectableSettings
@@ -26,7 +29,6 @@ namespace MediaControlApp.Commands.Medias
             public string? MediaId { get; init; }
 
         }
-
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
@@ -52,7 +54,7 @@ namespace MediaControlApp.Commands.Medias
                 throw new Exception("No medias available");
             }
 
-            var media = AnsiConsole.Prompt(new SelectionPrompt<Media>().Title("Please select the media you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(medias).UseConverter(x => x.Title));
+            var media = _ansiConsole.Prompt(new SelectionPrompt<Media>().Title("Please select the media you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(medias).UseConverter(x => x.Title));
 
             if (media == null)
             {
@@ -61,7 +63,7 @@ namespace MediaControlApp.Commands.Medias
             Guid selectedMediaId = media.Id;
 
             await _mediaService.Remove(selectedMediaId);
-            AnsiConsole.MarkupLine($"[green]Media [[{media.Title}]] was successfully deleted![/]");
+            _ansiConsole.MarkupLine($"[green]Media [[{media.Title}]] was successfully deleted![/]");
         }
 
         private async Task HandleRemoveWithShowSelect(string? mediaId)
@@ -74,7 +76,7 @@ namespace MediaControlApp.Commands.Medias
                 Guid mediaIdGuid = Guid.Parse(mediaId!);
 
                 await _mediaService.Remove(mediaIdGuid);
-                AnsiConsole.MarkupLine($"[green]Media with Id [[{mediaId}]] was successfully deleted![/]");
+                _ansiConsole.MarkupLine($"[green]Media with Id [[{mediaId}]] was successfully deleted![/]");
             }
             else
             {

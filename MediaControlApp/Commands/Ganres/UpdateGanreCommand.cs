@@ -11,11 +11,14 @@ namespace MediaControlApp.Commands.Ganres
     {
         private readonly GanreService _ganreService;
         private readonly MediaTypeService _mediaTypeService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public UpdateGanreCommand(GanreService ganreService, MediaTypeService mediaTypeService)
+
+        public UpdateGanreCommand(GanreService ganreService, MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaTypeService = mediaTypeService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : GanreSettings
@@ -75,7 +78,7 @@ namespace MediaControlApp.Commands.Ganres
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
             await _ganreService.Update(ganreIdGuid, ganreName, mediaTypeIdGuid, description);
-            AnsiConsole.MarkupLine($"[green]Ganre with Id [[{ganreIdGuid}]] was successfully updated![/]");
+            _ansiConsole.MarkupLine($"[green]Ganre with Id [[{ganreIdGuid}]] was successfully updated![/]");
         }
 
         private async Task HandleUpdate()
@@ -94,14 +97,14 @@ namespace MediaControlApp.Commands.Ganres
                 throw new Exception("No media types available");
             }
 
-            var ganre = AnsiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select the ganre you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(ganres).UseConverter(x => x.Name));
+            var ganre = _ansiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select the ganre you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(ganres).UseConverter(x => x.Name));
 
             if (ganre == null)
             {
                 throw new ArgumentNullException(nameof(ganre));
             }
 
-            var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(ganre.Name).Validate(x =>
+            var newName = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(ganre.Name).Validate(x =>
             {
                 var ganreNameValidationTask = GanreValidationUtils.ValidateName(_ganreService, x);
                 ganreNameValidationTask.Wait();
@@ -111,9 +114,9 @@ namespace MediaControlApp.Commands.Ganres
                 return ganreNameValidationResult.Successful;
             }));
 
-            var newDescription = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new description: ").DefaultValue(ganre.Description));
+            var newDescription = _ansiConsole.Prompt(new TextPrompt<string?>("Enter a new description: ").DefaultValue(ganre.Description));
 
-            var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
+            var mediaType = _ansiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
 
             if (mediaType == null)
             {
@@ -122,9 +125,7 @@ namespace MediaControlApp.Commands.Ganres
             Guid selectedMediaTypeId = mediaType.Id;
 
             await _ganreService.Update(ganre.Id, newName, selectedMediaTypeId, newDescription);
-            AnsiConsole.MarkupLine($"[green]Ganre was successfully updated![/]");
+            _ansiConsole.MarkupLine($"[green]Ganre was successfully updated![/]");
         }
-
-
     }
 }

@@ -12,6 +12,8 @@ namespace MediaControlApp.Commands.MediaTypes
     public sealed class AddMediaTypeCommand : AsyncCommand<AddMediaTypeCommand.Settings>
     {
         private readonly MediaTypeService _mediaTypeService;
+        private readonly IAnsiConsole _ansiConsole;
+
 
         public AddMediaTypeCommand(MediaTypeService mediaTypeService)
         {
@@ -42,7 +44,7 @@ namespace MediaControlApp.Commands.MediaTypes
         {
           
             await _mediaTypeService.Add(settings.Name!.ToUpper());
-            AnsiConsole.MarkupLine($"[green]Media Type was successfully added![/]");
+            _ansiConsole.MarkupLine($"[green]Media Type was successfully added![/]");
            
             return 0;
         }

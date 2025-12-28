@@ -12,10 +12,13 @@ namespace MediaControlApp.Commands.Ganres
     {
 
         private readonly GanreService _ganreService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public RemoveGanreCommand(GanreService ganreService)
+
+        public RemoveGanreCommand(GanreService ganreService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : SelectableSettings
@@ -26,7 +29,6 @@ namespace MediaControlApp.Commands.Ganres
             public string? GanreId { get; init; }
 
         }
-
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
@@ -51,7 +53,7 @@ namespace MediaControlApp.Commands.Ganres
             {
                 throw new Exception("No ganres available");
             }
-            var ganre = AnsiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select the ganre you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(ganres).UseConverter(x => $"{x.Name}"));
+            var ganre = _ansiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select the ganre you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(ganres).UseConverter(x => $"{x.Name}"));
 
             if (ganre == null)
             {
@@ -60,7 +62,7 @@ namespace MediaControlApp.Commands.Ganres
             Guid selectedGanreId = ganre.Id;
 
             await _ganreService.Remove(selectedGanreId);
-            AnsiConsole.MarkupLine($"[green]Ganre [[{ganre.Name}]] was successfully deleted![/]");
+            _ansiConsole.MarkupLine($"[green]Ganre [[{ganre.Name}]] was successfully deleted![/]");
         }
 
         private async Task HandleRemoveWithShowSelect(string? ganreId)
@@ -73,7 +75,7 @@ namespace MediaControlApp.Commands.Ganres
                 Guid ganreIdGuid = Guid.Parse(ganreId!);
 
                 await _ganreService.Remove(ganreIdGuid);
-                AnsiConsole.MarkupLine($"[green]Ganre with Id [[{ganreId}]] was successfully deleted![/]");
+                _ansiConsole.MarkupLine($"[green]Ganre with Id [[{ganreId}]] was successfully deleted![/]");
             }
             else
             {

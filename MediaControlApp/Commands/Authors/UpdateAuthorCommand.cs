@@ -13,10 +13,12 @@ namespace MediaControlApp.Commands.MediaTypes
     public class UpdateAuthorCommand : AsyncCommand<UpdateAuthorCommand.Settings>
     {
         private readonly AuthorService _authorService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public UpdateAuthorCommand(AuthorService authorService)
+        public UpdateAuthorCommand(AuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : SelectableSettings
@@ -82,7 +84,7 @@ namespace MediaControlApp.Commands.MediaTypes
             Guid authorIdGuid = Guid.Parse(authorId!);
 
             await _authorService.Update(authorIdGuid, authorName!, companyName, email);
-            AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
+            _ansiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
         }
 
         private async Task HandleUpdate()
@@ -94,14 +96,14 @@ namespace MediaControlApp.Commands.MediaTypes
                 throw new Exception("No authors available");
             }
 
-            var author = AnsiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select the author you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(authors).UseConverter(x => x.Name));
+            var author = _ansiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select the author you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(authors).UseConverter(x => x.Name));
 
             if (author == null)
             {
                 throw new ArgumentNullException(nameof(author));
             }
 
-            var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(author.Name).Validate(x =>
+            var newName = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(author.Name).Validate(x =>
             {
                 var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, x);
                 authorNameValidationTask.Wait();
@@ -111,12 +113,12 @@ namespace MediaControlApp.Commands.MediaTypes
                 return authorNameValidationResult.Successful;
             }));
 
-            var newCompanyName = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new company name: ").DefaultValue(author.CompanyName).AllowEmpty());
+            var newCompanyName = _ansiConsole.Prompt(new TextPrompt<string?>("Enter a new company name: ").DefaultValue(author.CompanyName).AllowEmpty());
 
-            var newEmail = AnsiConsole.Prompt(new TextPrompt<string?>("Enter a new email: ").DefaultValue(author.Email).AllowEmpty());
+            var newEmail = _ansiConsole.Prompt(new TextPrompt<string?>("Enter a new email: ").DefaultValue(author.Email).AllowEmpty());
 
             await _authorService.Update(author.Id, newName, companyName: newCompanyName, email: newEmail);
-            AnsiConsole.MarkupLine($"[green]Author was successfully updated![/]");
+            _ansiConsole.MarkupLine($"[green]Author was successfully updated![/]");
         }
 
 

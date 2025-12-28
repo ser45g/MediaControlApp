@@ -13,10 +13,12 @@
     public class RemoveAuthorCommand : AsyncCommand<RemoveAuthorCommand.Settings>
     {
         private readonly AuthorService _authorService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public RemoveAuthorCommand(AuthorService authorService)
+        public RemoveAuthorCommand(AuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : SelectableSettings
@@ -36,7 +38,7 @@
                 throw new Exception("No authors available");
             }
 
-            var author = AnsiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select the author you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(authors).UseConverter(x => x.Name));
+            var author = _ansiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select the author you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(authors).UseConverter(x => x.Name));
 
             if (author == null)
             {
@@ -46,7 +48,7 @@
 
             await _authorService.Remove(selectedAuthorId);
 
-            AnsiConsole.MarkupLine($"[green]Author [[{author.Name}]] was successfully deleted![/]");
+            _ansiConsole.MarkupLine($"[green]Author [[{author.Name}]] was successfully deleted![/]");
         }
 
 
@@ -59,7 +61,7 @@
                 Guid authorIdGuid = Guid.Parse(authorId);
 
                 await _authorService.Remove(authorIdGuid);
-                AnsiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
+                _ansiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
             }
             else
             {

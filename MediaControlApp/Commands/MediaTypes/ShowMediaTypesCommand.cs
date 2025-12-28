@@ -15,11 +15,14 @@ namespace MediaControlApp.Commands.MediaTypes
     {
 
         private readonly MediaTypeService _mediaTypeService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public ShowMediaTypesCommand(MediaTypeService mediaTypeService)
+
+        public ShowMediaTypesCommand(MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _mediaTypeService = mediaTypeService;
-        }    
+            _ansiConsole = ansiConsole;
+        }
 
         protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)
         {
@@ -45,7 +48,7 @@ namespace MediaControlApp.Commands.MediaTypes
                 mediaTypes = mediaTypes.OrderByDescending(x => x.Name);
             }  
            
-            AnsiConsole.MarkupLine("[red]Media Types[/]");
+            _ansiConsole.MarkupLine("[red]Media Types[/]");
             if (!mediaTypes.Any())
             {
                 table.AddEmptyRow();
@@ -55,7 +58,7 @@ namespace MediaControlApp.Commands.MediaTypes
                 table.AddRow(el.Id.ToString(), el.Name);
             }
 
-            AnsiConsole.Write(table);
+            _ansiConsole.Write(table);
             return 0;
         }
     }

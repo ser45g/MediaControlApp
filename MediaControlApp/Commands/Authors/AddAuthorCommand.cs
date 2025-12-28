@@ -11,10 +11,12 @@ namespace MediaControlApp.Commands.MediaTypes
     public sealed class AddAuthorCommand : AsyncCommand<AddAuthorCommand.Settings>
     {
         private readonly AuthorService _authorService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public AddAuthorCommand(AuthorService authorService)
+        public AddAuthorCommand(AuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
+            _ansiConsole = ansiConsole;
         }
         public sealed class Settings : CommandSettings
         {
@@ -47,7 +49,7 @@ namespace MediaControlApp.Commands.MediaTypes
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
             await _authorService.Add(settings.Name, settings.CompanyName, settings.Email);
-            AnsiConsole.MarkupLine($"[green]Author was successfully added![/]");
+            _ansiConsole.MarkupLine($"[green]Author was successfully added![/]");
 
             return 0;
         }

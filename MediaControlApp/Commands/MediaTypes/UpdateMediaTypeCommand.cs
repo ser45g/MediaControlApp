@@ -13,10 +13,13 @@
     {
  
         private readonly MediaTypeService _mediaTypeService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public UpdateMediaTypeCommand(MediaTypeService mediaTypeService)
+
+        public UpdateMediaTypeCommand(MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _mediaTypeService = mediaTypeService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : SelectableSettings
@@ -72,7 +75,7 @@
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
             await _mediaTypeService.Update(mediaTypeIdGuid, mediaTypeName);
-            AnsiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");      
+            _ansiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");      
         }
 
         private async Task HandleUpdate()
@@ -84,14 +87,14 @@
                 throw new Exception("No media types available");
             }
 
-            var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
+            var mediaType = _ansiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
 
             if (mediaType == null)
             {
                 throw new ArgumentNullException(nameof(mediaType));
             }
 
-            var newName = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(mediaType.Name).Validate(x =>
+            var newName = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(mediaType.Name).Validate(x =>
             {
                 var task = MediaTypeValidationUtils.ValidateName(_mediaTypeService, x);
                 task.Wait();
@@ -101,7 +104,7 @@
             }));
 
             await _mediaTypeService.Update(mediaType.Id, newName);
-            AnsiConsole.MarkupLine($"[green]Media Type was successfully updated![/]");
+            _ansiConsole.MarkupLine($"[green]Media Type was successfully updated![/]");
         }      
     }
 }

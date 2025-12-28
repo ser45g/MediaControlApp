@@ -14,10 +14,12 @@ namespace MediaControlApp.Commands.MediaTypes
     {
 
         private readonly AuthorService _authorService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public ShowAuthorsCommand(AuthorService authorService)
+        public ShowAuthorsCommand(AuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
+            _ansiConsole = ansiConsole;
         }
 
         protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)
@@ -45,7 +47,7 @@ namespace MediaControlApp.Commands.MediaTypes
                 authors = authors.OrderByDescending(x => x.Name);
             }
 
-            AnsiConsole.MarkupLine("[red]Authors[/]");
+            _ansiConsole.MarkupLine("[red]Authors[/]");
 
             if (!authors.Any())
             {
@@ -57,10 +59,8 @@ namespace MediaControlApp.Commands.MediaTypes
                 table.AddRow(el.Id.ToString(), el.Name, el.CompanyName ?? " - ", el.Email ?? " - ");
             }
 
-            AnsiConsole.Write(table);
+            _ansiConsole.Write(table);
             return 0;
         }
-
-
     }
 }

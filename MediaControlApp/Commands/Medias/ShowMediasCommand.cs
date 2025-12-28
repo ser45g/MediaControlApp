@@ -11,6 +11,8 @@ namespace MediaControlApp.Commands.Medias
     {
 
         private readonly MediaService _mediaService;
+        private readonly IAnsiConsole _ansiConsole;
+
 
         public ShowMediasCommand(MediaService mediaService)
         {
@@ -49,7 +51,7 @@ namespace MediaControlApp.Commands.Medias
             }
 
 
-            AnsiConsole.MarkupLine("[red]Medias[/]");
+            _ansiConsole.MarkupLine("[red]Medias[/]");
             if (!medias.Any())
             {
                 table.AddEmptyRow();
@@ -59,7 +61,7 @@ namespace MediaControlApp.Commands.Medias
                 table.AddRow(el.Id.ToString(), el.Title, el.Description ?? " - ", el.GanreId.ToString(), el.Ganre?.Name ?? " - ", el.AuthorId.ToString(), el.Author?.Name ?? " - ", el.PublisedDateUtc.ToShortDateString(), el.LastConsumedDateUtc?.ToShortDateString() ?? " - ");
             }
 
-            AnsiConsole.Write(table);
+            _ansiConsole.Write(table);
             return 0;
         }
 

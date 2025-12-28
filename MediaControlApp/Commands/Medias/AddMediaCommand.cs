@@ -18,15 +18,18 @@ namespace MediaControlApp.Commands.Medias
         private readonly GanreService _ganreService;
         private readonly MediaService _mediaService;
         private readonly AuthorService _authorService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public AddMediaCommand(GanreService ganreService, MediaService mediaService, AuthorService authorService)
+
+        public AddMediaCommand(GanreService ganreService, MediaService mediaService, AuthorService authorService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaService = mediaService;
             _authorService = authorService;
+            _ansiConsole = ansiConsole;
         }
 
-       
+
 
         protected override ValidationResult Validate(CommandContext context, MediaSettings settings)
         {
@@ -71,7 +74,7 @@ namespace MediaControlApp.Commands.Medias
 
             await _mediaService.Add(title,description,ganreIdGuid,publishedDateDate,authorIdGuid, ratingObj);
 
-            AnsiConsole.MarkupLine($"[green]Media was successfully added![/]");
+            _ansiConsole.MarkupLine($"[green]Media was successfully added![/]");
         }
 
         private async Task HandleAdd()
@@ -90,7 +93,7 @@ namespace MediaControlApp.Commands.Medias
                 throw new Exception("No ganres available");
             }
 
-            var title = AnsiConsole.Prompt(new TextPrompt<string>("Enter a media title: ").Validate(x =>
+            var title = _ansiConsole.Prompt(new TextPrompt<string>("Enter a media title: ").Validate(x =>
             {
                 var task = MediaValidationUtils.ValidateTitle(_mediaService, x);
                 task.Wait();
@@ -101,32 +104,32 @@ namespace MediaControlApp.Commands.Medias
 
             var description = AnsiConsole.Prompt(new TextPrompt<string>("Enter a description: ").AllowEmpty());
 
-            var ganre = AnsiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select a ganre").PageSize(10).MoreChoicesText("Move up and down to reveal more ganres").AddChoices(ganres).UseConverter(x => x.Name));
+            var ganre = _ansiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select a ganre").PageSize(10).MoreChoicesText("Move up and down to reveal more ganres").AddChoices(ganres).UseConverter(x => x.Name));
 
             if (ganre == null)
             {
                 throw new ArgumentNullException(nameof(ganre));
             }
 
-            var author = AnsiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select an author").PageSize(10).MoreChoicesText("Move up and down to reveal more authors").AddChoices(authors).UseConverter(x => x.Name));
+            var author = _ansiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select an author").PageSize(10).MoreChoicesText("Move up and down to reveal more authors").AddChoices(authors).UseConverter(x => x.Name));
 
             if (author == null)
             {
                 throw new ArgumentNullException(nameof(author));
             }
 
-            var publishedDate = AnsiConsole.Prompt(new TextPrompt<string>("Enter the publication date: ").DefaultValue(DateTime.Now.AddYears(-2).ToShortDateString()));
+            var publishedDate = _ansiConsole.Prompt(new TextPrompt<string>("Enter the publication date: ").DefaultValue(DateTime.Now.AddYears(-2).ToShortDateString()));
 
-            var lastConsumedDate = AnsiConsole.Prompt(new TextPrompt<string?>("Enter the last consumed date: ").DefaultValue(null).AllowEmpty());
+            var lastConsumedDate = _ansiConsole.Prompt(new TextPrompt<string?>("Enter the last consumed date: ").DefaultValue(null).AllowEmpty());
 
-            var rating = AnsiConsole.Prompt(new TextPrompt<double?>($"Enter the rating (between {Rating.LOW_RATING} and {Rating.HIGH_RATING}").DefaultValue(null).AllowEmpty().Validate(x =>
+            var rating = _ansiConsole.Prompt(new TextPrompt<double?>($"Enter the rating (between {Rating.LOW_RATING} and {Rating.HIGH_RATING}").DefaultValue(null).AllowEmpty().Validate(x =>
             {
                 var res = MediaValidationUtils.ValidateRating(x.ToString());
                 return res.Successful;
             }));
 
             await _mediaService.Add(title, description,ganre.Id, DateTime.Parse(publishedDate), author.Id, rating!=null? new Rating(rating.Value):null );
-            AnsiConsole.MarkupLine($"[green]Media was successfully added![/]");
+            _ansiConsole.MarkupLine($"[green]Media was successfully added![/]");
         }
     }
 }

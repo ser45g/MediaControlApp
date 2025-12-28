@@ -15,12 +15,15 @@ namespace MediaControlApp.Commands.Medias
         private readonly GanreService _ganreService;
         private readonly MediaService _mediaService;
         private readonly AuthorService _authorService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public UpdateMediaCommand(GanreService ganreService, MediaService mediaService, AuthorService authorService)
+
+        public UpdateMediaCommand(GanreService ganreService, MediaService mediaService, AuthorService authorService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaService = mediaService;
             _authorService = authorService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : MediaSettings
@@ -80,7 +83,7 @@ namespace MediaControlApp.Commands.Medias
 
             await _mediaService.Update(id:mediaIdGuid, title:title, description:description, ganreId:ganreIdGuid, publishedDate:publishedDateDate, authorId:authorIdGuid, rating:ratingObj, lastConsumedDate:lastConsumedDateDate);
 
-            AnsiConsole.MarkupLine($"[green]Media was successfully updated![/]");
+            _ansiConsole.MarkupLine($"[green]Media was successfully updated![/]");
         }
 
         private async Task HandleUpdate()
@@ -106,7 +109,7 @@ namespace MediaControlApp.Commands.Medias
 
 
 
-            var media = AnsiConsole.Prompt(new SelectionPrompt<Media>().Title("Please select the media you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(medias).UseConverter(x => x.Title));
+            var media = _ansiConsole.Prompt(new SelectionPrompt<Media>().Title("Please select the media you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(medias).UseConverter(x => x.Title));
 
             if (media == null)
             {
@@ -114,7 +117,7 @@ namespace MediaControlApp.Commands.Medias
             }
 
 
-            var newTitle = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new title: ").Validate(x =>
+            var newTitle = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new title: ").Validate(x =>
             {
                 var task = MediaValidationUtils.ValidateTitle(_mediaService, x);
                 task.Wait();
@@ -123,9 +126,9 @@ namespace MediaControlApp.Commands.Medias
 
             }));
 
-            var newDescription = AnsiConsole.Prompt(new TextPrompt<string>("Enter a new description: ").AllowEmpty());
+            var newDescription = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new description: ").AllowEmpty());
 
-            var ganre = AnsiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select a ganre").PageSize(10).MoreChoicesText("Move up and down to reveal more ganres").AddChoices(ganres).UseConverter(x => x.Name));
+            var ganre = _ansiConsole.Prompt(new SelectionPrompt<Ganre>().Title("Please select a ganre").PageSize(10).MoreChoicesText("Move up and down to reveal more ganres").AddChoices(ganres).UseConverter(x => x.Name));
 
             if (ganre == null)
             {
@@ -133,33 +136,33 @@ namespace MediaControlApp.Commands.Medias
             }
 
 
-            var author = AnsiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select a ganre").PageSize(10).MoreChoicesText("Move up and down to reveal more authors").AddChoices(authors).UseConverter(x => x.Name));
+            var author = _ansiConsole.Prompt(new SelectionPrompt<Author>().Title("Please select a ganre").PageSize(10).MoreChoicesText("Move up and down to reveal more authors").AddChoices(authors).UseConverter(x => x.Name));
 
             if (author == null)
             {
                 throw new ArgumentNullException(nameof(author));
             }
 
-            var publishedDate = AnsiConsole.Prompt(new TextPrompt<string>("Enter the publication date: ").DefaultValue(DateTime.Now.AddYears(-2).ToShortDateString()).Validate(x =>
+            var publishedDate = _ansiConsole.Prompt(new TextPrompt<string>("Enter the publication date: ").DefaultValue(DateTime.Now.AddYears(-2).ToShortDateString()).Validate(x =>
             {
                 var publishedDateValidationResult = MediaValidationUtils.ValidatePublishedDate(x);
                 return publishedDateValidationResult.Successful;
             }));
 
-            var lastConsumedDate = AnsiConsole.Prompt(new TextPrompt<string?>("Enter the last consumed date: ").DefaultValue(null).Validate(x =>
+            var lastConsumedDate = _ansiConsole.Prompt(new TextPrompt<string?>("Enter the last consumed date: ").DefaultValue(null).Validate(x =>
             {
                 var lastConsumedDateValidationResult = MediaValidationUtils.ValidateLastConsumedDate(x);
                 return lastConsumedDateValidationResult.Successful;
             }));
 
-            var rating = AnsiConsole.Prompt(new TextPrompt<double?>($"Enter the rating (between {Rating.LOW_RATING} and {Rating.HIGH_RATING}").DefaultValue(null).AllowEmpty().Validate(x =>
+            var rating = _ansiConsole.Prompt(new TextPrompt<double?>($"Enter the rating (between {Rating.LOW_RATING} and {Rating.HIGH_RATING}").DefaultValue(null).AllowEmpty().Validate(x =>
             {
                 var res = MediaValidationUtils.ValidateRating(x.ToString());
                 return res.Successful;
             }));
 
             await _mediaService.Update(media.Id, newTitle, newDescription, ganre.Id, DateTime.Parse(publishedDate), lastConsumedDate!=null?DateTime.Parse(lastConsumedDate):null,  author.Id, rating != null ? new Rating(rating.Value) : null);
-            AnsiConsole.MarkupLine($"[green]Media was successfully updated![/]");
+            _ansiConsole.MarkupLine($"[green]Media was successfully updated![/]");
         }
     }
 }

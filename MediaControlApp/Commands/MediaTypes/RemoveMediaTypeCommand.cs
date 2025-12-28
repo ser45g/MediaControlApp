@@ -13,8 +13,10 @@
     {
        
         private readonly MediaTypeService _mediaTypeService;
+        private readonly IAnsiConsole _ansiConsole;
 
-       
+
+
         public RemoveMediaTypeCommand(MediaTypeService mediaTypeService)
         {
             _mediaTypeService = mediaTypeService;
@@ -56,7 +58,7 @@
                 throw new Exception("No media types available");
             }
 
-            var mediaType = AnsiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
+            var mediaType = _ansiConsole.Prompt(new SelectionPrompt<MediaType>().Title("Please select the media type you want to delete").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(mediaTypes).UseConverter(x => x.Name));
 
             if (mediaType == null)
             {
@@ -65,7 +67,7 @@
             Guid selectedMediaTypeId = mediaType.Id;
 
             await _mediaTypeService.Remove(selectedMediaTypeId);
-            AnsiConsole.MarkupLine($"[green]Media Type [[{mediaType.Name}]] was successfully deleted![/]");
+            _ansiConsole.MarkupLine($"[green]Media Type [[{mediaType.Name}]] was successfully deleted![/]");
         }
 
         private async Task HandleRemoveWithShowSelect(string? mediaTypeId)
@@ -78,7 +80,7 @@
                 Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId!);
 
                 await _mediaTypeService.Remove(mediaTypeIdGuid);
-                AnsiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");
+                _ansiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");
             }
             else
             {

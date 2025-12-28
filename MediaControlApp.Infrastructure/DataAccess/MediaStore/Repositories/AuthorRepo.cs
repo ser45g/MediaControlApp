@@ -1,7 +1,6 @@
 ﻿using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 
 namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 {

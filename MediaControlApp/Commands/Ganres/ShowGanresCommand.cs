@@ -11,10 +11,13 @@ namespace MediaControlApp.Commands.Ganres
     public class ShowGanresCommand : AsyncCommand<ShowElementsSettings>
     {
         private readonly GanreService _ganreService;
+        private readonly IAnsiConsole _ansiConsole;
 
-        public ShowGanresCommand(GanreService ganreService)
+
+        public ShowGanresCommand(GanreService ganreService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
+            _ansiConsole = ansiConsole;
         }
 
         protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)
@@ -44,7 +47,7 @@ namespace MediaControlApp.Commands.Ganres
                 ganres = ganres.OrderByDescending(x => x.Name);
             }
 
-            AnsiConsole.MarkupLine("[red]Ganres[/]");
+            _ansiConsole.MarkupLine("[red]Ganres[/]");
 
             if (!ganres.Any())
             {
@@ -55,7 +58,7 @@ namespace MediaControlApp.Commands.Ganres
                 table.AddRow(el.Id.ToString(), el.Name, el.Description ?? " - ", el.MediaTypeId.ToString(), el.MediaType?.Name ?? " - ");
             }
 
-            AnsiConsole.Write(table);
+            _ansiConsole.Write(table);
             return 0;
         }
 
