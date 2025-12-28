@@ -13,7 +13,7 @@ namespace MediaControlApp.Commands.Medias
 {
     public static class MediaValidationUtils
     {
-        public static async Task<ValidationResult> Validate(MediaService mediaService, string? title,
+        public static async Task<ValidationResult> Validate(IMediaService mediaService, string? title,
             string? ganreId, string? authorId, string? publishedDate, string? lastConsumedDate, string? rating)
         {
             var titleValidationResult = await ValidateTitle(mediaService, title);
@@ -56,7 +56,7 @@ namespace MediaControlApp.Commands.Medias
         }
 
 
-        public static async Task<ValidationResult> ValidateTitle(MediaService mediaService, string? title)
+        public static async Task<ValidationResult> ValidateTitle(IMediaService mediaService, string? title)
         {
             if (string.IsNullOrWhiteSpace(title))
             {

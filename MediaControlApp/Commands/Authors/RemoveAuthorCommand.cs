@@ -12,10 +12,10 @@
     [Description("Remove an author")]
     public class RemoveAuthorCommand : AsyncCommand<RemoveAuthorCommand.Settings>
     {
-        private readonly AuthorService _authorService;
+        private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
 
-        public RemoveAuthorCommand(AuthorService authorService, IAnsiConsole ansiConsole)
+        public RemoveAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
             _ansiConsole = ansiConsole;

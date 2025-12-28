@@ -12,12 +12,12 @@
     public class RemoveMediaTypeCommand : AsyncCommand<RemoveMediaTypeCommand.Settings>
     {
        
-        private readonly MediaTypeService _mediaTypeService;
+        private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
 
 
 
-        public RemoveMediaTypeCommand(MediaTypeService mediaTypeService)
+        public RemoveMediaTypeCommand(IMediaTypeService mediaTypeService)
         {
             _mediaTypeService = mediaTypeService;
         }

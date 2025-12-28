@@ -4,7 +4,7 @@ using MediaControlApp.Domain.Models.Media;
 
 namespace MediaControlApp.Application.Services
 {
-    public class AuthorService
+    public class AuthorService : IAuthorService
     {
         private readonly IAuthorRepo _authorRepo;
 
@@ -15,11 +15,11 @@ namespace MediaControlApp.Application.Services
 
         public async Task<bool> Add(string name, string? companyName = null, string? email = null)
         {
-            return await _authorRepo.Add(name:name, companyName:companyName, email:email);
+            return await _authorRepo.Add(name: name, companyName: companyName, email: email);
         }
         public async Task<bool> Update(Guid id, string name, string? companyName = null, string? email = null)
         {
-            return await _authorRepo.Update(id:id,name:name,companyName:companyName,email:email);
+            return await _authorRepo.Update(id: id, name: name, companyName: companyName, email: email);
         }
         public async Task<bool> Remove(Guid id)
         {
@@ -30,7 +30,8 @@ namespace MediaControlApp.Application.Services
             return await _authorRepo.GetById(id);
         }
 
-        public async Task<Author?> GetByName(string name) { 
+        public async Task<Author?> GetByName(string name)
+        {
             return await _authorRepo.GetByName(name);
 
         }

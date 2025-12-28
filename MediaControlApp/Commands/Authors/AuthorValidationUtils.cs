@@ -8,7 +8,7 @@ namespace MediaControlApp.Commands.Authors
 {
     public static class AuthorValidationUtils
     {
-        public static async Task<ValidationResult> ValidateName(AuthorService authorService, string? name)
+        public static async Task<ValidationResult> ValidateName(IAuthorService authorService, string? name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

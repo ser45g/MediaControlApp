@@ -11,11 +11,11 @@ namespace MediaControlApp.Commands.Medias
     public class RemoveMediaCommand : AsyncCommand<RemoveMediaCommand.Settings>
     {
 
-        private readonly MediaService _mediaService;
+        private readonly IMediaService _mediaService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public RemoveMediaCommand(MediaService mediaService, IAnsiConsole ansiConsole)
+        public RemoveMediaCommand(IMediaService mediaService, IAnsiConsole ansiConsole)
         {
             _mediaService = mediaService;
             _ansiConsole = ansiConsole;

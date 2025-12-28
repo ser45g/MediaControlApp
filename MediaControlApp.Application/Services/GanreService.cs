@@ -4,7 +4,7 @@ using MediaControlApp.Domain.Models.Media;
 
 namespace MediaControlApp.Application.Services
 {
-    public class GanreService
+    public class GanreService : IGanreService
     {
         public readonly IGanreRepo _ganreRepo;
 
@@ -15,7 +15,7 @@ namespace MediaControlApp.Application.Services
 
         public async Task<bool> Add(string name, Guid mediaTypeId, string? description = null)
         {
-            return await _ganreRepo.Add(name:name,mediaTypeId:mediaTypeId,description:description);
+            return await _ganreRepo.Add(name: name, mediaTypeId: mediaTypeId, description: description);
         }
         public async Task<bool> Update(Guid id, string name, Guid mediaTypeId, string? description = null)
         {

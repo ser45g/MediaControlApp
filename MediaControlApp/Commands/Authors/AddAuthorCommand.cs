@@ -10,10 +10,10 @@ namespace MediaControlApp.Commands.MediaTypes
     [Description("Add an author.")]
     public sealed class AddAuthorCommand : AsyncCommand<AddAuthorCommand.Settings>
     {
-        private readonly AuthorService _authorService;
+        private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
 
-        public AddAuthorCommand(AuthorService authorService, IAnsiConsole ansiConsole)
+        public AddAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
             _ansiConsole = ansiConsole;

@@ -15,13 +15,13 @@ namespace MediaControlApp.Commands.Medias
     [Description("Add a media")]
     public class AddMediaCommand : AsyncCommand<MediaSettings>
     {
-        private readonly GanreService _ganreService;
-        private readonly MediaService _mediaService;
-        private readonly AuthorService _authorService;
+        private readonly IGanreService _ganreService;
+        private readonly IMediaService _mediaService;
+        private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public AddMediaCommand(GanreService ganreService, MediaService mediaService, AuthorService authorService, IAnsiConsole ansiConsole)
+        public AddMediaCommand(IGanreService ganreService, IMediaService mediaService, IAuthorService authorService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaService = mediaService;

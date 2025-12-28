@@ -12,11 +12,11 @@
     public class UpdateMediaTypeCommand : AsyncCommand<UpdateMediaTypeCommand.Settings>
     {
  
-        private readonly MediaTypeService _mediaTypeService;
+        private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public UpdateMediaTypeCommand(MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+        public UpdateMediaTypeCommand(IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _mediaTypeService = mediaTypeService;
             _ansiConsole = ansiConsole;

@@ -10,11 +10,11 @@ namespace MediaControlApp.Commands.Ganres
     [Description("Show available ganres")]
     public class ShowGanresCommand : AsyncCommand<ShowElementsSettings>
     {
-        private readonly GanreService _ganreService;
+        private readonly IGanreService _ganreService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public ShowGanresCommand(GanreService ganreService, IAnsiConsole ansiConsole)
+        public ShowGanresCommand(IGanreService ganreService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _ansiConsole = ansiConsole;

@@ -10,13 +10,14 @@ namespace MediaControlApp.Commands.Medias
     public class ShowMediasCommand : AsyncCommand<ShowElementsSettings>
     {
 
-        private readonly MediaService _mediaService;
+        private readonly IMediaService _mediaService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public ShowMediasCommand(MediaService mediaService)
+        public ShowMediasCommand(IMediaService mediaService, IAnsiConsole ansiConsole)
         {
             _mediaService = mediaService;
+            _ansiConsole = ansiConsole;
         }
 
         protected override async Task<int> ExecuteAsync(CommandContext context, ShowElementsSettings settings, CancellationToken cancellationToken)

@@ -11,11 +11,11 @@ namespace MediaControlApp.Commands.Ganres
     public class RemoveGanreCommand : AsyncCommand<RemoveGanreCommand.Settings>
     {
 
-        private readonly GanreService _ganreService;
+        private readonly IGanreService _ganreService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public RemoveGanreCommand(GanreService ganreService, IAnsiConsole ansiConsole)
+        public RemoveGanreCommand(IGanreService ganreService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _ansiConsole = ansiConsole;

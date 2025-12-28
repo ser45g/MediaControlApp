@@ -4,7 +4,7 @@ using MediaControlApp.Domain.Models.Media;
 
 namespace MediaControlApp.Application.Services
 {
-    public class MediaTypeService
+    public class MediaTypeService : IMediaTypeService
     {
         public readonly IMediaTypeRepo _mediaTypeRepo;
 
@@ -15,12 +15,12 @@ namespace MediaControlApp.Application.Services
 
         public async Task<bool> Add(string name)
         {
-            return await _mediaTypeRepo.Add(name:name);
+            return await _mediaTypeRepo.Add(name: name);
         }
 
         public async Task<bool> Update(Guid id, string name)
         {
-            return await _mediaTypeRepo.Update(id:id, name:name);
+            return await _mediaTypeRepo.Update(id: id, name: name);
         }
 
         public async Task<bool> Remove(Guid id)
@@ -30,7 +30,7 @@ namespace MediaControlApp.Application.Services
 
         public async Task<IEnumerable<MediaType>> GetAll()
         {
-            return await _mediaTypeRepo.GetAll(); 
+            return await _mediaTypeRepo.GetAll();
         }
         public async Task<MediaType?> GetById(Guid id)
         {

@@ -12,10 +12,10 @@ namespace MediaControlApp.Commands.MediaTypes
     [Description("Update an author")]
     public class UpdateAuthorCommand : AsyncCommand<UpdateAuthorCommand.Settings>
     {
-        private readonly AuthorService _authorService;
+        private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
 
-        public UpdateAuthorCommand(AuthorService authorService, IAnsiConsole ansiConsole)
+        public UpdateAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
             _ansiConsole = ansiConsole;

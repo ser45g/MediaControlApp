@@ -9,7 +9,7 @@ namespace MediaControlApp.Commands.Ganres
 {
     public static class GanreValidationUtils
     {
-        public static async Task<ValidationResult> ValidateName(GanreService ganreService, string? name)
+        public static async Task<ValidationResult> ValidateName(IGanreService ganreService, string? name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

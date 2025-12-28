@@ -14,11 +14,11 @@ namespace MediaControlApp.Commands.MediaTypes
     public sealed class ShowMediaTypesCommand : AsyncCommand<ShowElementsSettings>
     {
 
-        private readonly MediaTypeService _mediaTypeService;
+        private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public ShowMediaTypesCommand(MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+        public ShowMediaTypesCommand(IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _mediaTypeService = mediaTypeService;
             _ansiConsole = ansiConsole;

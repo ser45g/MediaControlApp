@@ -9,12 +9,12 @@ namespace MediaControlApp.Commands.Ganres
     [Description("Add a ganre.")]
     public sealed class AddGanreCommand : AsyncCommand<GanreSettings>
     {
-        private readonly GanreService _ganreService;
-        private readonly MediaTypeService _mediaTypeService;
+        private readonly IGanreService _ganreService;
+        private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public AddGanreCommand(GanreService ganreService, MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+        public AddGanreCommand(IGanreService ganreService, IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaTypeService = mediaTypeService;

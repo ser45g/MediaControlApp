@@ -9,12 +9,12 @@ namespace MediaControlApp.Commands.Ganres
     [Description("Update a ganre")]
     public class UpdateGanreCommand : AsyncCommand<UpdateGanreCommand.Settings>
     {
-        private readonly GanreService _ganreService;
-        private readonly MediaTypeService _mediaTypeService;
+        private readonly IGanreService _ganreService;
+        private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public UpdateGanreCommand(GanreService ganreService, MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+        public UpdateGanreCommand(IGanreService ganreService, IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaTypeService = mediaTypeService;

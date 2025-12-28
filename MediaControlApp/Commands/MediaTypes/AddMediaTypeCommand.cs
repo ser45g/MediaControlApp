@@ -11,13 +11,14 @@ namespace MediaControlApp.Commands.MediaTypes
     [Description("Add a media type.")]
     public sealed class AddMediaTypeCommand : AsyncCommand<AddMediaTypeCommand.Settings>
     {
-        private readonly MediaTypeService _mediaTypeService;
+        private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public AddMediaTypeCommand(MediaTypeService mediaTypeService)
+        public AddMediaTypeCommand(MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
         {
             _mediaTypeService = mediaTypeService;
+            _ansiConsole = ansiConsole;
         }
 
         public sealed class Settings : CommandSettings

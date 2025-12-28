@@ -8,7 +8,7 @@ namespace MediaControlApp.Commands.MediaTypes
 {
     public static class MediaTypeValidationUtils
     {
-        public static async Task<ValidationResult> ValidateName(MediaTypeService mediaTypeService, string? name)
+        public static async Task<ValidationResult> ValidateName(IMediaTypeService mediaTypeService, string? name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

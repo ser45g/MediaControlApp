@@ -12,13 +12,13 @@ namespace MediaControlApp.Commands.Medias
     [Description("Update a media")]
     public class UpdateMediaCommand : AsyncCommand<UpdateMediaCommand.Settings>
     {
-        private readonly GanreService _ganreService;
-        private readonly MediaService _mediaService;
-        private readonly AuthorService _authorService;
+        private readonly IGanreService _ganreService;
+        private readonly IMediaService _mediaService;
+        private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
 
 
-        public UpdateMediaCommand(GanreService ganreService, MediaService mediaService, AuthorService authorService, IAnsiConsole ansiConsole)
+        public UpdateMediaCommand(IGanreService ganreService, IMediaService mediaService, IAuthorService authorService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
             _mediaService = mediaService;

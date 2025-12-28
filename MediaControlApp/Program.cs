@@ -23,15 +23,15 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(s =>
         builder.UseSqlite("Data Source=db.db");
     });
 
-    s.AddTransient<IAuthorRepo,AuthorRepo>();
-    s.AddTransient<IGanreRepo,GanreRepo>();
-    s.AddTransient<IMediaRepo,MediaRepo>();
-    s.AddTransient<IMediaTypeRepo,MediaTypeRepo>();
+    s.AddScoped<IAuthorRepo,AuthorRepo>();
+    s.AddScoped<IGanreRepo,GanreRepo>();
+    s.AddScoped<IMediaRepo,MediaRepo>();
+    s.AddScoped<IMediaTypeRepo,MediaTypeRepo>();
 
-    s.AddScoped<AuthorService>();
-    s.AddScoped<GanreService>();
-    s.AddScoped<MediaService>();
-    s.AddScoped<MediaTypeService>();
+    s.AddScoped<IAuthorService,AuthorService>();
+    s.AddScoped<IGanreService, GanreService>();
+    s.AddScoped<IMediaService, MediaService>();
+    s.AddScoped<IMediaTypeService, MediaTypeService>();
 
     services = s;
 }).ConfigureLogging(builder =>

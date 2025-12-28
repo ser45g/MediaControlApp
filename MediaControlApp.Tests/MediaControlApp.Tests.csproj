@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Spectre.Console.Cli.Testing" Version="1.0.0-alpha.0.12" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
   </ItemGroup>
@@ -20,6 +21,7 @@
     <ProjectReference Include="..\MediaControlApp.Application\MediaControlApp.Application.csproj" />
     <ProjectReference Include="..\MediaControlApp.Domain\MediaControlApp.Domain.csproj" />
     <ProjectReference Include="..\MediaControlApp.Infrastructure\MediaControlApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\MediaControlApp\MediaControlApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="App\Commands\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 

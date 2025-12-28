@@ -13,10 +13,10 @@ namespace MediaControlApp.Commands.MediaTypes
     public sealed class ShowAuthorsCommand : AsyncCommand<ShowElementsSettings>
     {
 
-        private readonly AuthorService _authorService;
+        private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
 
-        public ShowAuthorsCommand(AuthorService authorService, IAnsiConsole ansiConsole)
+        public ShowAuthorsCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
         {
             _authorService = authorService;
             _ansiConsole = ansiConsole;
