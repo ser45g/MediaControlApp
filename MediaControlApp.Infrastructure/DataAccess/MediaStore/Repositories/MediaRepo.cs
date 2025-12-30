@@ -64,9 +64,9 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
             return await _context.Medias.Where(m => m.Id == id).ExecuteDeleteAsync(cancellationToken)==1;
         }
 
-        public async Task<bool> SetConsumed(Guid id, CancellationToken cancellationToken = default)
+        public async Task<bool> SetConsumed(Guid id, DateTime lastConsumed, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Where(m=>m.Id==id).ExecuteUpdateAsync((m)=>m.SetProperty(m=>m.LastConsumedDateUtc, DateTime.UtcNow), cancellationToken)==1;
+            return await _context.Medias.Where(m=>m.Id==id).ExecuteUpdateAsync((m)=>m.SetProperty(m=>m.LastConsumedDateUtc, lastConsumed), cancellationToken)==1;
         }
 
         public async Task<bool> Update(Guid id, string title, Guid ganreId, DateTime publisedDate, Guid authorId, string? description = null, DateTime? lastConsumedDate = null, Rating? rating = null,  CancellationToken cancellationToken = default)

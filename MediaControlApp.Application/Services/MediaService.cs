@@ -58,9 +58,9 @@ namespace MediaControlApp.Application.Services
             return await _mediaRepo.GetById(id, cancellationToken);
         }
 
-        public async Task<bool> SetConsumed(Guid id, CancellationToken cancellationToken = default)
+        public async Task<bool> SetConsumed(Guid id, DateTime lastConsumed, CancellationToken cancellationToken = default)
         {
-            return await _mediaRepo.SetConsumed(id, cancellationToken);
+            return await _mediaRepo.SetConsumed(id, lastConsumed, cancellationToken);
 
         }
 

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\MediaControlApp.Infrastructure\MediaControlApp.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Statistics\" />
+  </ItemGroup>
+
 </Project>

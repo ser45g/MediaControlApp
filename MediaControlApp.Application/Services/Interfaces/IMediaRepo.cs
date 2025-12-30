@@ -28,7 +28,7 @@ namespace MediaControlApp.Application.Services.Interfaces
 
         Task<bool> Rate(Guid id, Rating rating, CancellationToken cancellationToken = default);
 
-        Task<bool> SetConsumed(Guid id, CancellationToken cancellationToken = default);
+        Task<bool> SetConsumed(Guid id, DateTime lastConsumed, CancellationToken cancellationToken = default);
 
 
     }

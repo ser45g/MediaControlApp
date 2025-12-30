@@ -101,6 +101,7 @@ app.Configure(config =>
         media.AddCommand<RemoveMediaCommand>("remove");
         media.AddCommand<ShowMediasCommand>("show");
         media.AddCommand<UpdateMediaCommand>("update");
+        media.AddCommand<SetMediaConsumedCommand>("set-consumed");
     });
 
     app.Configure(config =>

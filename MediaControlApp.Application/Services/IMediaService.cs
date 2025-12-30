@@ -14,7 +14,7 @@ namespace MediaControlApp.Application.Services
         Task<Media?> GetByTitle(string title, CancellationToken cancellationToken = default);
         Task<bool> Rate(Guid id, Rating rating, CancellationToken cancellationToken = default);
         Task<bool> Remove(Guid id, CancellationToken cancellationToken = default);
-        Task<bool> SetConsumed(Guid id, CancellationToken cancellationToken = default);
+        Task<bool> SetConsumed(Guid id, DateTime lastConsumed, CancellationToken cancellationToken = default);
         Task<bool> Update(Guid id, string title, string? description, Guid ganreId, DateTime publishedDate, DateTime? lastConsumedDate, Guid authorId, Rating? rating, CancellationToken cancellationToken = default);
     }
 }
