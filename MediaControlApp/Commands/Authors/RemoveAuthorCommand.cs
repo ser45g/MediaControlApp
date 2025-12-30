@@ -1,9 +1,9 @@
 ﻿namespace MediaControlApp.Commands.MediaTypes
 {
     using MediaControlApp.Application.Services;
-    using MediaControlApp.Commands.Authors;
     using MediaControlApp.Domain.Models.Media;
     using MediaControlApp.SharedSettings;
+    using MediaControlApp.Validators;
     using Spectre.Console;
     using Spectre.Console.Cli;
     using System;
@@ -14,11 +14,13 @@
     {
         private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IAuthorValidationUtils _authorValidationUtils;
 
-        public RemoveAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
+        public RemoveAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole, IAuthorValidationUtils authorValidationUtils)
         {
             _authorService = authorService;
             _ansiConsole = ansiConsole;
+            _authorValidationUtils = authorValidationUtils;
         }
 
         public sealed class Settings : SelectableSettings
@@ -54,7 +56,7 @@
 
         private async Task HandleRemoveWithShowSelect(string authorId)
         {
-            var mediaTypeIdValidationResult = AuthorValidationUtils.ValidateAuthorId(authorId);
+            var mediaTypeIdValidationResult = _authorValidationUtils.ValidateAuthorId(authorId);
 
             if (mediaTypeIdValidationResult.Successful)
             {

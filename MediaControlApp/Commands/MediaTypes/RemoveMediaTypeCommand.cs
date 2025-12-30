@@ -3,6 +3,7 @@
     using MediaControlApp.Application.Services;
     using MediaControlApp.Domain.Models.Media;
     using MediaControlApp.SharedSettings;
+    using MediaControlApp.Validators;
     using Spectre.Console;
     using Spectre.Console.Cli;
     using System;
@@ -10,22 +11,20 @@
 
     [Description("Remove a media type.")]
     public class RemoveMediaTypeCommand : AsyncCommand<RemoveMediaTypeCommand.Settings>
-    {
-       
+    {   
         private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IMediaTypeValidationUtils _mediaTypeValidationUtils;
 
-
-
-        public RemoveMediaTypeCommand(IMediaTypeService mediaTypeService)
+        public RemoveMediaTypeCommand(IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole, IMediaTypeValidationUtils mediaTypeValidationUtils)
         {
             _mediaTypeService = mediaTypeService;
+            _ansiConsole = ansiConsole;
+            _mediaTypeValidationUtils = mediaTypeValidationUtils;
         }
 
-    
         public sealed class Settings : SelectableSettings
         {
-        
             [CommandArgument(0, "[MEDIATYPEID]")]
             [Description("The media type's id to delete it")]
             public string? Id { get; init; }
@@ -45,7 +44,6 @@
                 await HandleRemoveWithShowSelect(settings.Id);
             }
 
-           
             return 0;
         }
 
@@ -72,14 +70,14 @@
 
         private async Task HandleRemoveWithShowSelect(string? mediaTypeId)
         {
-
-            var mediaTypeIdValidationResult = MediaTypeValidationUtils.ValidateMediaTypeId(mediaTypeId);
+            var mediaTypeIdValidationResult = _mediaTypeValidationUtils.ValidateMediaTypeId(mediaTypeId);
 
             if (mediaTypeIdValidationResult.Successful)
             {
                 Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId!);
 
                 await _mediaTypeService.Remove(mediaTypeIdGuid);
+
                 _ansiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");
             }
             else

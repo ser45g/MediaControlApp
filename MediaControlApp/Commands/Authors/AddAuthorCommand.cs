@@ -1,5 +1,5 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.Authors;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -12,11 +12,13 @@ namespace MediaControlApp.Commands.MediaTypes
     {
         private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IAuthorValidationUtils _authorValidationUtils;
 
-        public AddAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
+        public AddAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole, IAuthorValidationUtils authorValidationUtils)
         {
             _authorService = authorService;
             _ansiConsole = ansiConsole;
+            _authorValidationUtils = authorValidationUtils;
         }
         public sealed class Settings : CommandSettings
         {
@@ -34,7 +36,7 @@ namespace MediaControlApp.Commands.MediaTypes
         }
         protected override ValidationResult Validate(CommandContext context, Settings settings)
         {
-            var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.Name);
+            var authorNameValidationTask = _authorValidationUtils.ValidateName(settings.Name);
 
             authorNameValidationTask.Wait();
 

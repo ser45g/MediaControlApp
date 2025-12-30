@@ -1,5 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Domain.Models.Media;
+using MediaControlApp.SharedSettings;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -7,29 +9,47 @@ using System.ComponentModel;
 namespace MediaControlApp.Commands.Ganres
 {
     [Description("Add a ganre.")]
-    public sealed class AddGanreCommand : AsyncCommand<GanreSettings>
+    public sealed class AddGanreCommand : AsyncCommand<AddGanreCommand.Settings>
     {
         private readonly IGanreService _ganreService;
         private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IGanreValidationUtils _ganreValidationUtils;
 
 
-        public AddGanreCommand(IGanreService ganreService, IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+
+        public AddGanreCommand(IGanreService ganreService, IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole, IGanreValidationUtils ganreValidationUtils)
         {
             _ganreService = ganreService;
             _mediaTypeService = mediaTypeService;
             _ansiConsole = ansiConsole;
+            _ganreValidationUtils = ganreValidationUtils;
         }
 
+        public class Settings : SelectableSettings
+        {
+            [CommandArgument(0, "[GANRENAME]")]
+            [Description("The ganre name to add. It must be unique")]
+            public string? Name { get; init; }
+            [CommandArgument(1, "[DESCRIPTION]")]
+            [Description("The description of the specified ganre")]
+            public string? Description { get; init; }
 
+            [CommandArgument(2, "[MEDIATYPEID]")]
+            [Description("The ganre's media type id")]
+            public string? MediaTypeId { get; init; }
 
-        protected override ValidationResult Validate(CommandContext context, GanreSettings settings)
+         
+
+        }
+
+        protected override ValidationResult Validate(CommandContext context, Settings settings)
         {
             if (!settings.ShowSelect)
             {
-                var mediaTypeIdValidationResult = GanreValidationUtils.ValidateMediaTypeId(settings.MediaTypeId);
+                var mediaTypeIdValidationResult = _ganreValidationUtils.ValidateMediaTypeId(settings.MediaTypeId);
 
-                var mediaTypeNameValidationTask = GanreValidationUtils.ValidateName(_ganreService, settings.Name);
+                var mediaTypeNameValidationTask = _ganreValidationUtils.ValidateName(settings.Name);
 
                 mediaTypeNameValidationTask.Wait();
 
@@ -46,7 +66,7 @@ namespace MediaControlApp.Commands.Ganres
         }
 
 
-        protected async override Task<int> ExecuteAsync(CommandContext context, GanreSettings settings, CancellationToken cancellationToken)
+        protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
 
             if (settings.ShowSelect)
@@ -66,7 +86,7 @@ namespace MediaControlApp.Commands.Ganres
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
             await _ganreService.Add(name, mediaTypeIdGuid, description);
-            _ansiConsole.MarkupLine($"[green]Ganre with Id [[{mediaTypeIdGuid}]] was successfully added![/]");
+            _ansiConsole.MarkupLine($"[green]Ganre was successfully added![/]");
         }
 
         private async Task HandleAdd()
@@ -80,7 +100,7 @@ namespace MediaControlApp.Commands.Ganres
 
             var name = _ansiConsole.Prompt(new TextPrompt<string>("Enter a ganre name: ").Validate(x =>
             {
-                var task = GanreValidationUtils.ValidateName(_ganreService, x);
+                var task = _ganreValidationUtils.ValidateName(x);
                 task.Wait();
 
                 return task.Result.Successful;

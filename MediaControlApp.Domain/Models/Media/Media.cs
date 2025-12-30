@@ -15,7 +15,7 @@ namespace MediaControlApp.Domain.Models.Media
         public Guid GanreId { get; set; }
         public Ganre? Ganre { get; set; }
 
-        public DateTime PublisedDateUtc { get; set; }
+        public DateTime PublishedDateUtc { get; set; }
 
         public DateTime? LastConsumedDateUtc { get; set; }
 

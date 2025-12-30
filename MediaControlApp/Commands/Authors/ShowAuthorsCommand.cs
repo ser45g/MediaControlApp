@@ -7,14 +7,13 @@ using System.ComponentModel;
 
 namespace MediaControlApp.Commands.MediaTypes
 {
-
-
     [Description("Show available authors.")]
     public sealed class ShowAuthorsCommand : AsyncCommand<ShowElementsSettings>
     {
 
         private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
+
 
         public ShowAuthorsCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
         {

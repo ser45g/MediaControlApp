@@ -1,5 +1,6 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Application.Services.Interfaces;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -13,12 +14,13 @@ namespace MediaControlApp.Commands.MediaTypes
     {
         private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IMediaTypeValidationUtils _mediaTypeValidationUtils;
 
-
-        public AddMediaTypeCommand(MediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+        public AddMediaTypeCommand(IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole, IMediaTypeValidationUtils mediaTypeValidationUtils)
         {
             _mediaTypeService = mediaTypeService;
             _ansiConsole = ansiConsole;
+            _mediaTypeValidationUtils = mediaTypeValidationUtils;
         }
 
         public sealed class Settings : CommandSettings
@@ -31,7 +33,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
         protected override  ValidationResult Validate(CommandContext context, Settings settings)
         {
-            var mediaTypeNameValidationTask = MediaTypeValidationUtils.ValidateName(_mediaTypeService, settings.Name);
+            var mediaTypeNameValidationTask = _mediaTypeValidationUtils.ValidateName(settings.Name);
 
             mediaTypeNameValidationTask.Wait();
 

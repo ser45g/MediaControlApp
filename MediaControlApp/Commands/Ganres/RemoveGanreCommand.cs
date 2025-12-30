@@ -1,6 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.SharedSettings;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -13,12 +14,14 @@ namespace MediaControlApp.Commands.Ganres
 
         private readonly IGanreService _ganreService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IGanreValidationUtils _ganreValidationUtils;
 
 
-        public RemoveGanreCommand(IGanreService ganreService, IAnsiConsole ansiConsole)
+        public RemoveGanreCommand(IGanreService ganreService, IAnsiConsole ansiConsole, IGanreValidationUtils ganreValidationUtils)
         {
             _ganreService = ganreService;
             _ansiConsole = ansiConsole;
+            _ganreValidationUtils = ganreValidationUtils;
         }
 
         public sealed class Settings : SelectableSettings
@@ -68,7 +71,7 @@ namespace MediaControlApp.Commands.Ganres
         private async Task HandleRemoveWithShowSelect(string? ganreId)
         {
 
-            var ganreIdValidationResult = GanreValidationUtils.ValidateGanreId(ganreId);
+            var ganreIdValidationResult = _ganreValidationUtils.ValidateGanreId(ganreId);
 
             if (ganreIdValidationResult.Successful)
             {

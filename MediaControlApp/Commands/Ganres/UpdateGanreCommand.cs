@@ -1,5 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Domain.Models.Media;
+using MediaControlApp.SharedSettings;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -12,20 +14,34 @@ namespace MediaControlApp.Commands.Ganres
         private readonly IGanreService _ganreService;
         private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IGanreValidationUtils _ganreValidationUtils;
 
 
-        public UpdateGanreCommand(IGanreService ganreService, IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+        public UpdateGanreCommand(IGanreService ganreService, IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole, IGanreValidationUtils ganreValidationUtils)
         {
             _ganreService = ganreService;
             _mediaTypeService = mediaTypeService;
             _ansiConsole = ansiConsole;
+            _ganreValidationUtils = ganreValidationUtils;
         }
 
-        public sealed class Settings : GanreSettings
+        public sealed class Settings : SelectableSettings
         {
             [CommandArgument(0, "[GANREID]")]
             [Description("The ganre's id to delete.")]
             public string? GanreId { get; init; }
+
+            [CommandArgument(1, "[GANRENAME]")]
+            [Description("The ganre name to add. It must be unique")]
+            public string? Name { get; init; }
+
+            [CommandArgument(2, "[DESCRIPTION]")]
+            [Description("The description of the specified ganre")]
+            public string? Description { get; init; }
+
+            [CommandArgument(3, "[MEDIATYPEID]")]
+            [Description("The ganre's media type id")]
+            public string? MediaTypeId { get; init; }
 
         }
 
@@ -33,12 +49,12 @@ namespace MediaControlApp.Commands.Ganres
         {
             if (!settings.ShowSelect)
             {
-                var ganreIdValidationResult = GanreValidationUtils.ValidateGanreId(settings.GanreId);
+                var ganreIdValidationResult = _ganreValidationUtils.ValidateGanreId(settings.GanreId);
 
-                var ganreNameValidationTask = GanreValidationUtils.ValidateName(_ganreService, settings.Name);
+                var ganreNameValidationTask = _ganreValidationUtils.ValidateName(settings.Name);
                 ganreNameValidationTask.Wait();
 
-                var mediaTypeIdValidationTask = GanreValidationUtils.ValidateMediaTypeId(settings.MediaTypeId);
+                var mediaTypeIdValidationTask = _ganreValidationUtils.ValidateMediaTypeId(settings.MediaTypeId);
 
 
                 var ganreNameValidationResult = ganreNameValidationTask.Result;
@@ -106,7 +122,7 @@ namespace MediaControlApp.Commands.Ganres
 
             var newName = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(ganre.Name).Validate(x =>
             {
-                var ganreNameValidationTask = GanreValidationUtils.ValidateName(_ganreService, x);
+                var ganreNameValidationTask = _ganreValidationUtils.ValidateName(x);
                 ganreNameValidationTask.Wait();
 
                 var ganreNameValidationResult = ganreNameValidationTask.Result;

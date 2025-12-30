@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MediaControlApp.Infrasturcture
+namespace MediaControlApp.Helpers
 {
-    internal class DITypeRegistar : ITypeRegistrar
+    public class DITypeRegistar : ITypeRegistrar
     {
         private readonly IServiceCollection _builder;
 

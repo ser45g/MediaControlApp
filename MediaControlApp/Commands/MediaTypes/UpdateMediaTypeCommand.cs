@@ -3,6 +3,7 @@
     using MediaControlApp.Application.Services;
     using MediaControlApp.Domain.Models.Media;
     using MediaControlApp.SharedSettings;
+    using MediaControlApp.Validators;
     using Spectre.Console;
     using Spectre.Console.Cli;
     using System;
@@ -14,12 +15,14 @@
  
         private readonly IMediaTypeService _mediaTypeService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IMediaTypeValidationUtils _mediaTypeValidationUtils;
 
 
-        public UpdateMediaTypeCommand(IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole)
+        public UpdateMediaTypeCommand(IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole, IMediaTypeValidationUtils mediaTypeValidationUtils)
         {
             _mediaTypeService = mediaTypeService;
             _ansiConsole = ansiConsole;
+            _mediaTypeValidationUtils = mediaTypeValidationUtils;
         }
 
         public sealed class Settings : SelectableSettings
@@ -36,9 +39,9 @@
         {
             if (!settings.ShowSelect)
             {
-                var mediaTypeIdValidationResult = MediaTypeValidationUtils.ValidateMediaTypeId(settings.Id);
+                var mediaTypeIdValidationResult = _mediaTypeValidationUtils.ValidateMediaTypeId(settings.Id);
 
-                var mediaTypeNameValidationTask = MediaTypeValidationUtils.ValidateName(_mediaTypeService,settings.Name);
+                var mediaTypeNameValidationTask = _mediaTypeValidationUtils.ValidateName(settings.Name);
 
                 mediaTypeNameValidationTask.Wait();
 
@@ -75,7 +78,7 @@
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
             await _mediaTypeService.Update(mediaTypeIdGuid, mediaTypeName);
-            _ansiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");      
+            _ansiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully updated![/]");      
         }
 
         private async Task HandleUpdate()
@@ -83,7 +86,7 @@
             var mediaTypes = await _mediaTypeService.GetAll();
 
             if (!mediaTypes.Any())
-            {
+            { 
                 throw new Exception("No media types available");
             }
 
@@ -96,10 +99,10 @@
 
             var newName = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(mediaType.Name).Validate(x =>
             {
-                var task = MediaTypeValidationUtils.ValidateName(_mediaTypeService, x);
+                var task = _mediaTypeValidationUtils.ValidateName(x);
                 task.Wait();
 
-                return !task.Result.Successful;
+                return task.Result.Successful;
               
             }));
 

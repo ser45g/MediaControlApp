@@ -4,11 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MediaControlApp.Commands.Authors
+namespace MediaControlApp.Validators
 {
-    public static class AuthorValidationUtils
+    public class AuthorValidationUtils : IAuthorValidationUtils
     {
-        public static async Task<ValidationResult> ValidateName(IAuthorService authorService, string? name)
+        public readonly IAuthorService _authorService;
+        public readonly ISharedValidatorUtils _sharedValidatorUtils;
+
+        public AuthorValidationUtils(IAuthorService authorService, ISharedValidatorUtils sharedValidatorUtils)
+        {
+            _authorService = authorService;
+            _sharedValidatorUtils = sharedValidatorUtils;
+        }
+
+        public async Task<ValidationResult> ValidateName(string? name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -17,7 +26,7 @@ namespace MediaControlApp.Commands.Authors
 
             var checkNameIsUniqueFunc = async () =>
             {
-                var res = await authorService.GetByName(name);
+                var res = await _authorService.GetByName(name);
                 return res == null;
             };
             var checkNameIsUniqueTask = checkNameIsUniqueFunc();
@@ -33,20 +42,9 @@ namespace MediaControlApp.Commands.Authors
         }
 
 
-        public static ValidationResult ValidateAuthorId(string? authorId)
+        public ValidationResult ValidateAuthorId(string? authorId)
         {
-            if (authorId != null)
-            {
-                bool isValidGuid = Guid.TryParse(authorId, out Guid res);
-                if (!isValidGuid)
-                    return ValidationResult.Error("Invalid format for Author Id");
-
-            }
-            else
-            {
-                return ValidationResult.Error("Id can't be empty");
-            }
-            return ValidationResult.Success();
+            return _sharedValidatorUtils.ValidateGuid(authorId);
         }
     }
 }

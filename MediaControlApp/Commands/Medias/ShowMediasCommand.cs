@@ -59,7 +59,7 @@ namespace MediaControlApp.Commands.Medias
             }
             foreach (var el in medias)
             {
-                table.AddRow(el.Id.ToString(), el.Title, el.Description ?? " - ", el.GanreId.ToString(), el.Ganre?.Name ?? " - ", el.AuthorId.ToString(), el.Author?.Name ?? " - ", el.PublisedDateUtc.ToShortDateString(), el.LastConsumedDateUtc?.ToShortDateString() ?? " - ");
+                table.AddRow(el.Id.ToString(), el.Title, el.Description ?? " - ", el.GanreId.ToString(), el.Ganre?.Name ?? " - ", el.AuthorId.ToString(), el.Author?.Name ?? " - ", el.PublishedDateUtc.ToShortDateString(), el.LastConsumedDateUtc?.ToShortDateString() ?? " - ");
             }
 
             _ansiConsole.Write(table);

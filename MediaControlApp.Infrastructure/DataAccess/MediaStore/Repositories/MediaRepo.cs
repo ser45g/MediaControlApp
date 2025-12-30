@@ -16,7 +16,7 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<bool> Add(string title, Guid ganreId, DateTime publisedDate, Guid authorId, string? description = null, DateTime? lastConsumedDate = null, Rating? rating = null)
         {
-            var media = new Media() { Title = title, PublisedDateUtc = publisedDate, Description = description, LastConsumedDateUtc = lastConsumedDate, Rating = rating };
+            var media = new Media() { Title = title, PublishedDateUtc = publisedDate, Description = description, LastConsumedDateUtc = lastConsumedDate, Rating = rating };
 
             _context.Medias.Add(media);
 
@@ -72,7 +72,7 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
         public async Task<bool> Update(Guid id, string title, Guid ganreId, DateTime publisedDate, Guid authorId, string? description = null, DateTime? lastConsumedDate = null, Rating? rating = null)
         {
 
-            return await _context.Medias.Where(m=>m.Id == id).ExecuteUpdateAsync((m) => m.SetProperty(m => m.AuthorId, authorId).SetProperty(m => m.Title, title).SetProperty(m => m.Description, description).SetProperty(m => m.PublisedDateUtc, publisedDate).SetProperty(m => m.LastConsumedDateUtc, lastConsumedDate).SetProperty(m => m.GanreId, ganreId).SetProperty(m => m.Rating, rating)) == 1;
+            return await _context.Medias.Where(m=>m.Id == id).ExecuteUpdateAsync((m) => m.SetProperty(m => m.AuthorId, authorId).SetProperty(m => m.Title, title).SetProperty(m => m.Description, description).SetProperty(m => m.PublishedDateUtc, publisedDate).SetProperty(m => m.LastConsumedDateUtc, lastConsumedDate).SetProperty(m => m.GanreId, ganreId).SetProperty(m => m.Rating, rating)) == 1;
 
 
         }

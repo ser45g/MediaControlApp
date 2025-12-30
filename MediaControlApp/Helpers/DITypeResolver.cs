@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MediaControlApp.Infrasturcture
+namespace MediaControlApp.Helpers
 {
     public class DITypeResolver : ITypeResolver, IDisposable
     {

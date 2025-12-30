@@ -14,6 +14,7 @@ namespace MediaControlApp.Commands.Ganres
         private readonly IAnsiConsole _ansiConsole;
 
 
+
         public ShowGanresCommand(IGanreService ganreService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;

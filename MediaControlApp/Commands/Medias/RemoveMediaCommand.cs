@@ -1,6 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.SharedSettings;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -13,12 +14,14 @@ namespace MediaControlApp.Commands.Medias
 
         private readonly IMediaService _mediaService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IMediaValidationUtils _mediaValidationUtils;
 
 
-        public RemoveMediaCommand(IMediaService mediaService, IAnsiConsole ansiConsole)
+        public RemoveMediaCommand(IMediaService mediaService, IAnsiConsole ansiConsole, IMediaValidationUtils mediaValidationUtils)
         {
             _mediaService = mediaService;
             _ansiConsole = ansiConsole;
+            _mediaValidationUtils = mediaValidationUtils;
         }
 
         public sealed class Settings : SelectableSettings
@@ -69,7 +72,7 @@ namespace MediaControlApp.Commands.Medias
         private async Task HandleRemoveWithShowSelect(string? mediaId)
         {
 
-            var mediaIdValidationResult = MediaValidationUtils.ValidateMediaId(mediaId);
+            var mediaIdValidationResult = _mediaValidationUtils.ValidateMediaId(mediaId);
 
             if (mediaIdValidationResult.Successful)
             {

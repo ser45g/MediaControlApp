@@ -3,9 +3,11 @@ using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Commands.Ganres;
 using MediaControlApp.Commands.Medias;
 using MediaControlApp.Commands.MediaTypes;
+using MediaControlApp.Helpers;
 using MediaControlApp.Infrastructure.DataAccess.MediaStore;
 using MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories;
-using MediaControlApp.Infrasturcture;
+
+using MediaControlApp.Validators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +29,12 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(s =>
     s.AddScoped<IGanreRepo,GanreRepo>();
     s.AddScoped<IMediaRepo,MediaRepo>();
     s.AddScoped<IMediaTypeRepo,MediaTypeRepo>();
+
+    s.AddTransient<IGanreValidationUtils, GanreValidationUtils>();
+    s.AddTransient<IAuthorValidationUtils, AuthorValidationUtils>();
+    s.AddTransient<IMediaTypeValidationUtils, MediaTypeValidationUtils>();
+    s.AddTransient<IMediaValidationUtils, MediaValidationUtils>();
+    s.AddTransient<ISharedValidatorUtils, SharedValidatorUtils>();
 
     s.AddScoped<IAuthorService,AuthorService>();
     s.AddScoped<IGanreService, GanreService>();
@@ -99,7 +107,9 @@ app.Configure(config =>
     {
         config.SetExceptionHandler((ex, resolver) =>
         {
-            AnsiConsole.WriteException(ex, ExceptionFormats.NoStackTrace|ExceptionFormats.ShortenEverything);
+
+            IAnsiConsole _ansiConsole = (IAnsiConsole)resolver.Resolve(typeof(IAnsiConsole));
+            _ansiConsole.WriteException(ex, ExceptionFormats.NoStackTrace|ExceptionFormats.ShortenEverything);
 
             // Return specific exit codes based on exception type
             return 1;

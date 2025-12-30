@@ -1,7 +1,7 @@
 ﻿using MediaControlApp.Application.Services;
-using MediaControlApp.Commands.Authors;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.SharedSettings;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -14,11 +14,14 @@ namespace MediaControlApp.Commands.MediaTypes
     {
         private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IAuthorValidationUtils _authorValidationUtils;
 
-        public UpdateAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole)
+
+        public UpdateAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole, IAuthorValidationUtils authorValidationUtils)
         {
             _authorService = authorService;
             _ansiConsole = ansiConsole;
+            _authorValidationUtils = authorValidationUtils;
         }
 
         public sealed class Settings : SelectableSettings
@@ -46,9 +49,9 @@ namespace MediaControlApp.Commands.MediaTypes
         {
             if (!settings.ShowSelect)
             {
-                var authorIdValidationResult = AuthorValidationUtils.ValidateAuthorId(settings.Id);
+                var authorIdValidationResult = _authorValidationUtils.ValidateAuthorId(settings.Id);
 
-                var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, settings.Name);
+                var authorNameValidationTask = _authorValidationUtils.ValidateName(settings.Name);
 
                 authorNameValidationTask.Wait();
 
@@ -84,7 +87,7 @@ namespace MediaControlApp.Commands.MediaTypes
             Guid authorIdGuid = Guid.Parse(authorId!);
 
             await _authorService.Update(authorIdGuid, authorName!, companyName, email);
-            _ansiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
+            _ansiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully updated![/]");
         }
 
         private async Task HandleUpdate()
@@ -105,7 +108,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
             var newName = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new name: ").DefaultValue(author.Name).Validate(x =>
             {
-                var authorNameValidationTask = AuthorValidationUtils.ValidateName(_authorService, x);
+                var authorNameValidationTask = _authorValidationUtils.ValidateName(x);
                 authorNameValidationTask.Wait();
 
                 var authorNameValidationResult = authorNameValidationTask.Result;

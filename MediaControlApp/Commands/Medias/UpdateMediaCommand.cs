@@ -2,6 +2,7 @@
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.Domain.Models.Media.ValueObjects;
 using MediaControlApp.SharedSettings;
+using MediaControlApp.Validators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -16,21 +17,50 @@ namespace MediaControlApp.Commands.Medias
         private readonly IMediaService _mediaService;
         private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
+        private readonly IMediaValidationUtils _mediaValidationUtils;
 
-
-        public UpdateMediaCommand(IGanreService ganreService, IMediaService mediaService, IAuthorService authorService, IAnsiConsole ansiConsole)
+        public UpdateMediaCommand(IGanreService ganreService, IMediaService mediaService, IAuthorService authorService, IAnsiConsole ansiConsole, IMediaValidationUtils mediaValidationUtils)
         {
             _ganreService = ganreService;
             _mediaService = mediaService;
             _authorService = authorService;
             _ansiConsole = ansiConsole;
+            _mediaValidationUtils = mediaValidationUtils;
         }
 
-        public sealed class Settings : MediaSettings
+        public sealed class Settings : SelectableSettings
         {
             [CommandArgument(0, "[MEDIAID]")]
             [Description("The media's id to delete.")]
             public string? MediaId { get; init; }
+
+            [CommandArgument(1, "[MEDIATITLE]")]
+            [Description("The media's title. It must be unique")]
+            public string? Title { get; init; }
+
+            [CommandArgument(2, "[GANREID]")]
+            [Description("The ganre's id")]
+            public string? GanreId { get; init; }
+
+            [CommandArgument(3, "[AUTHORID]")]
+            [Description("The author's id")]
+            public string? AuthorId { get; init; }
+
+            [CommandArgument(4, "[DESCRIPTION]")]
+            [Description("The description")]
+            public string? Description { get; init; }
+
+            [CommandArgument(5, "[PUBLISHEDDATE]")]
+            [Description("The publicashion date of the specified ganre")]
+            public string? PublishedDate { get; init; }
+
+            [CommandArgument(6, "[LASTCONSUMEDDATE]")]
+            [Description("The date the specified media was consumed")]
+            public string? LastConsumedDateUtc { get; init; }
+
+            [CommandArgument(7, "[RATING]")]
+            [Description("The rating of a media")]
+            public string? Rating { get; init; }
 
         }
 
@@ -38,12 +68,12 @@ namespace MediaControlApp.Commands.Medias
         {
             if (!settings.ShowSelect)
             {
-                var mediaIdValidationResult = MediaValidationUtils.ValidateMediaId(settings.MediaId);
+                var mediaIdValidationResult = _mediaValidationUtils.ValidateMediaId(settings.MediaId);
 
                 if (!mediaIdValidationResult.Successful)
                     return mediaIdValidationResult;
 
-                var validationTask = MediaValidationUtils.Validate(_mediaService, title: settings.Title, ganreId: settings.GanreId, authorId: settings.AuthorId, publishedDate: settings.PublishedDate, lastConsumedDate: settings.LastConsumedDateUtc, rating: settings.Rating);
+                var validationTask = _mediaValidationUtils.Validate(title: settings.Title, ganreId: settings.GanreId, authorId: settings.AuthorId, publishedDate: settings.PublishedDate, lastConsumedDate: settings.LastConsumedDateUtc, rating: settings.Rating);
 
                 validationTask.Wait();
 
@@ -119,7 +149,7 @@ namespace MediaControlApp.Commands.Medias
 
             var newTitle = _ansiConsole.Prompt(new TextPrompt<string>("Enter a new title: ").Validate(x =>
             {
-                var task = MediaValidationUtils.ValidateTitle(_mediaService, x);
+                var task = _mediaValidationUtils.ValidateTitle(x);
                 task.Wait();
 
                 return !task.Result.Successful;
@@ -145,19 +175,19 @@ namespace MediaControlApp.Commands.Medias
 
             var publishedDate = _ansiConsole.Prompt(new TextPrompt<string>("Enter the publication date: ").DefaultValue(DateTime.Now.AddYears(-2).ToShortDateString()).Validate(x =>
             {
-                var publishedDateValidationResult = MediaValidationUtils.ValidatePublishedDate(x);
+                var publishedDateValidationResult = _mediaValidationUtils.ValidatePublishedDate(x);
                 return publishedDateValidationResult.Successful;
             }));
 
             var lastConsumedDate = _ansiConsole.Prompt(new TextPrompt<string?>("Enter the last consumed date: ").DefaultValue(null).Validate(x =>
             {
-                var lastConsumedDateValidationResult = MediaValidationUtils.ValidateLastConsumedDate(x);
+                var lastConsumedDateValidationResult = _mediaValidationUtils.ValidateLastConsumedDate(x);
                 return lastConsumedDateValidationResult.Successful;
             }));
 
             var rating = _ansiConsole.Prompt(new TextPrompt<double?>($"Enter the rating (between {Rating.LOW_RATING} and {Rating.HIGH_RATING}").DefaultValue(null).AllowEmpty().Validate(x =>
             {
-                var res = MediaValidationUtils.ValidateRating(x.ToString());
+                var res = _mediaValidationUtils.ValidateRating(x.ToString());
                 return res.Successful;
             }));
 
