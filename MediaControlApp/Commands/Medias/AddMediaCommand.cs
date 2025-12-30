@@ -89,17 +89,17 @@ namespace MediaControlApp.Commands.Medias
             
             if (settings.ShowSelect)
             {
-                await HandleAdd();
+                await HandleAdd(cancellationToken);
             }
             else
             {
-                await HandleAddWithShowSelect(settings.Title,settings.Description,settings.GanreId, settings.AuthorId,settings.PublishedDate, settings.LastConsumedDateUtc, settings.Rating);
+                await HandleAddWithShowSelect(settings.Title,settings.Description,settings.GanreId, settings.AuthorId,settings.PublishedDate, settings.LastConsumedDateUtc, settings.Rating,cancellationToken);
             }
             
             return 0;
         }
 
-        private async Task HandleAddWithShowSelect(string title, string? description, string ganreId, string authorId, string publishedDate, string? lastConsumedDate, string? rating )
+        private async Task HandleAddWithShowSelect(string title, string? description, string ganreId, string authorId, string publishedDate, string? lastConsumedDate, string? rating , CancellationToken cancellationToken = default)
         {
             Guid ganreIdGuid = Guid.Parse(ganreId);
             Guid authorIdGuid = Guid.Parse(authorId);
@@ -107,16 +107,16 @@ namespace MediaControlApp.Commands.Medias
             DateTime? lastConsumedDateDate = lastConsumedDate!=null? DateTime.Parse(lastConsumedDate):null;
             Rating? ratingObj = rating != null ? new Rating(double.Parse(rating)) : null;
 
-            await _mediaService.Add(title,description,ganreIdGuid,publishedDateDate,authorIdGuid, ratingObj);
+            await _mediaService.Add(title,description,ganreIdGuid,publishedDateDate,authorIdGuid, ratingObj, cancellationToken);
 
             _ansiConsole.MarkupLine($"[green]Media was successfully added![/]");
         }
 
-        private async Task HandleAdd()
+        private async Task HandleAdd(CancellationToken cancellationToken = default)
         {
-            var ganres = await _ganreService.GetAll();
+            var ganres = await _ganreService.GetAll(cancellationToken);
 
-            var authors = await _authorService.GetAll();
+            var authors = await _authorService.GetAll(cancellationToken);
 
             if (!authors.Any())
             {
@@ -173,7 +173,7 @@ namespace MediaControlApp.Commands.Medias
 
         
 
-            await _mediaService.Add(title, description,ganre.Id, DateTime.Parse(publishedDate), author.Id, rating!=null? new Rating(double.Parse(rating)):null );
+            await _mediaService.Add(title, description,ganre.Id, DateTime.Parse(publishedDate), author.Id, rating!=null? new Rating(double.Parse(rating)):null, cancellationToken );
             _ansiConsole.MarkupLine($"[green]Media was successfully added![/]");
         }
     }

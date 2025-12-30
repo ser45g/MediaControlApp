@@ -88,20 +88,25 @@ namespace MediaControlApp.Commands.Ganres
         }
 
 
-        private async Task HandleUpdateWithShowSelect(string ganreId, string ganreName, string mediaTypeId, string? description)
+        private async Task HandleUpdateWithShowSelect(string ganreId, string ganreName, string mediaTypeId, string? description, CancellationToken cancellationToken = default)
         {
             Guid ganreIdGuid = Guid.Parse(ganreId);
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
-            await _ganreService.Update(ganreIdGuid, ganreName, mediaTypeIdGuid, description);
+            await _ganreService.Update(ganreIdGuid, ganreName, mediaTypeIdGuid, description, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Ganre with Id [[{ganreIdGuid}]] was successfully updated![/]");
         }
 
-        private async Task HandleUpdate()
+        private async Task HandleUpdate(CancellationToken cancellationToken = default)
         {
-            var ganres = await _ganreService.GetAll();
+            var ganresTask =  _ganreService.GetAll(cancellationToken);
 
-            var mediaTypes = await _mediaTypeService.GetAll();
+            var mediaTypesTask = _mediaTypeService.GetAll(cancellationToken);
+
+            Task.WaitAll(ganresTask, mediaTypesTask);
+
+            var ganres = ganresTask.Result;
+            var mediaTypes = mediaTypesTask.Result;
 
             if (!ganres.Any())
             {
@@ -140,7 +145,7 @@ namespace MediaControlApp.Commands.Ganres
             }
             Guid selectedMediaTypeId = mediaType.Id;
 
-            await _ganreService.Update(ganre.Id, newName, selectedMediaTypeId, newDescription);
+            await _ganreService.Update(ganre.Id, newName, selectedMediaTypeId, newDescription,cancellationToken);
             _ansiConsole.MarkupLine($"[green]Ganre was successfully updated![/]");
         }
     }

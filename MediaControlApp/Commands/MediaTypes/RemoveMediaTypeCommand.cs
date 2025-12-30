@@ -47,9 +47,9 @@
             return 0;
         }
 
-        private async Task HandleRemove()
+        private async Task HandleRemove(CancellationToken cancellationToken = default)
         {
-            var mediaTypes = await _mediaTypeService.GetAll();
+            var mediaTypes = await _mediaTypeService.GetAll(cancellationToken);
 
             if (!mediaTypes.Any())
             {
@@ -64,11 +64,11 @@
             }
             Guid selectedMediaTypeId = mediaType.Id;
 
-            await _mediaTypeService.Remove(selectedMediaTypeId);
+            await _mediaTypeService.Remove(selectedMediaTypeId, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Media Type [[{mediaType.Name}]] was successfully deleted![/]");
         }
 
-        private async Task HandleRemoveWithShowSelect(string? mediaTypeId)
+        private async Task HandleRemoveWithShowSelect(string? mediaTypeId, CancellationToken cancellationToken = default)
         {
             var mediaTypeIdValidationResult = _mediaTypeValidationUtils.ValidateMediaTypeId(mediaTypeId);
 
@@ -76,7 +76,7 @@
             {
                 Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId!);
 
-                await _mediaTypeService.Remove(mediaTypeIdGuid);
+                await _mediaTypeService.Remove(mediaTypeIdGuid, cancellationToken);
 
                 _ansiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully deleted![/]");
             }

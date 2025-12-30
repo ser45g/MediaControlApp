@@ -17,7 +17,6 @@
         private readonly IAnsiConsole _ansiConsole;
         private readonly IMediaTypeValidationUtils _mediaTypeValidationUtils;
 
-
         public UpdateMediaTypeCommand(IMediaTypeService mediaTypeService, IAnsiConsole ansiConsole, IMediaTypeValidationUtils mediaTypeValidationUtils)
         {
             _mediaTypeService = mediaTypeService;
@@ -63,27 +62,28 @@
            
             if (settings.ShowSelect)
             {
-                await HandleUpdate();
+                await HandleUpdate(cancellationToken);
             }
             else
             {
-                await HandleUpdateWithShowSelect(settings.Id, settings.Name);
+                await HandleUpdateWithShowSelect(settings.Id, settings.Name, cancellationToken);
             }
             
             return 0;
         }
 
-        private async Task HandleUpdateWithShowSelect(string mediaTypeId, string mediaTypeName)
+        private async Task HandleUpdateWithShowSelect(string mediaTypeId, string mediaTypeName, CancellationToken cancellationToken = default)
         {
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
-            await _mediaTypeService.Update(mediaTypeIdGuid, mediaTypeName);
+            await _mediaTypeService.Update(mediaTypeIdGuid, mediaTypeName, cancellationToken);
+
             _ansiConsole.MarkupLine($"[green]Media Type with Id [[{mediaTypeIdGuid}]] was successfully updated![/]");      
         }
 
-        private async Task HandleUpdate()
+        private async Task HandleUpdate(CancellationToken cancellationToken = default)
         {
-            var mediaTypes = await _mediaTypeService.GetAll();
+            var mediaTypes = await _mediaTypeService.GetAll(cancellationToken);
 
             if (!mediaTypes.Any())
             { 
@@ -106,7 +106,7 @@
               
             }));
 
-            await _mediaTypeService.Update(mediaType.Id, newName);
+            await _mediaTypeService.Update(mediaType.Id, newName, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Media Type was successfully updated![/]");
         }      
     }

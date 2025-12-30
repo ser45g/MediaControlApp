@@ -15,47 +15,47 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
            
         }
 
-        public async Task<bool> Add(string name, string? companyName = null, string? email = null)
+        public async Task<bool> Add(string name, string? companyName = null, string? email = null, CancellationToken cancellationToken = default)
         {
             var author = new Author() { Name=name,CompanyName=companyName, Email = email };
             _context.Authors.Add(author);
-            return await _context.SaveChangesAsync()==1;
+            return await _context.SaveChangesAsync(cancellationToken)==1;
         }
 
-        public async Task<IEnumerable<Author>> GetAll()
+        public async Task<IEnumerable<Author>> GetAll(CancellationToken cancellationToken = default)
         {
-            return await _context.Authors.ToListAsync();
+            return await _context.Authors.ToListAsync(cancellationToken);
         }
 
-        public async Task<Author?> GetByCompanyName(string companyName)
+        public async Task<Author?> GetByCompanyName(string companyName, CancellationToken cancellationToken = default)
         {
-            return await _context.Authors.SingleOrDefaultAsync(a => a.CompanyName == companyName);
+            return await _context.Authors.SingleOrDefaultAsync(a => a.CompanyName == companyName, cancellationToken);
         }
 
-        public async Task<Author?> GetByEmail(string email)
+        public async Task<Author?> GetByEmail(string email, CancellationToken cancellationToken = default)
         {
-            return await _context.Authors.SingleOrDefaultAsync(a => a.Email == email);
+            return await _context.Authors.SingleOrDefaultAsync(a => a.Email == email, cancellationToken);
         }
 
-        public async Task<Author?> GetById(Guid id)
+        public async Task<Author?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _context.Authors.SingleOrDefaultAsync(a => a.Id == id);
+            return await _context.Authors.SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
            
         }
 
-        public async Task<Author?> GetByName(string name)
+        public async Task<Author?> GetByName(string name, CancellationToken cancellationToken = default)
         {
-            return await _context.Authors.SingleOrDefaultAsync(a => a.Name == name);
+            return await _context.Authors.SingleOrDefaultAsync(a => a.Name == name, cancellationToken);
         }
 
-        public async Task<bool> Remove(Guid id)
+        public async Task<bool> Remove(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _context.Authors.Where(m => m.Id == id).ExecuteDeleteAsync() == 1;
+            return await _context.Authors.Where(m => m.Id == id).ExecuteDeleteAsync(cancellationToken) == 1;
         }
 
-        public async Task<bool> Update(Guid id, string name, string? companyName = null, string? email = null)
+        public async Task<bool> Update(Guid id, string name, string? companyName = null, string? email = null,  CancellationToken cancellationToken = default)
         {
-            return await _context.Authors.Where(m => m.Id == id).ExecuteUpdateAsync((m) => m.SetProperty(m => m.Name, name).SetProperty(m => m.CompanyName, companyName).SetProperty(m => m.Email, email)) == 1;
+            return await _context.Authors.Where(m => m.Id == id).ExecuteUpdateAsync((m) => m.SetProperty(m => m.Name, name).SetProperty(m => m.CompanyName, companyName).SetProperty(m => m.Email, email),cancellationToken) == 1;
         }
     }
 }

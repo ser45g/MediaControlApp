@@ -36,7 +36,7 @@ namespace MediaControlApp.Commands.Medias
 
             table.ShowRowSeparators();
 
-            var medias = await _mediaService.GetAll();
+            var medias = await _mediaService.GetAll(cancellationToken);
             if (settings.Limit != null)
             {
                 medias = medias.Take(settings.Limit.Value);

@@ -4,12 +4,12 @@ namespace MediaControlApp.Application.Services
 {
     public interface IGanreService
     {
-        Task<bool> Add(string name, Guid mediaTypeId, string? description = null);
-        Task<IEnumerable<Ganre>> GetAll();
-        Task<Ganre?> GetById(Guid id);
-        Task<IEnumerable<Ganre>> GetByMediaTypeId(Guid mediaTypeId);
-        Task<Ganre?> GetByName(string name);
-        Task<bool> Remove(Guid id);
-        Task<bool> Update(Guid id, string name, Guid mediaTypeId, string? description = null);
+        Task<bool> Add(string name, Guid mediaTypeId, string? description = null, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Ganre>> GetAll(CancellationToken cancellationToken = default);
+        Task<Ganre?> GetById(Guid id, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Ganre>> GetByMediaTypeId(Guid mediaTypeId, CancellationToken cancellationToken = default);
+        Task<Ganre?> GetByName(string name, CancellationToken cancellationToken = default);
+        Task<bool> Remove(Guid id, CancellationToken cancellationToken = default);
+        Task<bool> Update(Guid id, string name, Guid mediaTypeId, string? description = null, CancellationToken cancellationToken = default);
     }
 }

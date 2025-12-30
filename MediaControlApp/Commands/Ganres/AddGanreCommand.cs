@@ -71,27 +71,27 @@ namespace MediaControlApp.Commands.Ganres
 
             if (settings.ShowSelect)
             {
-                await HandleAdd();
+                await HandleAdd(cancellationToken);
             }
             else
             {
-                await HandleAddWithShowSelect(settings.Name, settings.MediaTypeId, settings.Description!);
+                await HandleAddWithShowSelect(settings.Name, settings.MediaTypeId, settings.Description!, cancellationToken);
             }
 
             return 0;
         }
 
-        private async Task HandleAddWithShowSelect(string name, string mediaTypeId, string? description)
+        private async Task HandleAddWithShowSelect(string name, string mediaTypeId, string? description, CancellationToken cancellationToken = default)
         {
             Guid mediaTypeIdGuid = Guid.Parse(mediaTypeId);
 
-            await _ganreService.Add(name, mediaTypeIdGuid, description);
+            await _ganreService.Add(name, mediaTypeIdGuid, description, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Ganre was successfully added![/]");
         }
 
-        private async Task HandleAdd()
+        private async Task HandleAdd(CancellationToken cancellationToken = default)
         {
-            var mediaTypes = await _mediaTypeService.GetAll();
+            var mediaTypes = await _mediaTypeService.GetAll(cancellationToken);
 
             if (!mediaTypes.Any())
             {
@@ -116,7 +116,7 @@ namespace MediaControlApp.Commands.Ganres
                 throw new ArgumentNullException(nameof(mediaType));
             }
 
-            await _ganreService.Add(name, mediaType.Id, description);
+            await _ganreService.Add(name, mediaType.Id, description, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Ganre was successfully added![/]");
         }
     }

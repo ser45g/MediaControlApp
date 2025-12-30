@@ -6,7 +6,6 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 
-
 namespace MediaControlApp.Commands.MediaTypes
 {
     [Description("Update an author")]
@@ -15,7 +14,6 @@ namespace MediaControlApp.Commands.MediaTypes
         private readonly IAuthorService _authorService;
         private readonly IAnsiConsole _ansiConsole;
         private readonly IAuthorValidationUtils _authorValidationUtils;
-
 
         public UpdateAuthorCommand(IAuthorService authorService, IAnsiConsole ansiConsole, IAuthorValidationUtils authorValidationUtils)
         {
@@ -72,27 +70,27 @@ namespace MediaControlApp.Commands.MediaTypes
 
             if (settings.ShowSelect)
             {
-                await HandleUpdate();
+                await HandleUpdate(cancellationToken);
             }
             else
             {
-                await HandleUpdateWithShowSelect(settings.Id!, settings.Name!, settings.CompanyName, settings.Email);
+                await HandleUpdateWithShowSelect(settings.Id!, settings.Name!, settings.CompanyName, settings.Email, cancellationToken);
             }
 
             return 0;
         }
 
-        private async Task HandleUpdateWithShowSelect(string authorId, string authorName, string? companyName, string? email)
+        private async Task HandleUpdateWithShowSelect(string authorId, string authorName, string? companyName, string? email, CancellationToken cancellationToken = default)
         {
             Guid authorIdGuid = Guid.Parse(authorId!);
 
-            await _authorService.Update(authorIdGuid, authorName!, companyName, email);
+            await _authorService.Update(authorIdGuid, authorName!, companyName, email, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully updated![/]");
         }
 
-        private async Task HandleUpdate()
+        private async Task HandleUpdate(CancellationToken cancellationToken = default)
         {
-            var authors = await _authorService.GetAll();
+            var authors = await _authorService.GetAll(cancellationToken);
 
             if (!authors.Any())
             {
@@ -120,7 +118,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
             var newEmail = _ansiConsole.Prompt(new TextPrompt<string?>("Enter a new email: ").DefaultValue(author.Email).AllowEmpty());
 
-            await _authorService.Update(author.Id, newName, companyName: newCompanyName, email: newEmail);
+            await _authorService.Update(author.Id, newName, companyName: newCompanyName, email: newEmail, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Author was successfully updated![/]");
         }
 

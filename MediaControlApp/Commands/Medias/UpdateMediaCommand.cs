@@ -92,17 +92,17 @@ namespace MediaControlApp.Commands.Medias
             
             if (settings.ShowSelect)
             {
-                await HandleUpdate();
+                await HandleUpdate(cancellationToken);
             }
             else
             {
-                await HandleUpdateWithShowSelect(settings.MediaId, settings.Title, settings.Description, settings.GanreId, settings.AuthorId, settings.PublishedDate, settings.LastConsumedDateUtc, settings.Rating);
+                await HandleUpdateWithShowSelect(settings.MediaId, settings.Title, settings.Description, settings.GanreId, settings.AuthorId, settings.PublishedDate, settings.LastConsumedDateUtc, settings.Rating, cancellationToken);
             }
        
             return 0;
         }
 
-        private async Task HandleUpdateWithShowSelect(string mediaId, string title, string? description, string ganreId, string authorId, string publishedDate, string? lastConsumedDate, string? rating)
+        private async Task HandleUpdateWithShowSelect(string mediaId, string title, string? description, string ganreId, string authorId, string publishedDate, string? lastConsumedDate, string? rating, CancellationToken cancellationToken = default)
         {
             Guid mediaIdGuid = Guid.Parse(mediaId);
             Guid ganreIdGuid = Guid.Parse(ganreId);
@@ -111,16 +111,16 @@ namespace MediaControlApp.Commands.Medias
             DateTime? lastConsumedDateDate = lastConsumedDate != null ? DateTime.Parse(lastConsumedDate) : null;
             Rating? ratingObj = rating != null ? new Rating(double.Parse(rating)) : null;
 
-            await _mediaService.Update(id:mediaIdGuid, title:title, description:description, ganreId:ganreIdGuid, publishedDate:publishedDateDate, authorId:authorIdGuid, rating:ratingObj, lastConsumedDate:lastConsumedDateDate);
+            await _mediaService.Update(id:mediaIdGuid, title:title, description:description, ganreId:ganreIdGuid, publishedDate:publishedDateDate, authorId:authorIdGuid, rating:ratingObj, lastConsumedDate:lastConsumedDateDate, cancellationToken:cancellationToken);
 
             _ansiConsole.MarkupLine($"[green]Media was successfully updated![/]");
         }
 
-        private async Task HandleUpdate()
+        private async Task HandleUpdate(CancellationToken cancellationToken = default)
         {
-            var ganres = await _ganreService.GetAll();
-            var authors = await _authorService.GetAll();
-            var medias = await _mediaService.GetAll();
+            var ganres = await _ganreService.GetAll(cancellationToken);
+            var authors = await _authorService.GetAll(cancellationToken);
+            var medias = await _mediaService.GetAll(cancellationToken);
 
             if (!medias.Any())
             {
@@ -136,8 +136,6 @@ namespace MediaControlApp.Commands.Medias
             {
                 throw new Exception("No ganres available");
             }
-
-
 
             var media = _ansiConsole.Prompt(new SelectionPrompt<Media>().Title("Please select the media you want to update").PageSize(10).MoreChoicesText("Move up and down to reveal more media types").AddChoices(medias).UseConverter(x => x.Title));
 
@@ -191,7 +189,8 @@ namespace MediaControlApp.Commands.Medias
                 return res.Successful;
             }));
 
-            await _mediaService.Update(media.Id, newTitle, newDescription, ganre.Id, DateTime.Parse(publishedDate), lastConsumedDate!=null?DateTime.Parse(lastConsumedDate):null,  author.Id, rating != null ? new Rating(rating.Value) : null);
+            await _mediaService.Update(media.Id, newTitle, newDescription, ganre.Id, DateTime.Parse(publishedDate), lastConsumedDate!=null?DateTime.Parse(lastConsumedDate):null,  author.Id, rating != null ? new Rating(rating.Value) : null, cancellationToken:cancellationToken);
+
             _ansiConsole.MarkupLine($"[green]Media was successfully updated![/]");
         }
     }

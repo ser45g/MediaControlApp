@@ -31,7 +31,7 @@ namespace MediaControlApp.Commands.MediaTypes
             table.AddColumn("[green]Email[/]");
             table.ShowRowSeparators();
 
-            var authors = await _authorService.GetAll();
+            var authors = await _authorService.GetAll(cancellationToken);
             if (settings.Limit != null)
             {
                 authors = authors.Take(settings.Limit.Value);

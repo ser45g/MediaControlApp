@@ -38,19 +38,19 @@ namespace MediaControlApp.Commands.Ganres
 
             if (settings.ShowSelect)
             {
-                await HandleRemove();
+                await HandleRemove(cancellationToken);
             }
             else
             {
-                await HandleRemoveWithShowSelect(settings.GanreId);
+                await HandleRemoveWithShowSelect(settings.GanreId, cancellationToken);
             }
 
             return 0;
         }
 
-        private async Task HandleRemove()
+        private async Task HandleRemove(CancellationToken cancellationToken = default)
         {
-            var ganres = await _ganreService.GetAll();
+            var ganres = await _ganreService.GetAll(cancellationToken);
 
             if (!ganres.Any())
             {
@@ -64,11 +64,11 @@ namespace MediaControlApp.Commands.Ganres
             }
             Guid selectedGanreId = ganre.Id;
 
-            await _ganreService.Remove(selectedGanreId);
+            await _ganreService.Remove(selectedGanreId, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Ganre [[{ganre.Name}]] was successfully deleted![/]");
         }
 
-        private async Task HandleRemoveWithShowSelect(string? ganreId)
+        private async Task HandleRemoveWithShowSelect(string? ganreId, CancellationToken cancellationToken = default)
         {
 
             var ganreIdValidationResult = _ganreValidationUtils.ValidateGanreId(ganreId);
@@ -77,7 +77,7 @@ namespace MediaControlApp.Commands.Ganres
             {
                 Guid ganreIdGuid = Guid.Parse(ganreId!);
 
-                await _ganreService.Remove(ganreIdGuid);
+                await _ganreService.Remove(ganreIdGuid, cancellationToken);
                 _ansiConsole.MarkupLine($"[green]Ganre with Id [[{ganreId}]] was successfully deleted![/]");
             }
             else

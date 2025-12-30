@@ -46,7 +46,7 @@ namespace MediaControlApp.Commands.MediaTypes
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
           
-            await _mediaTypeService.Add(settings.Name!.ToUpper());
+            await _mediaTypeService.Add(settings.Name, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Media Type was successfully added![/]");
            
             return 0;

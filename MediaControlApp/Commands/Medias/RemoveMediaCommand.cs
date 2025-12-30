@@ -38,17 +38,17 @@ namespace MediaControlApp.Commands.Medias
            
             if (settings.ShowSelect)
             {
-                await HandleRemove();
+                await HandleRemove(cancellationToken);
             }
             else
             {
-                await HandleRemoveWithShowSelect(settings.MediaId);
+                await HandleRemoveWithShowSelect(settings.MediaId, cancellationToken);
             }
 
             return 0;
         }
 
-        private async Task HandleRemove()
+        private async Task HandleRemove(CancellationToken cancellationToken = default)
         {
             var medias = await _mediaService.GetAll();
 
@@ -65,11 +65,11 @@ namespace MediaControlApp.Commands.Medias
             }
             Guid selectedMediaId = media.Id;
 
-            await _mediaService.Remove(selectedMediaId);
+            await _mediaService.Remove(selectedMediaId, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Media [[{media.Title}]] was successfully deleted![/]");
         }
 
-        private async Task HandleRemoveWithShowSelect(string? mediaId)
+        private async Task HandleRemoveWithShowSelect(string? mediaId, CancellationToken cancellationToken = default)
         {
 
             var mediaIdValidationResult = _mediaValidationUtils.ValidateMediaId(mediaId);
@@ -78,7 +78,7 @@ namespace MediaControlApp.Commands.Medias
             {
                 Guid mediaIdGuid = Guid.Parse(mediaId!);
 
-                await _mediaService.Remove(mediaIdGuid);
+                await _mediaService.Remove(mediaIdGuid, cancellationToken);
                 _ansiConsole.MarkupLine($"[green]Media with Id [[{mediaId}]] was successfully deleted![/]");
             }
             else

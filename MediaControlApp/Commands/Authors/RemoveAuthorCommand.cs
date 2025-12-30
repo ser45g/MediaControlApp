@@ -31,9 +31,9 @@
 
         }
 
-        private async Task HandleRemove()
+        private async Task HandleRemove(CancellationToken cancellationToken=default)
         {
-            var authors = await _authorService.GetAll();
+            var authors = await _authorService.GetAll(cancellationToken);
 
             if (!authors.Any())
             {
@@ -48,13 +48,13 @@
             }
             Guid selectedAuthorId = author.Id;
 
-            await _authorService.Remove(selectedAuthorId);
+            await _authorService.Remove(selectedAuthorId, cancellationToken);
 
             _ansiConsole.MarkupLine($"[green]Author [[{author.Name}]] was successfully deleted![/]");
         }
 
 
-        private async Task HandleRemoveWithShowSelect(string authorId)
+        private async Task HandleRemoveWithShowSelect(string authorId, CancellationToken cancellationToken = default)
         {
             var mediaTypeIdValidationResult = _authorValidationUtils.ValidateAuthorId(authorId);
 
@@ -62,7 +62,7 @@
             {
                 Guid authorIdGuid = Guid.Parse(authorId);
 
-                await _authorService.Remove(authorIdGuid);
+                await _authorService.Remove(authorIdGuid, cancellationToken);
                 _ansiConsole.MarkupLine($"[green]Author with Id [[{authorIdGuid}]] was successfully deleted![/]");
             }
             else
@@ -76,11 +76,11 @@
 
             if (settings.ShowSelect)
             {
-                await HandleRemove();
+                await HandleRemove(cancellationToken);
             }
             else
             {
-                await HandleRemoveWithShowSelect(settings.AuthorId);
+                await HandleRemoveWithShowSelect(settings.AuthorId, cancellationToken);
             }
 
             return 0;

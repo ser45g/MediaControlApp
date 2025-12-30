@@ -50,7 +50,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
         protected async override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
         {
-            await _authorService.Add(settings.Name, settings.CompanyName, settings.Email);
+            await _authorService.Add(settings.Name, settings.CompanyName, settings.Email, cancellationToken);
             _ansiConsole.MarkupLine($"[green]Author was successfully added![/]");
 
             return 0;

@@ -13,37 +13,37 @@ namespace MediaControlApp.Application.Services
             _ganreRepo = genreRepo;
         }
 
-        public async Task<bool> Add(string name, Guid mediaTypeId, string? description = null)
+        public async Task<bool> Add(string name, Guid mediaTypeId, string? description = null, CancellationToken cancellationToken = default)
         {
             return await _ganreRepo.Add(name: name, mediaTypeId: mediaTypeId, description: description);
         }
-        public async Task<bool> Update(Guid id, string name, Guid mediaTypeId, string? description = null)
+        public async Task<bool> Update(Guid id, string name, Guid mediaTypeId, string? description = null, CancellationToken cancellationToken = default)
         {
             return await _ganreRepo.Update(id: id, name: name, mediaTypeId: mediaTypeId, description: description);
         }
 
-        public async Task<bool> Remove(Guid id)
+        public async Task<bool> Remove(Guid id, CancellationToken cancellationToken = default)
         {
             return await _ganreRepo.Remove(id);
         }
 
-        public async Task<IEnumerable<Ganre>> GetAll()
+        public async Task<IEnumerable<Ganre>> GetAll(CancellationToken cancellationToken = default)
         {
-            return await _ganreRepo.GetAll();
+            return await _ganreRepo.GetAll(cancellationToken);
         }
 
-        public async Task<Ganre?> GetById(Guid id)
+        public async Task<Ganre?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _ganreRepo.GetById(id);
+            return await _ganreRepo.GetById(id, cancellationToken);
         }
-        public async Task<Ganre?> GetByName(string name)
+        public async Task<Ganre?> GetByName(string name, CancellationToken cancellationToken = default)
         {
-            return await _ganreRepo.GetByName(name);
+            return await _ganreRepo.GetByName(name, cancellationToken);
         }
 
-        public async Task<IEnumerable<Ganre>> GetByMediaTypeId(Guid mediaTypeId)
+        public async Task<IEnumerable<Ganre>> GetByMediaTypeId(Guid mediaTypeId, CancellationToken cancellationToken = default)
         {
-            return await _ganreRepo.GetByMediaTypeId(mediaTypeId);
+            return await _ganreRepo.GetByMediaTypeId(mediaTypeId, cancellationToken);
         }
     }
 }

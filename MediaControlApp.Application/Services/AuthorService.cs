@@ -13,43 +13,42 @@ namespace MediaControlApp.Application.Services
             _authorRepo = authorRepo;
         }
 
-        public async Task<bool> Add(string name, string? companyName = null, string? email = null)
+        public async Task<bool> Add(string name, string? companyName = null, string? email = null, CancellationToken cancellationToken = default)
         {
-            return await _authorRepo.Add(name: name, companyName: companyName, email: email);
+            return await _authorRepo.Add(name: name, companyName: companyName, email: email, cancellationToken: cancellationToken);
         }
-        public async Task<bool> Update(Guid id, string name, string? companyName = null, string? email = null)
+        public async Task<bool> Update(Guid id, string name, string? companyName = null, string? email = null, CancellationToken cancellationToken = default)
         {
-            return await _authorRepo.Update(id: id, name: name, companyName: companyName, email: email);
+            return await _authorRepo.Update(id: id, name: name, companyName: companyName, email: email, cancellationToken: cancellationToken);
         }
-        public async Task<bool> Remove(Guid id)
+        public async Task<bool> Remove(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _authorRepo.Remove(id);
+            return await _authorRepo.Remove(id, cancellationToken);
         }
-        public async Task<Author?> GetById(Guid id)
+        public async Task<Author?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _authorRepo.GetById(id);
-        }
-
-        public async Task<Author?> GetByName(string name)
-        {
-            return await _authorRepo.GetByName(name);
-
+            return await _authorRepo.GetById(id, cancellationToken);
         }
 
-        public async Task<Author?> GetByCompanyName(string companyName)
+        public async Task<Author?> GetByName(string name, CancellationToken cancellationToken = default)
         {
-            return await _authorRepo.GetByCompanyName(companyName);
+            return await _authorRepo.GetByName(name, cancellationToken);
         }
 
-        public async Task<Author?> GetByEmail(string email)
+        public async Task<Author?> GetByCompanyName(string companyName, CancellationToken cancellationToken = default)
         {
-            return await _authorRepo.GetByEmail(email);
+            return await _authorRepo.GetByCompanyName(companyName, cancellationToken);
+        }
+
+        public async Task<Author?> GetByEmail(string email, CancellationToken cancellationToken = default)
+        {
+            return await _authorRepo.GetByEmail(email, cancellationToken);
         }
 
 
-        public async Task<IEnumerable<Author>> GetAll()
+        public async Task<IEnumerable<Author>> GetAll(CancellationToken cancellationToken = default)
         {
-            return await _authorRepo.GetAll();
+            return await _authorRepo.GetAll(cancellationToken);
         }
     }
 }

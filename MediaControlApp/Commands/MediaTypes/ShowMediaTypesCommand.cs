@@ -34,7 +34,7 @@ namespace MediaControlApp.Commands.MediaTypes
 
             IEnumerable<MediaType> mediaTypes = Enumerable.Empty<MediaType>();
 
-            mediaTypes = await _mediaTypeService.GetAll();
+            mediaTypes = await _mediaTypeService.GetAll(cancellationToken);
             if (settings.Limit != null)
             {
                 mediaTypes = mediaTypes.Take(settings.Limit.Value);

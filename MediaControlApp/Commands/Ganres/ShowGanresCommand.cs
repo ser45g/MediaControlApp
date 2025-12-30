@@ -13,8 +13,6 @@ namespace MediaControlApp.Commands.Ganres
         private readonly IGanreService _ganreService;
         private readonly IAnsiConsole _ansiConsole;
 
-
-
         public ShowGanresCommand(IGanreService ganreService, IAnsiConsole ansiConsole)
         {
             _ganreService = ganreService;
@@ -32,7 +30,7 @@ namespace MediaControlApp.Commands.Ganres
             table.AddColumn("[green]Media Type Name[/]");
             table.ShowRowSeparators();
 
-            var ganres = await _ganreService.GetAll();
+            var ganres = await _ganreService.GetAll(cancellationToken);
 
             if (settings.Limit != null)
             {
