@@ -1,0 +1,4 @@
+2026-01-01 03:49:08.071 +03:00 [INF] Starting command: __default_command
+2026-01-01 03:49:08.530 +03:00 [INF] Command completed in 465ms (exit code: 0)
+2026-01-01 03:49:35.254 +03:00 [INF] Starting command: show
+2026-01-01 03:49:35.599 +03:00 [INF] Command completed in 348ms (exit code: 0)

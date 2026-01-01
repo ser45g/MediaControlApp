@@ -1,8 +1,7 @@
 {
   "profiles": {
     "MediaControlApp": {
-      "commandName": "Project",
-      "commandLineArgs": "statistics show"
+      "commandName": "Project"
     }
   }
 }

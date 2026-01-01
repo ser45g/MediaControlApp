@@ -29,19 +29,25 @@ namespace MediaControlApp.Commands.Statistics
         {
             var stats = await _utilityDataRepo.GetAmountsOfElements();
 
-            double a = stats.AuthorsAmount;
-            double b = stats.MediaTypesAmount;
-            double c = stats.GanresAmount;
-            double d = stats.MediasAmount;
-
-            var barChart = new BarChart()
-                    .AddItem("Medias", d, Color.Green)
-                    .AddItem("Media Types", b, Color.Blue)
-                    .AddItem("Ganres", c, Color.Yellow)
-                    .AddItem("Authors", a, Color.Red);
+            if (settings.IsBarChart) {
+                var barChart = new BarChart()
+                    .AddItem("Medias", stats.MediasAmount, Color.Green)
+                    .AddItem("Media Types", stats.MediaTypesAmount, Color.Blue)
+                    .AddItem("Ganres", stats.GanresAmount, Color.Yellow)
+                    .AddItem("Authors", stats.AuthorsAmount, Color.Red);
                 
                 _ansiConsole.Write(barChart);
-            
+            }
+            else
+            {
+                var breakdownChart = new BreakdownChart()
+                    .AddItem("Medias", stats.MediasAmount, Color.Green)
+                    .AddItem("Media Types", stats.MediaTypesAmount, Color.Blue)
+                    .AddItem("Ganres", stats.GanresAmount, Color.Yellow)
+                    .AddItem("Authors", stats.AuthorsAmount, Color.Red);
+
+                _ansiConsole.Write(breakdownChart);
+            }
 
             return 0;
         }

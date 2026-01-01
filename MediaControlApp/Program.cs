@@ -64,11 +64,15 @@ var registrar = new DITypeRegistar(services);
 
 var app = new CommandApp(registrar);
 
+app.SetDefaultCommand<ShowChartOfElementsCommand>();
+
 app.Configure(config =>
 {
     config.SetApplicationName("favorite-media");
     config.ValidateExamples();
     config.AddExample("media-type","add","MUSIC");
+    config.AddExample("media", "remove", "-s");
+    config.AddExample("ganre", "update", Guid.NewGuid().ToString(), "James Hatfield");
 
     #if DEBUG
 
@@ -123,9 +127,10 @@ app.Configure(config =>
 
     config.AddBranch<CommandSettings>("statistics", statisctics =>
     {
+        statisctics.SetDescription("Show statistics");
         statisctics.AddCommand<ShowChartOfElementsCommand>("show");
     });
-  
+    
     app.Configure(config =>
     {
         config.SetExceptionHandler((ex, resolver) =>
@@ -153,7 +158,6 @@ Console.CancelKeyPress += (_, e) =>
 
 _host.Start();
 
-
 using (var context = _host.Services.GetService<MediaDbContext>())
 {
     if(context == null)
@@ -162,7 +166,6 @@ using (var context = _host.Services.GetService<MediaDbContext>())
     }
     context.Database.Migrate();
 }
-
 
 await app.RunAsync(args, cancellationToken:cancellationTokenSource.Token);
 
