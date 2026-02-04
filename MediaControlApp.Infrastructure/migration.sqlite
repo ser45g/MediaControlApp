@@ -1,0 +1,50 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "Authors" (
+    "Id" TEXT NOT NULL CONSTRAINT "PK_Authors" PRIMARY KEY,
+    "Name" TEXT NOT NULL,
+    "Email" TEXT NULL,
+    "CompanyName" TEXT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "MediaTypes" (
+    "Id" TEXT NOT NULL CONSTRAINT "PK_MediaTypes" PRIMARY KEY,
+    "Name" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "Ganres" (
+    "Id" TEXT NOT NULL CONSTRAINT "PK_Ganres" PRIMARY KEY,
+    "Name" TEXT NOT NULL,
+    "Description" TEXT NULL,
+    "MediaTypeId" TEXT NOT NULL,
+    CONSTRAINT "FK_Ganres_MediaTypes_MediaTypeId" FOREIGN KEY ("MediaTypeId") REFERENCES "MediaTypes" ("Id") ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "Medias" (
+    "Id" TEXT NOT NULL CONSTRAINT "PK_Medias" PRIMARY KEY,
+    "Title" TEXT NOT NULL,
+    "Description" TEXT NULL,
+    "GanreId" TEXT NOT NULL,
+    "PublisedDateUtc" TEXT NOT NULL,
+    "LastConsumedDateUtc" TEXT NULL,
+    "AuthorId" TEXT NOT NULL,
+    "Rating_Value" REAL NULL,
+    CONSTRAINT "FK_Medias_Authors_AuthorId" FOREIGN KEY ("AuthorId") REFERENCES "Authors" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_Medias_Ganres_GanreId" FOREIGN KEY ("GanreId") REFERENCES "Ganres" ("Id") ON DELETE CASCADE
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS "IX_Authors_Name" ON "Authors" ("Name");
+
+CREATE INDEX IF NOT EXISTS "IX_Ganres_MediaTypeId" ON "Ganres" ("MediaTypeId");
+
+CREATE UNIQUE INDEX IF NOT EXISTS "IX_Ganres_Name" ON "Ganres" ("Name");
+
+CREATE INDEX IF NOT EXISTS "IX_Medias_AuthorId" ON "Medias" ("AuthorId");
+
+CREATE INDEX IF NOT EXISTS "IX_Medias_GanreId" ON "Medias" ("GanreId");
+
+CREATE UNIQUE INDEX IF NOT EXISTS "IX_Medias_Title" ON "Medias" ("Title");
+
+CREATE UNIQUE INDEX IF NOT EXISTS "IX_MediaTypes_Name" ON "MediaTypes" ("Name");
+
+COMMIT;
+

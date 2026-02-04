@@ -35,10 +35,8 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices((hostContext, s) =>
     {
         throw new ArgumentNullException(nameof(mediaDbConnectionString));
     }
-    s.AddDbContext<MediaDbContext>(builder => {
-        builder.UseSqlite("Data Source=db.db");
-    });
-   
+    s.AddScoped<MediaDbContextDapper>(s => new MediaDbContextDapper(s.GetRequiredService<IConfiguration>()));
+
     s.AddScoped<IAuthorRepo,AuthorRepo>();
     s.AddScoped<IGanreRepo,GanreRepo>();
     s.AddScoped<IMediaRepo,MediaRepo>();
@@ -158,14 +156,10 @@ Console.CancelKeyPress += (_, e) =>
 
 _host.Start();
 
-using (var context = _host.Services.GetService<MediaDbContext>())
-{
-    if(context == null)
-    {
-        throw new ArgumentNullException(nameof(context));
-    }
-    context.Database.Migrate();
-}
+var context = _host.Services.GetRequiredService<MediaDbContextDapper>();
+
+await context.Init();
+
 
 await app.RunAsync(args, cancellationToken:cancellationTokenSource.Token);
 

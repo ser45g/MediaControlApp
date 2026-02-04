@@ -33,7 +33,7 @@ namespace MediaControlApp.Domain.Models.Media
             
         }
 
-        public bool Rate(int score)
+        public bool Rate(double score)
         {
             try
             {

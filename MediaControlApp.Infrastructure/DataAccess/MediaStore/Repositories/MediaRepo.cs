@@ -1,4 +1,6 @@
-﻿using MediaControlApp.Application.Services.Interfaces;
+﻿using Dapper;
+using Dommel;
+using MediaControlApp.Application.Services.Interfaces;
 using MediaControlApp.Domain.Models.Media;
 using MediaControlApp.Domain.Models.Media.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +9,9 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 {
     public class MediaRepo : IMediaRepo
     {
-        private readonly MediaDbContext _context;
+        private readonly MediaDbContextDapper _context;
 
-        public MediaRepo(MediaDbContext context)
+        public MediaRepo(MediaDbContextDapper context)
         {
             _context = context;
         }
@@ -18,61 +20,125 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
         {
             var media = new Media() { Title = title, PublishedDateUtc = publisedDate, Description = description, LastConsumedDateUtc = lastConsumedDate, Rating = rating };
 
-            _context.Medias.Add(media);
+            using var connection = _context.CreateConnection();
 
-            return await _context.SaveChangesAsync(cancellationToken)==1;
+            connection.Open();
+
+            var res = await connection.InsertAsync<Media>(media, cancellationToken: cancellationToken);
+
+            return res != null;
         }
 
         public async Task<IEnumerable<Media>> GetAll(CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Include(m=>m.Ganre).Include(m=>m.Author).ToListAsync(cancellationToken);
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            var res = await connection.GetAllAsync<Media>(cancellationToken: cancellationToken);
+
+            return res;
         }
 
         public async Task<IEnumerable<Media>> GetByAuthorId(Guid authorId, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.AuthorId == authorId).ToListAsync(cancellationToken);
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            var res = await connection.SelectAsync<Media>(g => g.AuthorId == authorId, cancellationToken: cancellationToken);
+
+            return res;
         }
 
         public async Task<IEnumerable<Media>> GetByGanreId(Guid ganreId, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.GanreId == ganreId).ToListAsync(cancellationToken);
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            var res = await connection.SelectAsync<Media>(g => g.GanreId == ganreId, cancellationToken: cancellationToken);
+
+            return res;
         }
 
         public async Task<Media?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.Id == id).FirstOrDefaultAsync(cancellationToken);
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            var res = await connection.GetAsync<Media>(id, cancellationToken: cancellationToken);
+
+            return res;
         }
 
         public async Task<IEnumerable<Media>> GetByMediaTypeId(Guid mediaTypeId, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(m=> m.Ganre!=null && m.Ganre.MediaTypeId == mediaTypeId).ToListAsync(cancellationToken);
+            return new List<Media>();
         }
 
         public async Task<Media?> GetByTitle(string title, CancellationToken cancellationToken = default)
         {
 
-            return await _context.Medias.Include(m => m.Ganre).Include(m => m.Author).Where(media => media.Title == title).FirstOrDefaultAsync(cancellationToken);
+            return null;
         }
 
         public async Task<bool> Rate(Guid id, Rating rating, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Where(m => m.Id == id).ExecuteUpdateAsync((m) => m.SetProperty(m => m.Rating, rating),cancellationToken) == 1;
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            using var transaction = connection.BeginTransaction();
+
+            var media = await connection.GetAsync<Media>(id, transaction, cancellationToken: cancellationToken);
+            if (media == null)
+                return false;
+
+            media.Rate(rating.Value);
+
+            return await connection.UpdateAsync<Media>(media, transaction, cancellationToken: cancellationToken);
         }
 
         public async Task<bool> Remove(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Where(m => m.Id == id).ExecuteDeleteAsync(cancellationToken)==1;
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            var res = await connection.ExecuteAsync("delete * from medias where Id=@id", id);
+
+            return res == 1;
         }
 
         public async Task<bool> SetConsumed(Guid id, DateTime lastConsumed, CancellationToken cancellationToken = default)
         {
-            return await _context.Medias.Where(m=>m.Id==id).ExecuteUpdateAsync((m)=>m.SetProperty(m=>m.LastConsumedDateUtc, lastConsumed), cancellationToken)==1;
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            using var transaction = connection.BeginTransaction();
+
+            var media = await connection.GetAsync<Media>(id, transaction, cancellationToken: cancellationToken);
+            if (media == null)
+                return false;
+
+            media.SetConsumed();
+
+            return await connection.UpdateAsync<Media>(media, transaction, cancellationToken: cancellationToken);
         }
 
         public async Task<bool> Update(Guid id, string title, Guid ganreId, DateTime publisedDate, Guid authorId, string? description = null, DateTime? lastConsumedDate = null, Rating? rating = null,  CancellationToken cancellationToken = default)
         {
 
-            return await _context.Medias.Where(m=>m.Id == id).ExecuteUpdateAsync((m) => m.SetProperty(m => m.AuthorId, authorId).SetProperty(m => m.Title, title).SetProperty(m => m.Description, description).SetProperty(m => m.PublishedDateUtc, publisedDate).SetProperty(m => m.LastConsumedDateUtc, lastConsumedDate).SetProperty(m => m.GanreId, ganreId).SetProperty(m => m.Rating, rating), cancellationToken) == 1;
+            var media = new Media() { Id = id, Description = description, Title=title, GanreId = ganreId, AuthorId=authorId, LastConsumedDateUtc = lastConsumedDate, PublishedDateUtc= publisedDate, Rating=rating };
+
+            using var connection = _context.CreateConnection();
+
+            connection.Open();
+
+            return await connection.UpdateAsync<Media>(media, cancellationToken: cancellationToken);
         }      
     }
 }
