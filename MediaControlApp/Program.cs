@@ -36,7 +36,7 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices((hostContext, s) =>
         throw new ArgumentNullException(nameof(mediaDbConnectionString));
     }
     s.AddDbContext<MediaDbContext>(builder => {
-        builder.UseSqlite("Data Source=db.db");
+        builder.UseSqlite(mediaDbConnectionString);
     });
    
     s.AddScoped<IAuthorRepo,AuthorRepo>();

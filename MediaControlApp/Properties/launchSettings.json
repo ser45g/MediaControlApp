@@ -1,7 +1,8 @@
 {
   "profiles": {
     "MediaControlApp": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "media-type show"
     }
   }
 }
