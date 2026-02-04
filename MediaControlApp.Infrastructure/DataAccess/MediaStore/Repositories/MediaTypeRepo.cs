@@ -19,14 +19,18 @@ namespace MediaControlApp.Infrastructure.DataAccess.MediaStore.Repositories
 
         public async Task<bool> Add(string name, CancellationToken cancellationToken = default)
         {
-            var mediaType = new MediaType() {Id=Guid.NewGuid(), Name=name};
+            var mediaType = new MediaType() { Name=name};
             using var connection = _context.CreateConnection();
 
             connection.Open();
 
-            var res = await connection.InsertAsync<MediaType>(mediaType, cancellationToken: cancellationToken);
+            //var res = await connection.InsertAsync<MediaType>(mediaType, cancellationToken: cancellationToken);
+
+            var sql = "insert into mediaTypes (Id, Name) values (@Id, @Name )";
+
+            var res = await connection.ExecuteAsync(sql, new {Id=Guid.NewGuid().ToString(),Name=name});
           
-            return res!=null;
+            return res>0;
         }
 
         public async Task<IEnumerable<MediaType>> GetAll(CancellationToken cancellationToken = default)
